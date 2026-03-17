@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshCart Analytics — LBS EMBA Exam Prep</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06060b;--bg2:#0c0c14;--bg3:#12121e;--bg4:#1a1a2a;
+  --text:#e8e6f0;--text2:#a09cb5;--text3:#6b6680;
+  --accent:#00e5cc;--accent2:#00b8a3;--accent-glow:rgba(0,229,204,.15);
+  --warm:#ff6b35;--purple:#8b5cf6;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#eab308;
+  --card:rgba(255,255,255,.03);--card-border:rgba(255,255,255,.06);
+  --radius:16px;--radius-xs:6px;
+  --font-head:'Outfit',sans-serif;--font-body:'Plus Jakarta Sans',sans-serif;--font-mono:'JetBrains Mono',monospace;
+  --transition:all .3s cubic-bezier(.4,0,.2,1);
+  --ch1:#00e5cc;--ch2:#8b5cf6;--ch3:#ff6b35;--ch4:#3b82f6;--ch5:#eab308;--ch6:#22c55e;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+::selection{background:var(--accent);color:var(--bg)}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px);background:rgba(6,6,11,.85);border-bottom:1px solid var(--card-border);padding:0 2rem;height:56px;display:flex;align-items:center;gap:1rem}
+.nav-logo{font-family:var(--font-head);font-weight:800;font-size:1rem;white-space:nowrap}
+.nav-logo .fc{color:var(--accent)}.nav-logo .sub{color:var(--text3);font-weight:400;font-size:.75rem;margin-left:.4rem}
+.nav-pills{display:flex;gap:.25rem;overflow-x:auto;scrollbar-width:none;flex:1;mask-image:linear-gradient(90deg,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent)}
+.nav-pills::-webkit-scrollbar{display:none}
+.np{padding:.35rem .75rem;border-radius:100px;font-size:.7rem;font-weight:500;color:var(--text3);cursor:pointer;transition:var(--transition);white-space:nowrap;border:none;background:transparent;font-family:var(--font-body)}
+.np:hover{color:var(--text);background:var(--card)}.np.active{background:var(--accent);color:var(--bg);font-weight:600}
+.btt{position:fixed;bottom:2rem;right:2rem;width:42px;height:42px;border-radius:50%;background:var(--accent);color:var(--bg);border:none;font-size:1.1rem;cursor:pointer;z-index:90;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,229,204,.3);opacity:0;pointer-events:none;transition:var(--transition);font-weight:700}
+.btt.show{opacity:1;pointer-events:auto}
+
+/* HERO */
+#hero{padding:5.5rem 2rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.18;pointer-events:none}
+.ho1{width:300px;height:300px;background:var(--accent);top:-60px;left:-60px}
+.ho2{width:200px;height:200px;background:var(--purple);bottom:-40px;right:-40px}
+#hero h1{font-family:var(--font-head);font-size:clamp(1.8rem,4.5vw,3rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:.5rem}
+#hero h1 .hl{background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+#hero .tagline{color:var(--text2);font-size:.88rem;max-width:550px;margin:0 auto 1.5rem}
+.chapter-nav{display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.25rem}
+.cn{padding:.3rem .7rem;border-radius:100px;font-size:.68rem;font-weight:600;cursor:pointer;transition:var(--transition);border:1px solid var(--card-border);background:var(--card);color:var(--text2);font-family:var(--font-body)}
+.cn:hover{transform:translateY(-1px)}
+.prog-row{display:flex;align-items:center;gap:.6rem;justify-content:center}
+.prog-strip{display:flex;gap:2px;height:5px;flex:1;max-width:400px;border-radius:3px;overflow:hidden}
+.prog-strip .seg{flex:1;background:var(--bg4);transition:background .3s;border-radius:1px}
+.prog-lbl{font-size:.68rem;color:var(--text3);font-weight:600;min-width:80px}
+
+/* SECTIONS */
+.section{padding:4rem 2rem 3rem}.container{max-width:1050px;margin:0 auto}
+
+/* CHAPTER HEADER */
+.ch-head{margin-bottom:2rem}
+.ch-num{font-family:var(--font-head);font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem;display:flex;align-items:center;gap:.5rem}
+.ch-num::before{content:'';width:20px;height:1px}
+.ch-q{font-family:var(--font-head);font-size:clamp(1.4rem,3.5vw,2rem);font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:.5rem}
+.ch-context{color:var(--text2);font-size:.88rem;max-width:600px}
+
+/* DATA BOX */
+.data-box{background:var(--bg2);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.1rem 1.4rem;margin-bottom:1.75rem;display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center}
+.data-box::before{content:'📊 THE DATA';font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--accent);width:100%;margin-bottom:-.25rem}
+.db-item{font-size:.82rem;color:var(--text2)}.db-item .v{color:var(--accent);font-family:var(--font-mono);font-weight:600}
+
+/* QUESTION CARD */
+.q-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.q-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:2px 0 0 2px}
+.q-card .q-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem}
+.q-card .q-text{font-family:var(--font-head);font-size:1rem;font-weight:600;line-height:1.5;margin-bottom:.75rem}
+.q-card p{font-size:.84rem;color:var(--text2);line-height:1.7;margin-bottom:.4rem}
+.q-card p strong{color:var(--text)}
+
+/* REVEAL ANSWER */
+.reveal-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1.2rem;border-radius:var(--radius-xs);font-size:.82rem;font-weight:600;cursor:pointer;transition:var(--transition);border:1px solid var(--card-border);background:var(--card);color:var(--text);font-family:var(--font-body);margin-top:.5rem}
+.reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+.answer{display:none;margin-top:1rem;padding:1.25rem;background:var(--bg2);border:1px solid var(--card-border);border-radius:var(--radius-xs);font-size:.84rem;color:var(--text2);line-height:1.8}
+.answer.show{display:block;animation:fadeIn .3s ease}
+.answer .step{margin-bottom:.6rem}.answer .step-n{font-weight:700;color:var(--accent);font-family:var(--font-mono);font-size:.8rem}
+.answer .result{color:var(--accent);font-family:var(--font-mono);font-weight:600}
+.answer .conclusion{margin-top:.5rem;padding:.6rem .9rem;background:rgba(0,229,204,.05);border:1px solid rgba(0,229,204,.1);border-radius:var(--radius-xs);color:var(--text)}
+
+/* DIG DEEPER */
+.dig{margin-top:.75rem}
+.dig-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .7rem;border-radius:100px;font-size:.72rem;font-weight:600;color:var(--text3);cursor:pointer;border:1px solid var(--card-border);background:transparent;font-family:var(--font-body);transition:var(--transition)}
+.dig-btn:hover{color:var(--text);border-color:var(--text3)}
+.dig-btn .arr{transition:transform .2s;font-size:.6rem}
+.dig-btn.open .arr{transform:rotate(90deg)}
+.dig-body{display:none;margin-top:.6rem;padding:.9rem 1.1rem;background:var(--bg3);border:1px solid var(--card-border);border-radius:var(--radius-xs);font-size:.82rem;color:var(--text2);line-height:1.75}
+.dig-body.show{display:block;animation:fadeIn .3s ease}
+.dig-body h5{font-family:var(--font-head);font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:.3rem}
+.dig-body p{margin-bottom:.5rem}
+
+/* FORMULA */
+.fm{background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius-xs);padding:.5rem .8rem;margin:.5rem 0;font-family:var(--font-mono);font-size:.88rem;font-weight:500;color:var(--accent);line-height:1.5;letter-spacing:.02em;overflow-x:auto}
+
+/* INTERACTIVE */
+.interactive{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.5rem;position:relative;overflow:hidden;margin:1.25rem 0}
+.interactive::after{content:'INTERACTIVE';position:absolute;top:.65rem;right:.65rem;font-size:.5rem;font-weight:700;letter-spacing:.1em;color:var(--accent);background:rgba(0,229,204,.08);padding:.12rem .4rem;border-radius:100px;border:1px solid rgba(0,229,204,.12)}
+.interactive h4{font-family:var(--font-head);font-size:.85rem;font-weight:700;margin-bottom:.2rem}
+.interactive .cd{font-size:.74rem;color:var(--text2);margin-bottom:.7rem}
+.interactive canvas{width:100%!important;max-height:250px}
+.sr{display:flex;align-items:center;gap:.6rem;margin-top:.5rem}
+.sr label{font-size:.7rem;color:var(--text2);min-width:28px}
+.sr input[type=range]{flex:1;accent-color:var(--accent);height:5px}
+.sr .sv{font-size:.75rem;font-weight:600;font-family:var(--font-mono);min-width:110px;text-align:right}
+.dr-row{display:flex;gap:1.2rem;margin-top:.5rem;flex-wrap:wrap}
+.dr-row .dr{font-size:.75rem;color:var(--text2)}.dr-row .dr .v{color:var(--accent);font-family:var(--font-mono);font-weight:600}
+
+/* CALCULATOR */
+.calc{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.25rem;margin:1.25rem 0}
+.calc h4{font-family:var(--font-head);font-size:.88rem;font-weight:700;margin-bottom:.15rem}
+.calc .fm{margin-bottom:.75rem}
+.calc .cr{display:flex;gap:.6rem;margin-bottom:.5rem;flex-wrap:wrap}
+.calc .cf{flex:1;min-width:85px}
+.calc .cf label{display:block;font-size:.65rem;font-weight:600;color:var(--text3);margin-bottom:.2rem;letter-spacing:.04em;text-transform:uppercase}
+.calc .cf input{width:100%;padding:.45rem .65rem;background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius-xs);color:var(--text);font-size:.82rem;font-family:var(--font-body);transition:var(--transition)}
+.calc .cf input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.calc-btn{padding:.45rem 1.1rem;background:var(--accent);color:var(--bg);border:none;border-radius:var(--radius-xs);font-family:var(--font-body);font-weight:600;font-size:.8rem;cursor:pointer;transition:var(--transition);margin-top:.3rem}
+.calc-btn:hover{background:var(--accent2);transform:translateY(-1px)}
+.calc-res{margin-top:.6rem;padding:.75rem;background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius-xs);font-size:.82rem;line-height:1.7;min-height:40px}
+.calc-res .v{color:var(--accent);font-weight:600;font-family:var(--font-mono)}
+.calc-res .lt{color:var(--text2);font-size:.74rem}
+
+/* CHART */
+.chart-box{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.25rem;margin:1.25rem 0}
+.chart-box h4{font-family:var(--font-head);font-size:.85rem;font-weight:700;margin-bottom:.2rem}
+.chart-box .cd{font-size:.74rem;color:var(--text2);margin-bottom:.6rem}
+.chart-box canvas{width:100%!important;max-height:250px}
+
+/* CHECK */
+.chk{display:flex;align-items:center;gap:.45rem;margin-top:.7rem;padding-top:.5rem;border-top:1px solid var(--card-border)}
+.chk input[type=checkbox]{width:15px;height:15px;accent-color:var(--accent);cursor:pointer}
+.chk label{font-size:.72rem;color:var(--text3);cursor:pointer;user-select:none}
+
+/* FLASHCARDS */
+.fc-controls{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.fcf{padding:.3rem .7rem;border-radius:100px;font-size:.72rem;font-weight:500;color:var(--text2);cursor:pointer;border:1px solid var(--card-border);background:transparent;font-family:var(--font-body);transition:var(--transition)}
+.fcf:hover{border-color:var(--text3);color:var(--text)}.fcf.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.fc-stats{margin-left:auto;font-size:.72rem;color:var(--text3)}
+.fc-wrap{perspective:1200px;max-width:640px;margin:0 auto}
+.fc{position:relative;width:100%;min-height:280px;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.fc.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius);padding:2rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fc-front{background:linear-gradient(135deg,var(--bg3),var(--bg4));border:1px solid var(--card-border)}
+.fc-back{background:linear-gradient(135deg,rgba(0,229,204,.06),rgba(139,92,246,.06));border:1px solid rgba(0,229,204,.1);transform:rotateY(180deg)}
+.fc-face .fc-l{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
+.fc-face .fc-q{font-family:var(--font-head);font-size:1.05rem;font-weight:600;line-height:1.5}
+.fc-face .fc-a{font-size:.88rem;line-height:1.7;color:var(--text)}
+.fc-face .fc-fm{font-family:var(--font-mono);font-size:.85rem;font-weight:500;color:var(--accent);margin-top:.5rem;padding:.35rem .7rem;background:var(--bg);border-radius:var(--radius-xs)}
+.fc-face .fc-hint{font-size:.68rem;color:var(--text3);margin-top:1rem}
+.fc-nav{display:flex;justify-content:center;gap:.5rem;margin-top:1rem;flex-wrap:wrap}
+.fcb{padding:.4rem 1rem;border-radius:var(--radius-xs);font-size:.75rem;font-weight:600;cursor:pointer;transition:var(--transition);font-family:var(--font-body);border:1px solid var(--card-border);background:var(--card);color:var(--text)}
+.fcb:hover{border-color:var(--accent);color:var(--accent)}
+.fcb.easy{border-color:rgba(34,197,94,.3);color:var(--green)}.fcb.easy:hover{background:rgba(34,197,94,.1)}
+.fcb.med{border-color:rgba(234,179,8,.3);color:var(--yellow)}.fcb.med:hover{background:rgba(234,179,8,.1)}
+.fcb.hard{border-color:rgba(239,68,68,.3);color:var(--red)}.fcb.hard:hover{background:rgba(239,68,68,.1)}
+
+/* PLAY BTN / ANIM */
+.play-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.4rem 1rem;background:var(--purple);color:#fff;border:none;border-radius:100px;font-family:var(--font-body);font-size:.75rem;font-weight:600;cursor:pointer;transition:var(--transition)}
+.play-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(139,92,246,.3)}
+.play-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.anim-status{font-size:.7rem;color:var(--text3);margin-top:.35rem;min-height:1em}
+
+/* DRAG SCATTER */
+.drag-box{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.25rem;margin:1.25rem 0;position:relative}
+.drag-box::after{content:'CLICK TO ADD POINTS';position:absolute;top:.65rem;right:.65rem;font-size:.5rem;font-weight:700;letter-spacing:.1em;color:var(--warm);background:rgba(255,107,53,.08);padding:.12rem .4rem;border-radius:100px;border:1px solid rgba(255,107,53,.12)}
+.drag-box h4{font-family:var(--font-head);font-size:.85rem;font-weight:700;margin-bottom:.2rem}
+.drag-box .cd{font-size:.74rem;color:var(--text2);margin-bottom:.5rem}
+.drag-box canvas{width:100%!important;cursor:crosshair;border-radius:var(--radius-xs);background:var(--bg)}
+.drag-stats{display:flex;gap:1.2rem;margin-top:.5rem;flex-wrap:wrap}
+.drag-stats .ds{font-size:.75rem;color:var(--text2)}.drag-stats .ds .v{color:var(--accent);font-family:var(--font-mono);font-weight:600}
+.drag-reset{padding:.25rem .7rem;border-radius:100px;font-size:.68rem;font-weight:600;cursor:pointer;border:1px solid var(--card-border);background:transparent;color:var(--text3);font-family:var(--font-body);transition:var(--transition);margin-left:auto}
+.drag-reset:hover{border-color:var(--red);color:var(--red)}
+
+.reveal-anim{opacity:0;transform:translateY(18px);transition:opacity .45s ease,transform .45s ease}.reveal-anim.visible{opacity:1;transform:translateY(0)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:768px){
+  .nav{padding:0 .75rem;gap:.4rem}.nav-logo .sub{display:none}
+  .section,#hero{padding-left:1rem;padding-right:1rem}
+  .data-box{gap:.75rem}.db-item{font-size:.75rem}
+  .q-card{padding:1.25rem}.q-card .q-text{font-size:.9rem}
+  .interactive,.calc,.chart-box,.drag-box{padding:1rem}
+  .interactive::after,.drag-box::after{font-size:.45rem;top:.4rem;right:.4rem}
+  .sr{flex-wrap:wrap;gap:.35rem}.sr .sv{min-width:auto;font-size:.68rem;width:100%;text-align:left}
+  .sr input[type=range]{min-width:100px}
+  .dr-row{gap:.5rem}.dr-row .dr{font-size:.68rem}
+  .fc-face{padding:1.25rem}.fc-face .fc-q{font-size:.9rem}
+  .btt{bottom:1rem;right:1rem;width:36px;height:36px;font-size:.95rem}
+  .prog-row{flex-direction:column;gap:.3rem}.prog-lbl{text-align:center}
+  .calc .cr{flex-direction:column}
+}
+
+
+/* TRY IT */
+.try-box{margin:.6rem 0}
+.try-box textarea{width:100%;min-height:65px;padding:.65rem .85rem;background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius-xs);color:var(--text);font-size:.82rem;font-family:var(--font-body);line-height:1.6;resize:vertical;transition:var(--transition)}
+.try-box textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.try-box textarea::placeholder{color:var(--text3);font-style:italic}
+.try-label{font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:.25rem}
+.try-label::before{content:'✍️ '}
+.hint-btn{display:inline-flex;align-items:center;gap:.3rem;padding:.28rem .65rem;border-radius:100px;font-size:.68rem;font-weight:600;color:var(--yellow);cursor:pointer;border:1px solid rgba(234,179,8,.2);background:rgba(234,179,8,.04);font-family:var(--font-body);transition:var(--transition);margin-right:.5rem}
+.hint-btn:hover{background:rgba(234,179,8,.08);border-color:rgba(234,179,8,.3)}
+.hint-text{display:none;margin:.4rem 0;padding:.45rem .75rem;background:rgba(234,179,8,.04);border:1px solid rgba(234,179,8,.1);border-radius:var(--radius-xs);font-size:.76rem;color:var(--text2);line-height:1.6;font-style:italic}
+.hint-text.show{display:block;animation:fadeIn .3s ease}
+.your-attempt{display:none;padding:.6rem .85rem;background:var(--bg3);border:1px solid var(--card-border);border-radius:var(--radius-xs);margin-bottom:.75rem;font-size:.8rem;color:var(--text3);line-height:1.5;white-space:pre-wrap}
+.ya-label{font-size:.55rem;font-weight:700;letter-spacing:.1em;color:var(--text3);margin-bottom:.2rem;opacity:.6}
+.your-attempt.show{display:block;animation:fadeIn .3s ease}
+.answer-visual{margin-top:1rem;padding-top:.75rem;border-top:1px dashed var(--card-border)}
+.answer-visual-label{font-size:.55rem;font-weight:700;letter-spacing:.1em;color:var(--accent);margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.answer-visual-label::before{content:'📊'}
+
+/* EXAM TIP */
+.exam-tip{border-radius:var(--radius);padding:.85rem 1.1rem;margin:.75rem 0;font-size:.82rem;line-height:1.7;background:linear-gradient(135deg,rgba(234,179,8,.06),rgba(255,107,53,.04));border:1px solid rgba(234,179,8,.15)}
+.exam-tip::before{content:'🎯 EXAM TIP';display:block;font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--yellow);margin-bottom:.3rem}
+.exam-tip strong{color:var(--yellow)}
+
+/* TAKEAWAY */
+.takeaway{border-radius:var(--radius);padding:.85rem 1.1rem;margin:1.5rem 0 .5rem;font-size:.82rem;line-height:1.7;background:linear-gradient(135deg,rgba(0,229,204,.04),rgba(139,92,246,.04));border:1px solid rgba(0,229,204,.12)}
+.takeaway::before{content:'✅ KEY TAKEAWAY';display:block;font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--accent);margin-bottom:.3rem}
+.takeaway strong{color:var(--accent)}
+
+/* TRAP */
+.trap{border-radius:var(--radius);padding:.85rem 1.1rem;margin:.75rem 0;font-size:.82rem;line-height:1.7;background:linear-gradient(135deg,rgba(239,68,68,.05),rgba(255,107,53,.04));border:1px solid rgba(239,68,68,.12)}
+.trap::before{content:'⚠️ EXAM TRAP';display:block;font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--red);margin-bottom:.3rem}
+.trap strong{color:var(--red)}
+
+@media print{
+  body{background:#fff!important;color:#222!important}
+  .nav,.btt,.hero-orb,.play-btn,.fc-nav,.fc-controls,.calc-btn,.drag-reset,.drag-box,.interactive canvas,.chart-box canvas,.chapter-nav,.prog-row{display:none!important}
+  .section{padding:1rem 0!important;page-break-inside:avoid}
+  .q-card,.answer,.dig-body,.calc,.chart-box{background:#f8f8f8!important;border:1px solid #ddd!important;color:#222!important;page-break-inside:avoid}
+  .q-card::before{background:#888!important}
+  .q-card p,.answer,.dig-body,.calc,.chart-box .cd{color:#333!important}
+  .q-card .q-text,.ch-q{color:#111!important}
+  .fm{background:#f0f0f0!important;color:#006!important;border:1px solid #ccc!important}
+  .answer{display:block!important}.dig-body{display:block!important}
+  #hero h1{-webkit-text-fill-color:#111!important;background:none!important}
+  .fc-wrap,.fc{display:none!important}
+  .try-box textarea{border:1px solid #ccc!important;background:#fff!important;color:#333!important}
+  .your-attempt{display:block!important;background:#f0f0f0!important;color:#555!important}
+  .exam-tip,.takeaway,.trap{background:#f8f8f8!important;border:1px solid #ddd!important;color:#333!important}
+  footer{color:#999!important}
+}
+.ch1 .q-card::before{background:var(--ch1)}
+.ch1 .ch-num{color:var(--ch1)}
+.ch1 .ch-num::before{background:var(--ch1)}
+.ch1 .ch-q{color:var(--ch1)}
+.ch2 .q-card::before{background:var(--ch2)}
+.ch2 .ch-num{color:var(--ch2)}
+.ch2 .ch-num::before{background:var(--ch2)}
+.ch2 .ch-q{color:var(--ch2)}
+.ch3 .q-card::before{background:var(--ch3)}
+.ch3 .ch-num{color:var(--ch3)}
+.ch3 .ch-num::before{background:var(--ch3)}
+.ch3 .ch-q{color:var(--ch3)}
+.ch4 .q-card::before{background:var(--ch4)}
+.ch4 .ch-num{color:var(--ch4)}
+.ch4 .ch-num::before{background:var(--ch4)}
+.ch4 .ch-q{color:var(--ch4)}
+.ch5 .q-card::before{background:var(--ch5)}
+.ch5 .ch-num{color:var(--ch5)}
+.ch5 .ch-num::before{background:var(--ch5)}
+.ch5 .ch-q{color:var(--ch5)}
+.ch6 .q-card::before{background:var(--ch6)}
+.ch6 .ch-num{color:var(--ch6)}
+.ch6 .ch-num::before{background:var(--ch6)}
+.ch6 .ch-q{color:var(--ch6)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo"><span class="fc">FreshCart</span><span class="sub">Analytics</span></div>
+  <div class="nav-pills">
+    <button class="np active" onclick="go('#hero')">Home</button>
+    <button class="np" onclick="go('#ch1')">1 · Data</button>
+    <button class="np" onclick="go('#ch2')">2 · Confidence</button>
+    <button class="np" onclick="go('#ch3')">3 · Claims</button>
+    <button class="np" onclick="go('#ch4')">4 · Comparing</button>
+    <button class="np" onclick="go('#ch5')">5 · Prediction</button>
+    <button class="np" onclick="go('#ch6')">6 · Full Model</button>
+    <button class="np" onclick="go('#cheat')">Cheat Sheet</button>
+    <button class="np" onclick="go('#traps')">Exam Traps</button>
+    <button class="np" onclick="go('#cards')">Flashcards</button>
+  </div>
+</nav>
+<button class="btt" id="btt" onclick="go('#hero')">↑</button>
+
+<section id="hero">
+  <div class="hero-orb ho1"></div>
+  <div class="hero-orb ho2"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <p style="font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem">LBS EMBA · CD62 · Prof Kostis</p>
+    <h1>The <span class="hl">FreshCart</span> Story</h1>
+    <p class="tagline">One dataset. Six business questions. Every exam concept. FreshCart is an online grocery startup with data on 200 customers. You're the analyst — work through each question, reveal the answer, then dig into the theory.</p>
+    <div class="chapter-nav">
+      <button class="cn" style="border-color:rgba(0,229,204,.3);color:var(--ch1)" onclick="go('#ch1')">1 · What does our data look like?</button>
+      <button class="cn" style="border-color:rgba(139,92,246,.3);color:var(--ch2)" onclick="go('#ch2')">2 · How confident are we?</button>
+      <button class="cn" style="border-color:rgba(255,107,53,.3);color:var(--ch3)" onclick="go('#ch3')">3 · Is the CEO right?</button>
+      <button class="cn" style="border-color:rgba(59,130,246,.3);color:var(--ch4)" onclick="go('#ch4')">4 · Premium vs Standard?</button>
+      <button class="cn" style="border-color:rgba(234,179,8,.3);color:var(--ch5)" onclick="go('#ch5')">5 · Does income predict spend?</button>
+      <button class="cn" style="border-color:rgba(34,197,94,.3);color:var(--ch6)" onclick="go('#ch6')">6 · The full picture</button>
+      <button class="cn" style="border-color:rgba(255,107,53,.3);color:var(--warm)" onclick="go('#cheat')">Formula Cheat Sheet</button>
+    </div>
+    <div class="prog-row">
+      <div class="prog-strip" id="masterProg"></div>
+      <span class="prog-lbl" id="progLbl">0 / 12 mastered</span>
+    </div>
+  </div>
+</section>
+
+<section class="section ch1" id="ch1">
+<div class="container">
+  <div class="ch-head">
+    <div class="ch-num">Chapter 1</div>
+    <div class="ch-q">What does our customer data look like?</div>
+    <p class="ch-context">Before building any model, you need to understand your data. Let's explore FreshCart's 200 customers.</p>
+  </div>
+
+  <div class="data-box">
+    <span class="db-item">Customers: <span class="v">200</span></span>
+    <span class="db-item">Mean spend: <span class="v">£142/mo</span></span>
+    <span class="db-item">Median spend: <span class="v">£128/mo</span></span>
+    <span class="db-item">Std dev: <span class="v">£59</span></span>
+    <span class="db-item">Delivery avg: <span class="v">32 min</span></span>
+    <span class="db-item">Delivery σ: <span class="v">8 min</span></span>
+  </div>
+
+    <div class="q-card">
+      <div class="q-label" style="color:var(--ch1)">Question 1A</div>
+      <div class="q-text">A report states: "About half of FreshCart customers spend less than £142 per month." Is this correct?</div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="What measure does 'about half' refer to — mean or median?"></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">Which measure splits data exactly in half when sorted?</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer" id="a_1a"><div class="your-attempt"></div><div class="step"><span class="step-n">Answer:</span> <strong style="color:var(--red)">Incorrect.</strong></div>
+<p>"About half" describes the <strong>median</strong>, not the mean. Half of customers spend below <span class="result">£128</span> (the median). The mean (£142) is pulled up by a few corporate accounts with high spend.</p>
+<p>Since mean (£142) > median (£128), the data is <strong>right-skewed</strong> — a long tail of high values pulls the average up.</p><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="interactive" id="outlierDemo" data-chart="outlierDemo">
+    <h4>Try it: drag the slider to add a corporate account</h4>
+    <p class="cd">Watch the mean jump while the median barely moves. This is why the median is more robust.</p>
+    <canvas id="c_outlier"></canvas>
+    <div class="sr">
+      <label>Corporate spend:</label>
+      <input type="range" id="outlierSlider" min="180" max="900" step="10" value="180" style="accent-color:var(--ch1)" oninput="updateOutlier()">
+      <span class="sv" id="outlierLbl" style="color:var(--ch1)">£180 (normal)</span>
+    </div>
+    <div class="dr-row">
+      <span class="dr">Mean: <span class="v" id="outMean">£131</span></span>
+      <span class="dr">Median: <span class="v" id="outMed">£128</span></span>
+      <span class="dr">Gap: <span class="v" id="outGap">£3</span></span>
+    </div>
+  </div>
+</div></div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — the theory behind this</button>
+        <div class="dig-body"><h5>Mean vs Median</h5>
+<p>The <strong>mean</strong> is the sum of all values divided by n. It's sensitive to extremes — one massive corporate account can drag the mean far from the "typical" customer.</p>
+<p>The <strong>median</strong> is the middle value when data is sorted. Exactly 50% of observations fall below it. It resists outliers because it only cares about position, not value.</p>
+<p><strong>Rule of thumb:</strong> When mean > median → right-skewed. When mean < median → left-skewed. When they're roughly equal → symmetric.</p></div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_1a" onchange="saveCheck()"><label for="chk_1a">I've got this</label></div>
+    </div>
+
+  <div class="q-card">
+      <div class="q-label" style="color:var(--ch1)">Question 1B</div>
+      <div class="q-text">FreshCart deliveries average 32 minutes (σ = 8 min). A customer complains if delivery exceeds 45 minutes. What percentage of deliveries trigger a complaint?</div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="Write z=(x−μ)/σ, plug in, then find P(Z>z)."></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">z=(x−μ)/σ. Here x=45, μ=32, σ=8.</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer" id="a_1b"><div class="your-attempt"></div><div class="step"><span class="step-n">Step 1:</span> Convert to a z-score: z = (45 − 32) / 8 = <span class="result">1.625</span></div>
+<div class="step"><span class="step-n">Step 2:</span> Look up P(Z > 1.63) in the standard normal table = <span class="result">5.2%</span></div>
+<div class="conclusion">About <strong>5.2%</strong> of deliveries will trigger a complaint — roughly 1 in 20.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="interactive" id="zChartBlock" data-chart="zChartBlock">
+    <h4>Try it: slide to change z and watch the tail probability</h4>
+    <p class="cd">The orange area shows how much of the distribution is beyond your z-score.</p>
+    <canvas id="c_zscore"></canvas>
+    <div class="sr">
+      <label>z:</label>
+      <input type="range" id="zSlider" min="0" max="3.5" step="0.01" value="1.63" style="accent-color:var(--ch1)" oninput="updateZ()">
+      <span class="sv" id="zLbl" style="color:var(--ch1)">z = 1.63 → 5.2%</span>
+    </div>
+  </div>
+</div></div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — the theory behind this</button>
+        <div class="dig-body"><h5>Z-Scores & Normal Probability</h5>
+<p>A <strong>z-score</strong> tells you how many standard deviations a value is from the mean. z = (x − μ) / σ.</p>
+<div class="fm">z = (x − μ) / σ</div>
+<p>Once you have the z-score, use the standard normal table (or a calculator) to find the probability of being above or below that value.</p>
+<p>z = 0 → you're at the mean (50% above, 50% below). z = 1 → top 15.9%. z = 2 → top 2.3%. z = 3 → top 0.1%. The further from 0, the rarer.</p></div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_1b" onchange="saveCheck()"><label for="chk_1b">I've got this</label></div>
+    </div>
+
+  <div class="calc">
+    <h4>Z-Score Calculator</h4>
+    <div class="fm">z = (x − μ) / σ</div>
+    <div class="cr"><div class="cf"><label>x</label><input type="number" id="z-x" value="45" step="any"></div><div class="cf"><label>μ</label><input type="number" id="z-mu" value="32" step="any"></div><div class="cf"><label>σ</label><input type="number" id="z-sig" value="8" step="any"></div></div>
+    <button class="calc-btn" onclick="calcZ()">Calculate</button>
+    <div class="calc-res" id="zR"><span class="lt">Enter values</span></div>
+  </div>
+
+</div>
+</section>
+
+<section class="section ch2" id="ch2">
+<div class="container">
+  <div class="ch-head">
+    <div class="ch-num">Chapter 2</div>
+    <div class="ch-q">How confident are we in our numbers?</div>
+    <p class="ch-context">We know the sample mean is £142. But how close is that to the <em>true</em> average across all possible customers?</p>
+  </div>
+
+  <div class="data-box">
+    <span class="db-item">x̄ = <span class="v">£142</span></span>
+    <span class="db-item">s = <span class="v">£59</span></span>
+    <span class="db-item">n = <span class="v">200</span></span>
+  </div>
+
+    <div class="q-card">
+      <div class="q-label" style="color:var(--ch2)">Question 2A</div>
+      <div class="q-text">The standard deviation of customer spend is £59. Does this mean our estimate of the average is also uncertain by about ±£59?</div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="What formula converts s to the uncertainty of the average?"></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">SE = s/√n. Try s=59, n=200.</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer" id="a_2a"><div class="your-attempt"></div><div class="step"><span class="step-n">Answer:</span> <strong style="color:var(--red)">No.</strong> £59 is the spread of <em>individual</em> customers. The uncertainty in the <em>average</em> is much smaller.</div>
+<div class="step"><span class="step-n">The key formula:</span> <span class="fm">SE = s / √n = 59 / √200 = <span class="result">£4.17</span></span></div>
+<p>Individual customers vary by ±£59. But our estimate of the average is precise to about <strong>±£4.17</strong>. That's 14× more precise — because averaging 200 people cancels out a lot of noise.</p><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="chart-box" id="sVsSeBlock" data-chart="sVsSeBlock">
+    <h4>FreshCart: s vs SE — the difference matters</h4>
+    <p class="cd">Individual spend varies by ±£59 (s), but our estimate of the average is precise to ±£4.17 (SE).</p>
+    <canvas id="c_sVsSe"></canvas>
+  </div>
+</div></div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — the theory behind this</button>
+        <div class="dig-body"><h5>Standard Deviation vs Standard Error</h5>
+<p><strong>s (standard deviation)</strong> = how spread out individual data points are around the mean.</p>
+<p><strong>SE (standard error) = s/√n</strong> = how much the sample mean itself would wobble if you took many different samples. It's always smaller than s because averaging cancels noise.</p>
+<p><strong>The #1 exam mistake:</strong> using s where SE belongs. They are not interchangeable. s describes individuals; SE describes the mean.</p>
+<p>To halve the SE, you need to quadruple n (because of the √n in the denominator). Doubling n only cuts SE by ~30%.</p></div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_2a" onchange="saveCheck()"><label for="chk_2a">I've got this</label></div>
+    </div>
+
+  <div class="q-card">
+      <div class="q-label" style="color:var(--ch2)">Question 2B</div>
+      <div class="q-text">Build a 95% confidence interval for the true average monthly spend.</div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="Write the CI formula. Multiplier for 95% = ?"></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">CI = x̄ ± [?] × SE. The multiplier is a simple whole number...</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer" id="a_2b"><div class="your-attempt"></div><div class="step"><span class="step-n">Step 1:</span> SE = s/√n = 59/√200 = <span class="result">£4.17</span></div>
+<div class="step"><span class="step-n">Step 2:</span> Margin = 2 × SE = 2 × 4.17 = <span class="result">£8.34</span></div>
+<div class="step"><span class="step-n">Step 3:</span> CI = 142 ± 8.34 = <span class="result">[£133.7, £150.3]</span></div>
+<div class="conclusion">We are 95% confident the true average monthly spend is between <strong>£133.70 and £150.30</strong>.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="interactive" id="ciExplorer" data-chart="ciExplorer">
+    <h4>Try it: watch the CI shrink as you add data</h4>
+    <p class="cd">Drag n to see the interval tighten. Drag confidence to see width vs coverage trade-off.</p>
+    <canvas id="c_ciExplore"></canvas>
+    <div class="sr">
+      <label>n:</label>
+      <input type="range" id="ciNSlider" min="5" max="500" step="5" value="200" style="accent-color:var(--ch2)" oninput="updateCIexplore()">
+      <span class="sv" id="ciNLbl" style="color:var(--ch2)">n=200</span>
+    </div>
+    <div class="sr">
+      <label>Conf:</label>
+      <input type="range" id="ciConfSlider" min="80" max="99" step="1" value="95" style="accent-color:var(--ch2)" oninput="updateCIexplore()">
+      <span class="sv" id="ciConfLbl" style="color:var(--ch2)">95% → ±8.3</span>
+    </div>
+  </div>
+</div></div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — the theory behind this</button>
+        <div class="dig-body"><h5>Confidence Intervals</h5>
+<p>A CI gives a <strong>range of plausible values</strong> for the true population mean. Take the sample mean, then add and subtract a margin of error.</p>
+<div class="fm">CI = x̄ ± 2 × (s / √n)</div>
+<p>The multiplier for 95% confidence is <strong>2</strong>. That's it.</p>
+<h5>What "95% confident" actually means</h5>
+<p>It does <strong style="color:var(--red)">NOT</strong> mean "95% probability the true mean is in this interval." Once calculated, μ is either in there or it isn't.</p>
+<p>What it means: if you repeated the study 100 times and built a CI each time, <strong>about 95 of those intervals</strong> would contain the true mean. The confidence is in the method, not any single interval.</p></div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_2b" onchange="saveCheck()"><label for="chk_2b">I've got this</label></div>
+    </div>
+
+  <div class="q-card" style="border-left:3px solid var(--ch2)">
+    <div class="q-label" style="color:var(--ch2)">KEY CONCEPT</div>
+    <div class="q-text">Why does SE = s/√n work? The Central Limit Theorem.</div>
+    <p>Even if individual customers' spending is weirdly distributed (skewed, lumpy), the <strong>average</strong> of a sample will be approximately normal — as long as n is large enough (~30+). And the spread of those sample averages is s/√n.</p>
+    <p>This is why confidence intervals work: we're exploiting the fact that <strong>sample means are better behaved than individual data points</strong>.</p>
+    <div class="dig">
+      <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — the CLT explained</button>
+      <div class="dig-body">
+        <h5>The Central Limit Theorem (CLT)</h5>
+        <p>Imagine taking 1,000 different samples of 200 FreshCart customers each and computing the mean of each sample. Those 1,000 means would form a bell curve centered on the true population mean, with spread = σ/√n.</p>
+        <p>The magic: this works regardless of the shape of the original data. Right-skewed spending data? Doesn't matter. The means are still approximately normal.</p>
+        <p>This is why n matters so much: √200 ≈ 14.1, so the SE is 14× smaller than σ. At n=800, it would be 28× smaller. More data → the mean estimate gets more precise.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="interactive" id="ciDanceBlock" style="margin-top:1.25rem">
+    <h4>Watch: The Dance of Confidence Intervals</h4>
+    <p class="cd">Each bar is a CI from a fresh sample. Most capture the true mean (teal) — roughly 1 in 20 will miss (red).</p>
+    <canvas id="c_ciDance" style="height:300px;width:100%"></canvas>
+    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+      <button class="play-btn" id="ciDancePlay" onclick="playCIDance()">▶ Play</button>
+      <div class="anim-status" id="ciDanceStatus">Press Play</div>
+    </div>
+  </div>
+
+  <div class="calc">
+    <h4>CI Builder & Claim Tester</h4>
+    <div class="fm">CI = x̄ ± 2 × (s / √n)</div>
+    <div class="cr"><div class="cf"><label>x̄</label><input type="number" id="ci-m" value="142" step="any"></div><div class="cf"><label>s</label><input type="number" id="ci-s" value="59" step="any"></div><div class="cf"><label>n</label><input type="number" id="ci-n" value="200" step="1"></div></div>
+    <div class="cr"><div class="cf"><label>Multiplier (2 for 95%)</label><input type="number" id="ci-t" value="2" step="any"></div><div class="cf"><label>Claim (optional)</label><input type="number" id="ci-cl" value="160" step="any"></div></div>
+    <button class="calc-btn" onclick="calcCI()">Build CI</button>
+    <div class="calc-res" id="ciR"><span class="lt">Enter values</span></div>
+  </div>
+
+
+  <div class="exam-tip"><strong>s vs SE — the #1 exam mistake:</strong> If the question gives you s = 59 and asks for a CI, you MUST divide by √n first to get SE. Using s directly in the CI formula will give an answer that's ~14× too wide. Look for this trap in every CI question.</div>
+
+  <div class="exam-tip"><strong>CI interpretation:</strong> Never write "95% probability the true mean is in this interval." Write: "We are 95% confident that the true population mean lies between [lower] and [upper]." The confidence is in the <strong>method</strong>, not any single interval.</div>
+
+  <div class="takeaway"><strong>Chapter 2 summary:</strong> SE = s/√n (always smaller than s). CI = x̄ ± 2 × SE for 95%. "95% confident" means the method works 95% of the time, not that this specific interval has a 95% probability. The CLT is why all of this works — sample means are approximately normal.</div>
+
+</div>
+</section>
+
+<section class="section ch3" id="ch3">
+<div class="container">
+  <div class="ch-head">
+    <div class="ch-num">Chapter 3</div>
+    <div class="ch-q">Is the CEO's £160 claim credible?</div>
+    <p class="ch-context">The CEO tells investors that average customer spend is £160/month. Your CI says [£133.7, £150.3]. Time to test the claim.</p>
+  </div>
+
+  <div class="data-box">
+    <span class="db-item">CI: <span class="v">[£133.7, £150.3]</span></span>
+    <span class="db-item">CEO claim: <span class="v">£160</span></span>
+  </div>
+
+    <div class="q-card">
+      <div class="q-label" style="color:var(--ch3)">Question 3A</div>
+      <div class="q-text">Set up hypotheses and test the CEO's claim using your confidence interval.</div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="State H₀/Hₐ. Does £160 fall inside or outside your CI?"></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">H₀ always has '='. CI is [£133.7, £150.3]. Where is £160?</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer" id="a_3a"><div class="your-attempt"></div><div class="step"><span class="step-n">Step 1:</span> Set up hypotheses.<br>H₀: μ = 160 (the CEO's claim)<br>Hₐ: μ ≠ 160 (the claim is wrong)</div>
+<div class="step"><span class="step-n">Step 2:</span> Check: does £160 fall inside our 95% CI [£133.7, £150.3]?<br>£160 is <strong style="color:var(--red)">outside</strong> the interval.</div>
+<div class="step"><span class="step-n">Step 3:</span> Since the claimed value is outside the CI → <span class="result">Reject H₀</span></div>
+<div class="conclusion"><strong>There is significant evidence that the true average spend is not £160.</strong> The CEO is overestimating customer spending.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="chart-box" id="ciTestBlock" data-chart="ciTestBlock">
+    <h4>FreshCart: The CEO's claim vs your CI</h4>
+    <p class="cd">The teal bar is your CI. The red dot is the CEO's £160 claim — clearly outside.</p>
+    <canvas id="c_ciTest"></canvas>
+  </div>
+</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="interactive" id="pvalDemo" data-chart="pvalDemo">
+    <h4>Try it: how the t-statistic maps to evidence strength</h4>
+    <p class="cd">Drag |t|. Watch the shaded area (≈ p-value) shrink. Past 2, you're in the rejection zone.</p>
+    <canvas id="c_pval"></canvas>
+    <div class="sr">
+      <label>|t|:</label>
+      <input type="range" id="pvalSlider" min="0" max="4" step="0.05" value="1.5" style="accent-color:var(--ch3)" oninput="updatePval()">
+      <span class="sv" id="pvalLbl" style="color:var(--ch3)">|t| = 1.50 → p ≈ 13.4%</span>
+    </div>
+    <div class="dr-row">
+      <span class="dr">Decision: <span class="v" id="pvalDec">Fail to reject H₀</span></span>
+    </div>
+  </div>
+</div></div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — the theory behind this</button>
+        <div class="dig-body"><h5>Hypothesis Testing with a CI</h5>
+<p>Every test starts with two competing statements:</p>
+<p><strong>H₀ (null)</strong> = the "nothing special" claim. Always has "=". This is what you're trying to disprove.</p>
+<p><strong>Hₐ (alternative)</strong> = what you want evidence for. Has ≠, <, or >.</p>
+<p>Think courtroom: H₀ = "innocent." You only convict (reject H₀) if the evidence is strong enough.</p>
+<h5>The CI Shortcut</h5>
+<p>Build a CI, then check: claimed value <strong>outside</strong> → reject. <strong>Inside</strong> → fail to reject. This is exactly equivalent to a formal two-tailed test at the same confidence level.</p>
+<h5>Never "Accept" H₀</h5>
+<p>You either <strong>reject</strong> or <strong>fail to reject</strong>. Saying "accept H₀" is always wrong — not finding evidence against something doesn't prove it's true. It's like saying "I didn't find my keys, therefore they don't exist."</p>
+<h5>What a p-value means</h5>
+<p>The p-value asks: "If H₀ were true, how surprising would my data be?" Small p (< 0.05) = very surprising = evidence against H₀. It is <strong style="color:var(--red)">NOT</strong> the probability that H₀ is true.</p></div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_3a" onchange="saveCheck()"><label for="chk_3a">I've got this</label></div>
+    </div>
+
+  <div class="exam-tip"><strong>Setting up hypotheses:</strong> H₀ always has "=". The claim you're testing goes into H₀. Hₐ has ≠ (two-sided) or < / > (one-sided). If the question says "test whether average spend is £160," then H₀: μ = 160.</div>
+
+  <div class="trap"><strong>"Accept H₀" = instant mark loss.</strong> Write "fail to reject H₀" or "insufficient evidence to reject." Never "accept." Absence of evidence is not evidence of absence.</div>
+
+  <div class="takeaway"><strong>Chapter 3 summary:</strong> Build CI → check if claim is inside. Outside = reject H₀. Inside = fail to reject. p-value = probability of data this extreme IF H₀ were true. Small p = strong evidence against H₀. Never "accept" H₀.</div>
+
+</div>
+</section>
+
+<section class="section ch4" id="ch4">
+<div class="container">
+  <div class="ch-head">
+    <div class="ch-num">Chapter 4</div>
+    <div class="ch-q">Do Premium members actually spend more?</div>
+    <p class="ch-context">FreshCart offers two tiers. Marketing says Premium members spend more. Let's test it.</p>
+  </div>
+
+  <div class="data-box">
+    <span class="db-item">Standard: <span class="v">x̄=£128, s=£52, n=120</span></span>
+    <span class="db-item">Premium: <span class="v">x̄=£156, s=£48, n=80</span></span>
+  </div>
+
+    <div class="q-card">
+      <div class="q-label" style="color:var(--ch4)">Question 4A</div>
+      <div class="q-text">Is the £28 difference between Premium and Standard members statistically significant, or could it be due to chance?</div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="SE = √(s₁²/n₁+s₂²/n₂), then t = gap/SE."></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">SE = √(52²/120 + 48²/80). Gap = £28.</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer" id="a_4a"><div class="your-attempt"></div><div class="step"><span class="step-n">Step 1:</span> H₀: μ_Premium = μ_Standard. Hₐ: μ_Premium ≠ μ_Standard.</div>
+<div class="step"><span class="step-n">Step 2:</span> SE = √(52²/120 + 48²/80) = √(22.5 + 28.8) = √51.3 = <span class="result">£7.16</span></div>
+<div class="step"><span class="step-n">Step 3:</span> t = (156 − 128) / 7.16 = <span class="result">3.91</span></div>
+<div class="step"><span class="step-n">Step 4:</span> |t| = 3.91 > 2 → <span class="result">Reject H₀</span></div>
+<div class="conclusion"><strong>There is significant evidence that Premium members spend more than Standard members.</strong> The £28/month gap is real, not due to chance.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="chart-box" id="twoSampleBlock" data-chart="twoSampleBlock">
+    <h4>FreshCart: Standard vs Premium distributions</h4>
+    <p class="cd">The gap (£28) divided by SE (£7.16) gives t = 3.91 — well beyond the |t|>2 threshold.</p>
+    <canvas id="c_twoSample"></canvas>
+  </div>
+</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="interactive" id="powerDemo" data-chart="powerDemo">
+    <h4>Try it: the Power trade-off</h4>
+    <p class="cd">Blue = H₀ distribution. Orange = true effect. Adjust effect size, n, and α to see how power changes.</p>
+    <div style="display:flex;gap:.35rem;margin-bottom:.5rem;flex-wrap:wrap">
+      <button class="play-btn" style="background:var(--red);font-size:.68rem;padding:.25rem .6rem" onclick="setPowerScenario(1)">Underpowered</button>
+      <button class="play-btn" style="background:var(--green);font-size:.68rem;padding:.25rem .6rem" onclick="setPowerScenario(2)">Well-Designed</button>
+      <button class="play-btn" style="background:var(--blue);font-size:.68rem;padding:.25rem .6rem" onclick="setPowerScenario(3)">Overwhelming</button>
+    </div>
+    <canvas id="c_power"></canvas>
+    <div class="sr"><label>Effect:</label><input type="range" id="pwrEffect" min="0.5" max="4" step="0.1" value="2" style="accent-color:var(--ch4)" oninput="updatePower()"><span class="sv" id="pwrEffLbl" style="color:var(--ch4)">effect = 2.0</span></div>
+    <div class="sr"><label>n:</label><input type="range" id="pwrN" min="10" max="200" step="5" value="30" style="accent-color:var(--ch4)" oninput="updatePower()"><span class="sv" id="pwrNLbl" style="color:var(--ch4)">n = 30</span></div>
+    <div class="sr"><label>α:</label><input type="range" id="pwrAlpha" min="1" max="10" step="0.5" value="5" style="accent-color:var(--ch4)" oninput="updatePower()"><span class="sv" id="pwrALbl" style="color:var(--ch4)">α = 5%</span></div>
+    <div class="dr-row">
+      <span class="dr">Power: <span class="v" id="pwrVal">—</span></span>
+      <span class="dr">Type II (β): <span class="v" id="pwrBeta">—</span></span>
+    </div>
+    <div class="anim-status" id="pwrInterpretation"></div>
+  </div>
+</div></div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — the theory behind this</button>
+        <div class="dig-body"><h5>Two-Sample t-Test</h5>
+<p>Compares two group averages. Calculate the gap, divide by the combined noise (SE). If the gap is large relative to noise (|t| > 2), it's significant.</p>
+<div class="fm">t = (x̄₁ − x̄₂) / √(s₁²/n₁ + s₂²/n₂)</div>
+<h5>Sample Size & Power</h5>
+<p>With small n (say 20), CIs are wide and tests are weak — you might miss real effects. The same £28 difference that's significant at n=200 could be invisible at n=20. The effect didn't change — your lens got sharper.</p></div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_4a" onchange="saveCheck()"><label for="chk_4a">I've got this</label></div>
+    </div>
+
+  <div class="calc">
+    <h4>Two-Sample t-Test Calculator</h4>
+    <div class="fm">t = (x̄₁ − x̄₂) / √(s₁²/n₁ + s₂²/n₂)</div>
+    <div class="cr"><div class="cf"><label>x̄₁</label><input type="number" id="t1-m" value="128" step="any"></div><div class="cf"><label>s₁</label><input type="number" id="t1-s" value="52" step="any"></div><div class="cf"><label>n₁</label><input type="number" id="t1-n" value="120" step="1"></div></div>
+    <div class="cr"><div class="cf"><label>x̄₂</label><input type="number" id="t2-m" value="156" step="any"></div><div class="cf"><label>s₂</label><input type="number" id="t2-s" value="48" step="any"></div><div class="cf"><label>n₂</label><input type="number" id="t2-n" value="80" step="1"></div></div>
+    <button class="calc-btn" onclick="calcTT()">Run t-Test</button>
+    <div class="calc-res" id="ttR"><span class="lt">Enter values</span></div>
+  </div>
+
+
+  <div class="exam-tip"><strong>Two-sample t-test on the exam:</strong> Show all 4 steps: (1) State H₀/Hₐ, (2) Calculate SE = √(s₁²/n₁ + s₂²/n₂), (3) Calculate t = difference/SE, (4) Compare |t| to 2 and state conclusion in context.</div>
+
+  <div class="takeaway"><strong>Chapter 4 summary:</strong> Two-sample test compares two group means. t = gap / noise. |t| > 2 → significant. Power = probability of detecting a real effect. Larger n and larger effects → more power. Same effect can be significant at n=200 but not at n=20.</div>
+
+</div>
+</section>
+
+<section class="section ch5" id="ch5">
+<div class="container">
+  <div class="ch-head">
+    <div class="ch-num">Chapter 5</div>
+    <div class="ch-q">Does household income predict how much customers spend?</div>
+    <p class="ch-context">We ran a simple regression: Spend = b₀ + b₁ × Income. Here's the output.</p>
+  </div>
+
+  <div class="data-box">
+    <span class="db-item">Equation: <span class="v">Ŷ = 45 + 0.85 × Income</span></span>
+    <span class="db-item">R² = <span class="v">34%</span></span>
+    <span class="db-item">b₁ SE = <span class="v">0.12</span></span>
+    <span class="db-item">Residual SE = <span class="v">£38</span></span>
+  </div>
+
+    <div class="q-card">
+      <div class="q-label" style="color:var(--ch5)">Question 5A</div>
+      <div class="q-text">Interpret the slope (b₁ = 0.85). What does it mean in plain English? Is it statistically significant?</div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="Interpret 0.85 in English. Then: t=b₁/SE. Significant?"></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">For each £1,000 more income, spend changes by... t=0.85/0.12=?</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer" id="a_5a"><div class="your-attempt"></div><div class="step"><span class="step-n">Interpretation:</span> "For each additional £1,000 of household income, monthly spend increases by <span class="result">£0.85</span>, on average."</div>
+<div class="step"><span class="step-n">Significance:</span> t = 0.85 / 0.12 = <span class="result">7.08</span>. |t| > 2 → the slope is <span class="result">significant</span>. Income genuinely predicts spending.</div>
+<div class="step"><span class="step-n">R²:</span> Income explains <span class="result">34%</span> of the variation in spend. The other 66% comes from other factors (distance, frequency, membership).</div>
+<div class="conclusion"><strong>The relationship is real and meaningful</strong>, but income alone is an incomplete predictor.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="chart-box" id="scatterBlock" data-chart="scatterBlock">
+    <h4>FreshCart: Income vs Monthly Spend</h4>
+    <p class="cd">Each dot is a customer. The orange line is the best fit: Ŷ = 45 + 0.85 × Income.</p>
+    <canvas id="c_scatter"></canvas>
+  </div>
+</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="drag-box" id="dragScatterBlock" data-chart="dragScatterBlock">
+    <h4>Build it: click to add your own data points</h4>
+    <p class="cd">Click anywhere on the canvas. The regression line, equation, and R² update live. Try adding an outlier!</p>
+    <canvas id="c_drag" height="260"></canvas>
+    <div class="drag-stats">
+      <span class="ds">Points: <span class="v" id="dragN">0</span></span>
+      <span class="ds">Slope: <span class="v" id="dragSlope">—</span></span>
+      <span class="ds">R²: <span class="v" id="dragR2">—</span></span>
+      <span class="ds">Eq: <span class="v" id="dragEq">—</span></span>
+      <button class="drag-reset" onclick="resetDrag()">Clear</button>
+    </div>
+  </div>
+</div></div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — the theory behind this</button>
+        <div class="dig-body"><h5>The Regression Equation</h5>
+<p><strong>True model:</strong> Y = β₀ + β₁X + ε (there's always random error).<br><strong>Fitted model:</strong> Ŷ = b₀ + b₁X (our estimate from data).</p>
+<p><strong>b₀ (intercept)</strong> = predicted Y when X is zero. <strong>b₁ (slope)</strong> = how much Y changes when X goes up by one unit.</p>
+<h5>Always include direction, units, and "on average"</h5>
+<p>A correct interpretation says: "For each one-[unit] increase in X, Y changes by b₁ [units of Y], on average."</p>
+<h5>Is the Slope Significant?</h5>
+<p>H₀: β₁ = 0 (no relationship). If |t| > 2 or p < 0.05, the slope is significant — X really predicts Y.</p>
+<div class="fm">t = b₁ / SE(b₁)</div>
+<p>A significant slope with low R² means the relationship is real but weak — a quiet signal in a noisy room.</p>
+<h5>Prediction Intervals</h5>
+<p>Point forecast: plug X into the equation. Wrap it in a <strong>PI ≈ Ŷ ± 2 × Residual SE</strong> for honest uncertainty. The PI is wider than a CI because it accounts for individual scatter around the line.</p></div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_5a" onchange="saveCheck()"><label for="chk_5a">I've got this</label></div>
+    </div>
+
+  <div class="q-card">
+      <div class="q-label" style="color:var(--ch5)">Question 5B</div>
+      <div class="q-text">Predict monthly spend for a customer with household income of £55,000. Give a 95% prediction interval.</div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="Plug income=55 into Ŷ=45+0.85×Income. Then PI=Ŷ±2×RSE."></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">Ŷ = 45 + 0.85 × 55 = ? RSE = 38.</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer" id="a_5b"><div class="your-attempt"></div><div class="step"><span class="step-n">Step 1:</span> Ŷ = 45 + 0.85 × 55 = 45 + 46.75 = <span class="result">£91.75</span></div>
+<div class="step"><span class="step-n">Step 2:</span> PI = 91.75 ± 2 × 38 = <span class="result">[£15.75, £167.75]</span></div>
+<div class="conclusion"><strong>Point forecast: £91.75/month.</strong> But the prediction interval is wide (£15.75 to £167.75) — income alone leaves a lot of uncertainty for any individual customer.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="interactive" id="slopeDemo" data-chart="slopeDemo">
+    <h4>Try it: change slope and noise, watch R² respond</h4>
+    <p class="cd">Points stay fixed. Only the line and R² change. High slope + low noise = high R².</p>
+    <canvas id="c_slopeDemo"></canvas>
+    <div class="sr"><label>Slope:</label><input type="range" id="slopeSlider" min="0" max="5" step="0.1" value="0.85" style="accent-color:var(--ch5)" oninput="updateSlope()"><span class="sv" id="slopeLbl" style="color:var(--ch5)">slope = 0.85</span></div>
+    <div class="sr"><label>Noise:</label><input type="range" id="noiseSlider" min="5" max="80" step="1" value="28" style="accent-color:var(--ch5)" oninput="updateSlope()"><span class="sv" id="noiseLbl" style="color:var(--ch5)">noise = 28 → R² ≈ 34%</span></div>
+  </div>
+</div></div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — the theory behind this</button>
+        <div class="dig-body"><h5>Why is the PI so wide?</h5>
+<p>The PI includes two sources of uncertainty: (1) uncertainty about where the line is, and (2) individual scatter around the line. With R² = 34%, most of the variation is unexplained — hence the wide PI.</p>
+<p>A <strong>confidence interval</strong> for the mean response would be much narrower — it only captures uncertainty about the average, not about individuals.</p>
+<p>The Residual SE (£38) is in the regression output's "Standard Error" row — not the SE column in the coefficients table.</p></div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_5b" onchange="saveCheck()"><label for="chk_5b">I've got this</label></div>
+    </div>
+
+  <div class="calc">
+    <h4>Coefficient t-Value Calculator</h4>
+    <div class="fm">t = b / SE(b) → |t| > 2 = significant</div>
+    <div class="cr"><div class="cf"><label>b</label><input type="number" id="tv-b" value="0.85" step="any"></div><div class="cf"><label>SE(b)</label><input type="number" id="tv-se" value="0.12" step="any"></div></div>
+    <button class="calc-btn" onclick="calcTV()">Calculate t</button>
+    <div class="calc-res" id="tvR"><span class="lt">Enter values</span></div>
+  </div>
+
+
+  <div class="trap"><strong>Extrapolation trap:</strong> FreshCart income data ranges from ~£20k to ~£100k. If asked to predict spend for someone earning £200k, you MUST flag this: "This is extrapolation beyond the observed data range. The prediction is unreliable because we don't know if the linear relationship holds at extreme values."</div>
+
+  <div class="exam-tip"><strong>Interpreting the slope — full template:</strong> "For each additional [1 unit of X], [Y] increases/decreases by [b₁] [units of Y], <strong>on average</strong>." Always include direction, units, and "on average." For FreshCart: "For each additional £1,000 of income, monthly spend increases by £0.85, on average."</div>
+
+  <div class="exam-tip"><strong>R² vs significance:</strong> R² = 34% means the model explains 34% of variance. The slope can be significant (|t|>2) even when R² is low — a real but weak signal. Don't confuse "significant" with "strong." Significance tells you the relationship <strong>exists</strong>; R² tells you how <strong>useful</strong> it is.</div>
+
+  <div class="exam-tip"><strong>PI vs CI on the exam:</strong> PI ≈ Ŷ ± 2 × Residual SE (for a <strong>single</strong> new customer). CI = for the <strong>average</strong> of all customers at that X value. PI is always wider. If the question asks "predict spend for a customer," use PI. If it asks "estimate average spend," use CI.</div>
+
+  <div class="takeaway"><strong>Chapter 5 summary:</strong> Ŷ = b₀ + b₁X. Slope = change in Y per unit X, on average. t = b₁/SE → |t|>2 means significant. R² = fraction of variance explained. PI = Ŷ ± 2×RSE for individuals. Never extrapolate outside data range. A significant slope with low R² means the relationship is real but weak.</div>
+
+</div>
+</section>
+
+<section class="section ch6" id="ch6">
+<div class="container">
+  <div class="ch-head">
+    <div class="ch-num">Chapter 6</div>
+    <div class="ch-q">What drives spending when we control for everything?</div>
+    <p class="ch-context">Income alone explains 34%. Let's add distance, frequency, and membership type to the model.</p>
+  </div>
+
+  <div class="data-box" style="flex-direction:column;gap:.5rem">
+    <span class="db-item" style="width:100%;font-family:var(--font-mono);font-size:.8rem;color:var(--text)">Ŷ = 22.4 + 0.62×Income − 1.8×Distance + 12.5×Frequency − 18.3×D_Standard</span>
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+      <span class="db-item">Adj R² = <span class="v">57.2%</span></span>
+      <span class="db-item">Residual SE = <span class="v">£38</span></span>
+      <span class="db-item">Correlation: Frequency ↔ Total_Items: <span class="v">r = 0.95</span></span>
+    </div>
+  </div>
+
+    <div class="q-card">
+      <div class="q-label" style="color:var(--ch6)">Question 6A</div>
+      <div class="q-text">Interpret each coefficient. Which predictors are significant? Is there a multicollinearity problem?</div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="For each predictor: interpret, compute t=b/SE, check |t|>2."></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">Income: t=0.62/0.09=? Distance: t=−1.8/0.41=?</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer" id="a_6a"><div class="your-attempt"></div><div class="step"><span class="step-n">Income (b=0.62, SE=0.09):</span> t=6.89 ✓ — each additional £1,000 income → +£0.62 spend, <em>holding other variables constant</em></div>
+<div class="step"><span class="step-n">Distance (b=−1.8, SE=0.41):</span> t=−4.39 ✓ — each additional km from warehouse → −£1.80 spend</div>
+<div class="step"><span class="step-n">Frequency (b=12.5, SE=1.8):</span> t=6.94 ✓ — each additional order/month → +£12.50 spend</div>
+<div class="step"><span class="step-n">D_Standard (b=−18.3, SE=5.2):</span> t=−3.52 ✓ — Standard members spend £18.30 less than Premium (reference)</div>
+<div class="step"><span class="step-n">Multicollinearity:</span> Frequency and Total_Items have r=0.95 → <strong style="color:var(--red)">dangerously high</strong>. Drop Total_Items (Frequency is more actionable).</div>
+<div class="conclusion">All four predictors are significant (|t|>2). The model explains 57.2% of variance. But do NOT include Total_Items — it's redundant with Frequency.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="chart-box" id="tvalsBlock" data-chart="tvalsBlock">
+    <h4>FreshCart: Predictor Significance</h4>
+    <p class="cd">All four predictors pass the |t|>2 test.</p>
+    <canvas id="c_tvals"></canvas>
+  </div>
+</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="chart-box" id="dummyBlock" data-chart="dummyBlock">
+    <h4>FreshCart: How the Membership Dummy Shifts the Line</h4>
+    <p class="cd">Standard members' line sits £18.30 below Premium at every income level.</p>
+    <canvas id="c_dummy"></canvas>
+  </div>
+</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="chart-box" id="multicolBlock" data-chart="multicolBlock">
+    <h4>FreshCart: Frequency vs Total Items (r = 0.95)</h4>
+    <p class="cd">These two carry nearly the same information. Including both poisons the model.</p>
+    <canvas id="c_multicol"></canvas>
+  </div>
+</div></div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — the theory behind this</button>
+        <div class="dig-body"><h5>"Holding All Else Constant"</h5>
+<p>Each coefficient isolates one predictor's effect, assuming all others stay frozen. Income's coefficient drops from 0.85 (SLR) to 0.62 (MLR) because some of income's effect was running through other variables.</p>
+<h5>Adjusted R²</h5>
+<p>Regular R² always goes up when you add variables — even useless ones. <strong>Adjusted R²</strong> penalises for complexity. If it drops when you add a variable, that variable hurts the model.</p>
+<div class="fm">Adj R² = 1 − [(1 − R²)(n − 1) / (n − k − 1)]</div>
+<h5>Dummy Variables</h5>
+<p>Regression needs numbers. For categories (Premium/Standard), create <strong>dummy variables</strong>: 0/1 columns. k categories → k−1 dummies. The omitted category is the <strong>reference group</strong>.</p>
+<p>D_Standard = −18.3 means Standard spends £18.30 less than Premium (reference), all else equal.</p>
+<h5>Multicollinearity</h5>
+<p>When predictors are correlated with <em>each other</em> (not with Y), the model can't tell their effects apart. Coefficients become unstable — they may flip signs. Detect: |r| > 0.8–0.9 between predictors. Fix: drop one.</p>
+<h5>The Intercept</h5>
+<p>Always keep the intercept. Never remove it based on its t-value or significance.</p></div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_6a" onchange="saveCheck()"><label for="chk_6a">I've got this</label></div>
+    </div>
+
+  <div class="q-card" style="border-left:3px solid var(--ch6)">
+      <div class="q-label" style="color:var(--ch6)">Question 6B</div>
+      <div class="q-text">Income's coefficient dropped from 0.85 (simple regression) to 0.62 (MLR). Why? And what does "holding all else constant" actually mean?</div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="Why would a coefficient shrink when you add more predictors?"></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">In SLR, income captured total effect including indirect. What happens when those other variables enter?</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer"><div class="your-attempt"></div>
+        <div class="step"><span class="step-n">Why it dropped:</span> In SLR, 0.85 captured income's <strong>total</strong> effect — including indirect effects via correlated variables (richer people may live closer, order more, etc.).</div>
+        <div class="step"><span class="step-n">In MLR:</span> 0.62 is the <strong>direct</strong> effect of income, after controlling for distance, frequency, and membership. The other variables "absorb" the indirect pathways.</div>
+        <div class="step"><span class="step-n">"Holding all else constant":</span> "If two customers have the same distance, frequency, and membership, but one earns £1,000 more — that customer spends £0.62 more/month."</div>
+        <div class="conclusion">Coefficients shrinking from SLR to MLR is <strong>normal</strong> — it means the SLR was overestimating the direct effect.</div>
+      </div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — omitted variable bias</button>
+        <div class="dig-body">
+          <h5>Omitted Variable Bias</h5>
+          <p>In SLR, income's coefficient (0.85) was <strong>biased upward</strong> because income was "taking credit" for the effects of omitted variables that correlate with income.</p>
+          <p>Adding controls removes this bias. The MLR coefficient (0.62) is a better estimate of income's true direct effect — though even MLR can't prove causation without an experiment.</p>
+        </div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_6bb" onchange="saveCheck()"><label for="chk_6bb">I've got this</label></div>
+    </div>
+
+    <div class="q-card" style="border-left:3px solid var(--ch6)">
+      <div class="q-label" style="color:var(--ch6)">Question 6C</div>
+      <div class="q-text">You add "customer age" to the model. R² rises from 58.0% to 58.1%, but Adjusted R² drops from 57.2% to 56.5%. Should you keep age?</div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="R² up but Adj R² down. Which do you trust? Keep or drop?"></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">R² always goes up. Adj R² penalises complexity. Which direction did it move?</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer"><div class="your-attempt"></div>
+        <div class="step"><span class="step-n">R² went up:</span> It always goes up when you add a variable — even a useless one.</div>
+        <div class="step"><span class="step-n">Adj R² went down:</span> The penalty for added complexity outweighed the tiny improvement.</div>
+        <div class="conclusion"><strong>Drop age.</strong> Adjusted R² is the referee — if it drops, the variable is noise.</div>
+      </div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — R² vs Adjusted R²</button>
+        <div class="dig-body">
+          <h5>Why R² Always Goes Up</h5>
+          <p>Adding any variable — even random noise — explains a tiny bit more variance by chance. So R² can never decrease.</p>
+          <h5>Adjusted R² Adds a Penalty</h5>
+          <p>Adj R² = 1 − [(1−R²)(n−1)/(n−k−1)] where k = number of predictors. Each new predictor increases the penalty.</p>
+          <p><strong>Decision rule:</strong> Add variable → Adj R² goes up? Keep it. Goes down? Drop it.</p>
+        </div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_6cc" onchange="saveCheck()"><label for="chk_6cc">I've got this</label></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label" style="color:var(--ch6)">Question 6D</div>
+      <div class="q-text">Forecast monthly spend for a Premium member, income=£55k, distance=8km, ordering 4×/month. Give a 95% PI.</div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="Plug ALL values in. D_Standard=0 for Premium."></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">Ŷ = 22.4 + 0.62(55) − 1.8(8) + 12.5(4) − 18.3(?)</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer" id="a_6b"><div class="your-attempt"></div><div class="step"><span class="step-n">Step 1:</span> Ŷ = 22.4 + 0.62(55) − 1.8(8) + 12.5(4) − 18.3(0)</div>
+<div class="step"><span class="step-n">Step 2:</span> = 22.4 + 34.1 − 14.4 + 50.0 − 0 = <span class="result">£92.10</span></div>
+<div class="step"><span class="step-n">Step 3:</span> PI = 92.1 ± 2 × 38 = <span class="result">[£16.10, £168.10]</span></div>
+<div class="conclusion"><strong>Point forecast: £92.10/month.</strong> The 95% PI is [£16.10, £168.10]. The model is much better than income alone (R²=57% vs 34%), but individual prediction is still uncertain.</div></div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — the theory behind this</button>
+        <div class="dig-body"><h5>Forecasting with MLR — Step by Step</h5>
+<p>1. Write the equation: Ŷ = b₀ + b₁X₁ + b₂X₂ + … + b_kD</p>
+<p>2. Plug in values. For dummy variables: 1 if the customer belongs to that category, 0 if not. Premium is the reference group (D_Standard=0), Standard gets D_Standard=1.</p>
+<p>3. Calculate Ŷ (the point forecast).</p>
+<p>4. Build the prediction interval: PI = Ŷ ± 2 × Residual SE. The Residual SE comes from the regression output — it's NOT the same as the coefficient SE in the table.</p>
+<div class="fm">PI ≈ Ŷ ± 2 × Residual SE</div>
+<p>5. Interpret: "We predict this customer will spend £[Ŷ]/month. The 95% PI is [lower, upper], meaning most individual customers with these characteristics would spend between £[lower] and £[upper]."</p>
+<p><strong>Warning:</strong> PI is wide because individual customers vary a lot around the line. Even with Adj R² = 57%, the RSE = £38 makes individual-level prediction uncertain. The model is better at explaining patterns than predicting individuals.</p></div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_6b" onchange="saveCheck()"><label for="chk_6b">I've got this</label></div>
+    </div>
+
+  <div class="calc">
+    <h4>MLR Forecaster</h4>
+    <div class="fm">Ŷ = b₀ + b₁X₁ + b₂X₂ + b₃X₃ + b₄D &nbsp;|&nbsp; PI = Ŷ ± 2 × RSE</div>
+    <div class="cr"><div class="cf"><label>b₀</label><input type="number" id="fc-b0" value="22.4" step="any"></div><div class="cf"><label>Resid SE</label><input type="number" id="fc-rse" value="38" step="any"></div></div>
+    <div class="cr"><div class="cf"><label>X₁ (Income £k)</label><input type="number" id="fc-x1" value="55" step="any"></div><div class="cf"><label>b₁</label><input type="number" id="fc-b1" value="0.62" step="any"></div></div>
+    <div class="cr"><div class="cf"><label>X₂ (Dist km)</label><input type="number" id="fc-x2" value="8" step="any"></div><div class="cf"><label>b₂</label><input type="number" id="fc-b2" value="-1.8" step="any"></div></div>
+    <div class="cr"><div class="cf"><label>X₃ (Freq/mo)</label><input type="number" id="fc-x3" value="4" step="any"></div><div class="cf"><label>b₃</label><input type="number" id="fc-b3" value="12.5" step="any"></div></div>
+    <div class="cr"><div class="cf"><label>D (Standard=1)</label><input type="number" id="fc-x4" value="0" min="0" max="1" step="1"></div><div class="cf"><label>b₄</label><input type="number" id="fc-b4" value="-18.3" step="any"></div></div>
+    <button class="calc-btn" onclick="calcFC()">Forecast</button>
+    <div class="calc-res" id="fcR"><span class="lt">Enter values</span></div>
+  </div>
+
+
+  <div class="exam-tip"><strong>Dummy variable template:</strong> "[Category] [direction: spend more/less] by £[|coefficient|] compared to [reference group], holding [list other variables] constant. t = [value], which is significant/not significant."</div>
+
+  <div class="exam-tip"><strong>Multicollinearity on the exam:</strong> If two predictors have |r| > 0.8–0.9, you MUST: (1) identify them, (2) note symptoms (unstable coefficients, flipped signs), (3) recommend dropping one. Say which one to keep and why (more actionable, better theoretical backing, etc.).</div>
+
+  <div class="exam-tip"><strong>MLR forecast template:</strong> Show every step: (1) Write the equation, (2) Plug in ALL values including dummy (0 or 1), (3) Calculate Ŷ, (4) Build PI = Ŷ ± 2 × Residual SE, (5) Interpret in context. "We predict this customer will spend £92.10/month, with a 95% prediction interval of [£16.10, £168.10]."</div>
+
+  <div class="trap"><strong>Intercept trap:</strong> If the intercept is not significant (|t| < 2), do NOT remove it. Always keep the intercept. Removing it forces the regression through the origin and distorts all other coefficients. This is a common exam trap.</div>
+
+  <div class="takeaway"><strong>Chapter 6 summary:</strong> MLR isolates each predictor's effect "holding all else constant." Coefficients shrink vs SLR (omitted variable bias removed). k categories → k−1 dummies. Reference group's effect = 0 by definition. Multicollinearity: drop one of any pair with |r|>0.9. Adj R² penalises complexity — if it drops, drop the variable. Always keep the intercept. Forecast with PI = Ŷ ± 2×RSE.</div>
+
+</div>
+</section>
+
+
+<section class="section" id="cheat">
+<div class="container">
+  <div class="ch-head">
+    <div class="ch-num" style="color:var(--warm)">Reference</div>
+    <div class="ch-q" style="color:var(--warm)">Formula Cheat Sheet</div>
+    <p class="ch-context">Every formula you need, all in one place. Print this page (Ctrl+P) for a paper copy.</p>
+  </div>
+
+  <div class="q-card" style="border-left:3px solid var(--warm)">
+    <div class="q-label" style="color:var(--warm)">DESCRIPTIVE</div>
+    <div class="fm">z = (x − μ) / σ &nbsp;&nbsp;→ how many σ's from the mean</div>
+    <p>Mean > Median → right-skewed. Mean < Median → left-skewed.</p>
+  </div>
+
+  <div class="q-card" style="border-left:3px solid var(--warm)">
+    <div class="q-label" style="color:var(--warm)">CONFIDENCE INTERVALS</div>
+    <div class="fm">SE = s / √n</div>
+    <div class="fm">CI = x̄ ± 2 × SE &nbsp;&nbsp;(for 95%)</div>
+    <p>Multiplier is always <strong>2</strong>. To halve the margin → quadruple n.</p>
+  </div>
+
+  <div class="q-card" style="border-left:3px solid var(--warm)">
+    <div class="q-label" style="color:var(--warm)">HYPOTHESIS TESTING</div>
+    <div class="fm">Claim outside CI → Reject H₀</div>
+    <div class="fm">Claim inside CI → Fail to reject H₀</div>
+    <p>Never "accept" H₀. p < 0.05 = significant = reject.</p>
+  </div>
+
+  <div class="q-card" style="border-left:3px solid var(--warm)">
+    <div class="q-label" style="color:var(--warm)">TWO-SAMPLE TEST</div>
+    <div class="fm">SE = √(s₁²/n₁ + s₂²/n₂)</div>
+    <div class="fm">t = (x̄₁ − x̄₂) / SE &nbsp;&nbsp;→ |t| > 2 = significant</div>
+  </div>
+
+  <div class="q-card" style="border-left:3px solid var(--warm)">
+    <div class="q-label" style="color:var(--warm)">SIMPLE REGRESSION</div>
+    <div class="fm">Ŷ = b₀ + b₁X</div>
+    <div class="fm">t = b₁ / SE(b₁) &nbsp;&nbsp;→ |t| > 2 = slope is significant</div>
+    <p>R² = % of variance explained. Significant slope + low R² = real but weak.</p>
+  </div>
+
+  <div class="q-card" style="border-left:3px solid var(--warm)">
+    <div class="q-label" style="color:var(--warm)">MULTIPLE REGRESSION</div>
+    <div class="fm">Ŷ = b₀ + b₁X₁ + b₂X₂ + ... + b_k D</div>
+    <div class="fm">PI = Ŷ ± 2 × Residual SE</div>
+    <p>Dummies: k categories → k−1 dummies. Adj R² drops → drop the variable. |r| > 0.9 between predictors → multicollinearity → drop one. Always keep the intercept.</p>
+  </div>
+
+  <div class="q-card" style="border-left:3px solid var(--warm)">
+    <div class="q-label" style="color:var(--warm)">DECISION RULES</div>
+    <p style="color:var(--text)"><strong>|t| > 2</strong> → significant at 5%</p>
+    <p style="color:var(--text)"><strong>p < 0.05</strong> → reject H₀</p>
+    <p style="color:var(--text)"><strong>Claim outside CI</strong> → reject</p>
+    <p style="color:var(--text)"><strong>Adj R² drops</strong> → drop the variable</p>
+    <p style="color:var(--text)"><strong>|r| > 0.9</strong> → multicollinearity → drop one predictor</p>
+  </div>
+</div>
+</section>
+
+
+<section class="section" id="traps">
+<div class="container">
+  <div class="ch-head">
+    <div class="ch-num" style="color:var(--red)">Watch Out</div>
+    <div class="ch-q" style="color:var(--red)">Common Exam Traps</div>
+    <p class="ch-context">These are the mistakes students make most often. Read this the night before the exam.</p>
+  </div>
+
+  <div class="trap"><strong>Trap 1: "Half of customers spend below £142"</strong> — WRONG. Half spend below the <strong>median</strong> (£128), not the mean. When mean ≠ median, they test this.</div>
+
+  <div class="trap"><strong>Trap 2: Using s instead of SE in the CI</strong> — CI = x̄ ± 2 × <strong>SE</strong>, where SE = s/√n. If s=59 and n=200, SE=4.17. Using 59 instead of 4.17 gives you a CI that's 14× too wide.</div>
+
+  <div class="trap"><strong>Trap 3: "95% probability the true mean is in the CI"</strong> — WRONG. The correct interpretation: "We are 95% confident..." The probability is about the <strong>method</strong>, not any specific interval.</div>
+
+  <div class="trap"><strong>Trap 4: "Accept H₀"</strong> — NEVER say this. Say "fail to reject H₀" or "insufficient evidence to reject." On every exam, this costs marks.</div>
+
+  <div class="trap"><strong>Trap 5: Confusing significance with strength</strong> — A significant slope (|t|>2) means the relationship EXISTS. R² tells you how STRONG it is. You can have a highly significant but weak relationship (FreshCart: age → spend is significant but R²=3%).</div>
+
+  <div class="trap"><strong>Trap 6: Removing the intercept</strong> — Even if the intercept is not significant, ALWAYS keep it. Removing it forces the line through the origin and distorts every other coefficient.</div>
+
+  <div class="trap"><strong>Trap 7: Ignoring multicollinearity</strong> — If two predictors have |r|>0.9, you MUST mention it. Say what the symptom is (unstable coefficients), what to do (drop one), and which one to keep and why.</div>
+
+  <div class="trap"><strong>Trap 8: Extrapolation</strong> — If asked to predict for values outside the data range, flag that the prediction is unreliable. The linear relationship may not hold at extreme values.</div>
+
+  <div class="trap"><strong>Trap 9: Forgetting "on average" and "holding all else constant"</strong> — Every regression interpretation needs "on average." Every MLR interpretation needs "holding all other variables constant." Missing these costs marks.</div>
+
+  <div class="trap"><strong>Trap 10: PI vs CI confusion</strong> — PI = for a single new observation (wider). CI = for the mean of all observations at that X (narrower). "Predict for a customer" = PI. "Estimate average spend" = CI.</div>
+
+</div>
+</section>
+
+<section class="section" id="cards">
+<div class="container">
+  <div class="ch-head">
+    <div class="ch-num" style="color:var(--purple)">Review</div>
+    <div class="ch-q" style="color:var(--purple)">Flashcards</div>
+    <p class="ch-context">Test recall. Rate difficulty — hard cards show up first. Progress saves locally.</p>
+  </div>
+  <div class="fc-controls">
+    <button class="fcf active" onclick="fFilt(this,'all')">All</button>
+    <button class="fcf" onclick="fFilt(this,'c1')">Ch1</button>
+    <button class="fcf" onclick="fFilt(this,'c2')">Ch2</button>
+    <button class="fcf" onclick="fFilt(this,'c3')">Ch3</button>
+    <button class="fcf" onclick="fFilt(this,'c4')">Ch4</button>
+    <button class="fcf" onclick="fFilt(this,'c5')">Ch5</button>
+    <button class="fcf" onclick="fFilt(this,'c6')">Ch6</button>
+    <span class="fc-stats" id="fcSt">1 / —</span>
+  </div>
+  <div class="fc-wrap"><div class="fc" id="fcard" onclick="fFlip()">
+    <div class="fc-face fc-front"><div class="fc-l" id="fcL">Loading</div><div class="fc-q" id="fcQ">...</div><div class="fc-hint">Click to reveal</div></div>
+    <div class="fc-face fc-back"><div class="fc-l">Answer</div><div class="fc-a" id="fcA">...</div><div class="fc-fm" id="fcF" style="display:none"></div></div>
+  </div></div>
+  <div class="fc-nav">
+    <button class="fcb" onclick="fPrev()">← Prev</button>
+    <button class="fcb easy" onclick="fRate('easy')">Easy</button>
+    <button class="fcb med" onclick="fRate('med')">Medium</button>
+    <button class="fcb hard" onclick="fRate('hard')">Hard</button>
+    <button class="fcb" onclick="fNext()">Next →</button>
+  </div>
+</div>
+</section>
+
+<footer style="text-align:center;padding:2rem 1rem;border-top:1px solid var(--card-border)">
+  <div style="color:var(--text3);font-size:.68rem">FreshCart Analytics · LBS EMBA · CD62 · Sessions 1–4</div>
+  <div style="margin-top:.6rem;font-size:.78rem;color:var(--accent);font-weight:600">With warm regards from ESH</div>
+</footer>
+
+<script>
+
+/* ── NAV & SCROLL ── */
+function go(s){document.querySelector(s).scrollIntoView({behavior:'smooth'})}
+function toggleHint(btn){btn.nextElementSibling.classList.toggle('show');}
+function toggleAnswer(btn){
+  const card=btn.closest('.q-card');
+  const a=card.querySelector('.answer');
+  const showing=!a.classList.contains('show');
+  a.classList.toggle('show');
+  btn.textContent=showing?'Hide answer ▴':'Check my answer ▾';
+  const ta=card.querySelector('textarea');
+  const ya=card.querySelector('.your-attempt');
+  if(ta&&ya&&showing&&ta.value.trim()){
+    ya.innerHTML='<div class="ya-label">YOUR ATTEMPT</div>'+ta.value.replace(/</g,'&lt;');
+    ya.classList.add('show');
+  } else if(ya) ya.classList.remove('show');
+  if(showing){a.querySelectorAll('[data-chart]').forEach(el=>{
+    if(!el.dataset.done){el.dataset.done='1';const fn=chartMap[el.dataset.chart];if(fn)fn();}
+  });}
+}
+function toggleDig(btn){btn.classList.toggle('open');btn.nextElementSibling.classList.toggle('show');}
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('btt').classList.toggle('show',window.scrollY>300);
+  const secs=['hero','ch1','ch2','ch3','ch4','ch5','ch6','cheat','traps','cards'];let cur='hero';
+  secs.forEach(s=>{const e=document.getElementById(s);if(e&&e.getBoundingClientRect().top<180)cur=s;});
+  document.querySelectorAll('.np').forEach((p,i)=>p.classList.toggle('active',secs[i]===cur));
+});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.06});
+document.querySelectorAll('.q-card,.interactive,.chart-box,.calc,.drag-box').forEach(el=>{el.classList.add('reveal-anim');obs.observe(el);});
+
+/* ── PROGRESS ── */
+function saveCheck(){
+  const saved={};document.querySelectorAll('.chk input').forEach(cb=>{saved[cb.id]=cb.checked;});
+  localStorage.setItem('fc-chk',JSON.stringify(saved));updateProgress();
+}
+function initChecks(){
+  const saved=JSON.parse(localStorage.getItem('fc-chk')||'{}');
+  document.querySelectorAll('.chk input').forEach(cb=>{if(saved[cb.id])cb.checked=true;});updateProgress();
+}
+function updateProgress(){
+  const all=document.querySelectorAll('.chk input');const done=[...all].filter(c=>c.checked).length;
+  const strip=document.getElementById('masterProg');strip.innerHTML='';
+  const colors=['#00e5cc','#00e5cc','#8b5cf6','#8b5cf6','#8b5cf6','#ff6b35','#3b82f6','#3b82f6','#eab308','#eab308','#22c55e','#22c55e','#22c55e','#22c55e'];
+  all.forEach((cb,i)=>{const s=document.createElement('div');s.className='seg';if(cb.checked)s.style.background=colors[i]||'#00e5cc';strip.appendChild(s);});
+  document.getElementById('progLbl').textContent=done+' / '+all.length+' mastered';
+}
+
+/* ── CHART SETUP ── */
+const C={a:'#00e5cc',a5:'rgba(0,229,204,.5)',a2:'rgba(0,229,204,.2)',p:'#8b5cf6',p5:'rgba(139,92,246,.5)',p2:'rgba(139,92,246,.2)',w:'#ff6b35',w5:'rgba(255,107,53,.5)',w2:'rgba(255,107,53,.2)',b:'#3b82f6',b5:'rgba(59,130,246,.5)',b2:'rgba(59,130,246,.2)',g:'#22c55e',g5:'rgba(34,197,94,.5)',r:'#ef4444',r5:'rgba(239,68,68,.5)',t2:'#a09cb5'};
+Chart.defaults.color=C.t2;Chart.defaults.borderColor='rgba(255,255,255,.04)';
+Chart.defaults.font.family="'Plus Jakarta Sans',sans-serif";Chart.defaults.font.size=11;
+Chart.defaults.plugins.legend.labels.usePointStyle=true;Chart.defaults.plugins.legend.labels.pointStyleWidth=8;
+function npdf(x,m,s){return Math.exp(-0.5*((x-m)/s)*((x-m)/s))/(s*Math.sqrt(2*Math.PI))}
+function erf(x){const a1=.254829592,a2=-.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=.3275911;const sg=x<0?-1:1;x=Math.abs(x);const t=1/(1+p*x);return sg*(1-((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t*Math.exp(-x*x))}
+function ncdf(z){return .5*(1+erf(z/Math.sqrt(2)))}
+function ncdfInv(p){if(p<=0)return-4;if(p>=1)return 4;const t=Math.sqrt(-2*Math.log(p<.5?p:1-p));const c0=2.515517,c1=0.802853,c2=0.010328,d1=1.432788,d2=0.189269,d3=0.001308;let z=t-(c0+c1*t+c2*t*t)/(1+d1*t+d2*t*t+d3*t*t*t);return p<.5?-z:z;}
+
+const chartMap={};
+const cObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&!e.target.dataset.done){e.target.dataset.done='1';const fn=chartMap[e.target.id];if(fn)fn();}});},{threshold:.08});
+document.querySelectorAll('.interactive,.chart-box,.drag-box').forEach(el=>{if(el.id)cObs.observe(el);});
+
+/* ── OUTLIER DEMO ── */
+const baseSpend=[82,88,95,100,105,110,115,118,120,125,128,130,132,138,140,145,150,158,165,180];
+let outlierChart=null;
+chartMap['outlierDemo']=function(){
+  outlierChart=new Chart('c_outlier',{type:'bar',data:{labels:baseSpend.map(()=>''),datasets:[{label:'Spend',data:[...baseSpend],backgroundColor:baseSpend.map(()=>C.a2),borderColor:baseSpend.map(()=>C.a),borderWidth:1}]},options:{responsive:true,animation:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:250,title:{display:true,text:'Monthly Spend (£)'}}}}});updateOutlier();
+};
+function updateOutlier(){
+  const top=+document.getElementById('outlierSlider').value;const data=[...baseSpend];
+  if(top>180)data.push(top);
+  const mean=data.reduce((a,b)=>a+b)/data.length;const sorted=[...data].sort((a,b)=>a-b);
+  const mid=Math.floor(sorted.length/2);const median=sorted.length%2?sorted[mid]:(sorted[mid-1]+sorted[mid])/2;
+  document.getElementById('outlierLbl').textContent=top<=180?'£180 (normal)':'£'+top+' (corporate)';
+  document.getElementById('outMean').textContent='£'+Math.round(mean);
+  document.getElementById('outMed').textContent='£'+Math.round(median);
+  document.getElementById('outGap').textContent='£'+Math.abs(Math.round(mean-median));
+  if(outlierChart){outlierChart.data.labels=data.map(()=>'');outlierChart.data.datasets[0].data=data;
+    outlierChart.data.datasets[0].backgroundColor=data.map((_,i)=>i===data.length-1&&top>180?C.w5:C.a2);
+    outlierChart.data.datasets[0].borderColor=data.map((_,i)=>i===data.length-1&&top>180?C.w:C.a);
+    outlierChart.options.scales.y.max=Math.max(250,top+50);outlierChart.update('none');}
+}
+
+/* ── Z-SCORE (smooth) ── */
+let zCh=null;const zL=[],zCurve=[];
+for(let x=-3.5;x<=3.5;x+=.05){zL.push(x.toFixed(2));zCurve.push(npdf(x,0,1));}
+chartMap['zChartBlock']=function(){
+  zCh=new Chart('c_zscore',{type:'line',data:{labels:zL,datasets:[
+    {label:'Standard Normal',data:zCurve,borderColor:C.a,borderWidth:2,pointRadius:0,tension:.4,fill:false},
+    {label:'Right tail',data:zL.map(()=>0),borderColor:'transparent',backgroundColor:C.w5,pointRadius:0,fill:true,tension:.4}
+  ]},options:{responsive:true,animation:false,scales:{x:{ticks:{maxTicksLimit:7}},y:{beginAtZero:true}}}});updateZ();
+};
+function updateZ(){
+  const z=parseFloat(document.getElementById('zSlider').value);const pr=1-ncdf(z);
+  document.getElementById('zLbl').textContent='z = '+z.toFixed(2)+' → '+(pr*100).toFixed(1)+'%';
+  if(!zCh)return;zCh.data.datasets[1].data=zL.map(lbl=>parseFloat(lbl)>=z?npdf(parseFloat(lbl),0,1):0);
+  zCh.data.datasets[1].label='P(Z>'+z.toFixed(2)+') = '+(pr*100).toFixed(1)+'%';zCh.update('none');
+}
+
+/* ── s vs SE ── */
+chartMap['sVsSeBlock']=()=>new Chart('c_sVsSe',{type:'bar',data:{labels:['s (std dev) = £59','SE = s/√n = £4.17'],datasets:[{data:[59,4.17],backgroundColor:[C.r5,C.g5],borderColor:[C.r,C.g],borderWidth:1.5}]},options:{responsive:true,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:'Value (£)'}}}}});
+
+/* ── CI EXPLORER ── */
+let ciExpChart=null;
+chartMap['ciExplorer']=function(){
+  const labels=[];for(let i=0;i<50;i++)labels.push('');
+  ciExpChart=new Chart('c_ciExplore',{type:'line',data:{labels,datasets:[
+    {label:'Upper CI',data:Array(50).fill(150.3),borderColor:C.a5,backgroundColor:C.a2,borderWidth:1.5,pointRadius:0,fill:'+1',tension:0},
+    {label:'Lower CI',data:Array(50).fill(133.7),borderColor:C.a5,borderWidth:1.5,pointRadius:0,fill:false,tension:0},
+    {label:'Mean = £142',data:Array(50).fill(142),borderColor:C.w,borderWidth:2,pointRadius:0,borderDash:[4,4],tension:0}
+  ]},options:{responsive:true,animation:false,plugins:{legend:{display:false}},scales:{y:{min:100,max:185,title:{display:true,text:'Monthly Spend (£)'}},x:{display:false}}}});
+  setTimeout(updateCIexplore,50);
+};
+function updateCIexplore(){
+  const n=+document.getElementById('ciNSlider').value;const confPct=+document.getElementById('ciConfSlider').value;
+  const zMap={80:1.28,85:1.44,90:1.645,95:1.96,99:2.576};const keys=[80,85,90,95,99];let mult=2;
+  for(let i=0;i<keys.length-1;i++){if(confPct>=keys[i]&&confPct<=keys[i+1]){const t=(confPct-keys[i])/(keys[i+1]-keys[i]);mult=zMap[keys[i]]*(1-t)+zMap[keys[i+1]]*t;break;}}
+  const se=59/Math.sqrt(n);const margin=mult*se;
+  document.getElementById('ciNLbl').textContent='n='+n;
+  document.getElementById('ciConfLbl').textContent=confPct+'% → ±'+margin.toFixed(1);
+  if(ciExpChart){ciExpChart.data.datasets[0].data=Array(50).fill(142+margin);ciExpChart.data.datasets[1].data=Array(50).fill(142-margin);
+    ciExpChart.options.scales.y.min=Math.min(100,142-margin-15);ciExpChart.options.scales.y.max=Math.max(185,142+margin+15);ciExpChart.update('none');}
+}
+
+/* ── CI DANCE ── */
+chartMap['ciDanceBlock']=function(){};
+function playCIDance(){
+  const btn=document.getElementById('ciDancePlay');btn.disabled=true;btn.textContent='⏳ Running...';
+  const canvas=document.getElementById('c_ciDance');const ctx2=canvas.getContext('2d');
+  const dpr=window.devicePixelRatio||1;const rect=canvas.getBoundingClientRect();
+  canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;ctx2.scale(dpr,dpr);
+  const W=rect.width,H=rect.height;const trueM=142,s=59,n=200,mult=2;
+  const se=s/Math.sqrt(n);const total=25;let drawn=0,captured=0;
+  const padT=22,padB=5;const barH=Math.min(10,(H-padT-padB)/total-2);
+  const xMin=trueM-4*mult*se,xMax=trueM+4*mult*se;
+  const xScale=v=>((v-xMin)/(xMax-xMin))*W;
+  function randNorm(){const u1=Math.random(),u2=Math.random();return Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2);}
+  const bars=[];for(let i=0;i<total;i++){const xbar=trueM+se*randNorm();const lo=xbar-mult*se,hi=xbar+mult*se;bars.push({lo,hi,hit:lo<=trueM&&hi>=trueM,xbar});}
+  function drawFrame(){
+    ctx2.clearRect(0,0,W,H);const mx=xScale(trueM);
+    ctx2.strokeStyle='rgba(239,68,68,.5)';ctx2.lineWidth=1.5;ctx2.setLineDash([4,4]);
+    ctx2.beginPath();ctx2.moveTo(mx,0);ctx2.lineTo(mx,H);ctx2.stroke();ctx2.setLineDash([]);
+    ctx2.fillStyle='rgba(239,68,68,.7)';ctx2.font='10px "Plus Jakarta Sans"';ctx2.textAlign='left';ctx2.fillText('True μ = £'+trueM,mx+4,14);
+    for(let i=0;i<drawn;i++){const b=bars[i],y=padT+i*(barH+2),x1=xScale(b.lo),x2=xScale(b.hi);
+      ctx2.fillStyle=b.hit?'rgba(0,229,204,.2)':'rgba(239,68,68,.2)';ctx2.fillRect(x1,y,x2-x1,barH);
+      ctx2.strokeStyle=b.hit?'#00e5cc':'#ef4444';ctx2.lineWidth=1.5;ctx2.strokeRect(x1,y,x2-x1,barH);
+      ctx2.fillStyle=b.hit?'#00e5cc':'#ef4444';ctx2.beginPath();ctx2.arc(xScale(b.xbar),y+barH/2,2,0,Math.PI*2);ctx2.fill();}
+  }
+  function step(){
+    if(drawn>=total){btn.disabled=false;btn.textContent='▶ Replay';
+      document.getElementById('ciDanceStatus').textContent=captured+'/'+total+' captured μ ('+Math.round(captured/total*100)+'%)';return;}
+    if(bars[drawn].hit)captured++;drawn++;drawFrame();
+    document.getElementById('ciDanceStatus').textContent=captured+'/'+drawn+' captured so far...';setTimeout(step,180);
+  }
+  drawn=0;captured=0;step();
+}
+
+/* ── CI TEST CHART ── */
+chartMap['ciTestBlock']=()=>new Chart('c_ciTest',{type:'bar',data:{labels:['95% CI'],datasets:[{label:'CI [£134, £150]',data:[[134,150]],backgroundColor:C.a2,borderColor:C.a,borderWidth:2},{label:'CEO claim = £160',data:[[159.5,160.5]],backgroundColor:C.r,borderColor:C.r,borderWidth:0}]},options:{indexAxis:'y',responsive:true,plugins:{title:{display:true,text:'£160 outside CI → Reject',font:{size:11,weight:'normal'}}},scales:{x:{min:120,max:175},y:{display:false}}}});
+
+/* ── P-VALUE EXPLORER ── */
+let pvalChart=null;const pvL=[],pvC=[];for(let x=-4;x<=4;x+=.05){pvL.push(x.toFixed(2));pvC.push(npdf(x,0,1));}
+chartMap['pvalDemo']=function(){
+  pvalChart=new Chart('c_pval',{type:'line',data:{labels:pvL,datasets:[
+    {label:'t-distribution',data:pvC,borderColor:C.p,borderWidth:2,pointRadius:0,tension:.4,fill:false},
+    {label:'p-value tails',data:pvL.map(()=>0),borderColor:'transparent',backgroundColor:'rgba(239,68,68,.4)',pointRadius:0,fill:true,tension:.4}
+  ]},options:{responsive:true,animation:false,scales:{x:{ticks:{maxTicksLimit:9}},y:{beginAtZero:true}}}});updatePval();
+};
+function updatePval(){
+  const t=+document.getElementById('pvalSlider').value;const p=2*(1-ncdf(t));const sig=t>=2;
+  document.getElementById('pvalLbl').textContent='|t| = '+t.toFixed(2)+' → p ≈ '+(p*100).toFixed(1)+'%';
+  document.getElementById('pvalDec').textContent=sig?'Reject H₀ ✓':'Fail to reject H₀';
+  document.getElementById('pvalDec').style.color=sig?C.g:C.w;
+  if(pvalChart){pvalChart.data.datasets[1].data=pvL.map(lbl=>{const x=parseFloat(lbl);return Math.abs(x)>=t?npdf(x,0,1):0;});
+    pvalChart.data.datasets[1].backgroundColor=sig?'rgba(34,197,94,.3)':'rgba(239,68,68,.35)';pvalChart.update('none');}
+}
+
+/* ── TWO SAMPLE CHART ── */
+chartMap['twoSampleBlock']=()=>{const L=[],g1=[],g2=[];for(let x=105;x<=180;x+=.5){L.push(x.toFixed(1));g1.push(npdf(x,128,52/Math.sqrt(120)));g2.push(npdf(x,156,48/Math.sqrt(80)));}
+  new Chart('c_twoSample',{type:'line',data:{labels:L,datasets:[{label:'Standard (x̄=128)',data:g1,borderColor:C.b,backgroundColor:C.b2,borderWidth:2,fill:true,pointRadius:0,tension:.4},{label:'Premium (x̄=156)',data:g2,borderColor:C.a,backgroundColor:C.a2,borderWidth:2,fill:true,pointRadius:0,tension:.4}]},options:{responsive:true,scales:{x:{ticks:{maxTicksLimit:7}},y:{beginAtZero:true}}}});};
+
+/* ── POWER ── */
+let powerChart=null;const pwrL=[];for(let x=-5;x<=9;x+=.08)pwrL.push(x.toFixed(2));
+chartMap['powerDemo']=function(){
+  powerChart=new Chart('c_power',{type:'line',data:{labels:pwrL,datasets:[
+    {label:'H₀',data:pwrL.map(x=>npdf(parseFloat(x),0,1)),borderColor:C.b,backgroundColor:C.b2,borderWidth:2,fill:true,pointRadius:0,tension:.4},
+    {label:'True',data:pwrL.map(()=>0),borderColor:C.w,backgroundColor:C.w2,borderWidth:2,fill:true,pointRadius:0,tension:.4},
+    {label:'α',data:pwrL.map(()=>0),borderColor:'transparent',backgroundColor:'rgba(239,68,68,.3)',pointRadius:0,fill:true,tension:.4},
+    {label:'Power',data:pwrL.map(()=>0),borderColor:'transparent',backgroundColor:'rgba(34,197,94,.25)',pointRadius:0,fill:true,tension:.4}
+  ]},options:{responsive:true,animation:false,plugins:{legend:{position:'top',labels:{font:{size:9}}}},scales:{x:{ticks:{maxTicksLimit:9}},y:{beginAtZero:true}}}});updatePower();
+};
+function updatePower(){
+  const eff=+document.getElementById('pwrEffect').value,n=+document.getElementById('pwrN').value,alpha=+document.getElementById('pwrAlpha').value/100;
+  const seN=1/Math.sqrt(n/10);const critVal=ncdfInv(1-alpha/2)*seN;
+  document.getElementById('pwrEffLbl').textContent='effect = '+eff.toFixed(1);
+  document.getElementById('pwrNLbl').textContent='n = '+n;
+  document.getElementById('pwrALbl').textContent='α = '+(alpha*100)+'%';
+  if(powerChart){
+    powerChart.data.datasets[0].data=pwrL.map(x=>npdf(parseFloat(x),0,seN));
+    powerChart.data.datasets[1].data=pwrL.map(x=>npdf(parseFloat(x),eff,seN));
+    powerChart.data.datasets[2].data=pwrL.map(x=>{const xf=parseFloat(x);return Math.abs(xf)>=critVal?npdf(xf,0,seN):0;});
+    powerChart.data.datasets[3].data=pwrL.map(x=>{const xf=parseFloat(x);return xf>=critVal?npdf(xf,eff,seN):0;});
+    powerChart.update('none');
+    const powVal=1-ncdf((critVal-eff)/seN);
+    document.getElementById('pwrVal').textContent=Math.round(powVal*100)+'%';
+    document.getElementById('pwrBeta').textContent=Math.round((1-powVal)*100)+'%';
+    document.getElementById('pwrVal').style.color=powVal>.8?C.g:C.w;}
+}
+function setPowerScenario(n){
+  const s={1:{eff:1.0,n:15,alpha:5,text:'<strong style="color:#ef4444">Underpowered:</strong> Small effect, tiny sample. Power is very low — you\'ll miss the effect ~80% of the time.'},
+    2:{eff:2.0,n:60,alpha:5,text:'<strong style="color:#22c55e">Well-Designed:</strong> Power ≈ 80%. You\'ll detect the effect 4 out of 5 times. Standard target.'},
+    3:{eff:3.5,n:150,alpha:5,text:'<strong style="color:#3b82f6">Overwhelming:</strong> Power ≈ 99%. The distributions barely overlap. You\'d almost never miss.'}};
+  const sc=s[n];document.getElementById('pwrEffect').value=sc.eff;document.getElementById('pwrN').value=sc.n;
+  document.getElementById('pwrAlpha').value=sc.alpha;document.getElementById('pwrInterpretation').innerHTML=sc.text;updatePower();
+}
+
+/* ── SCATTER (hardcoded) ── */
+const scatterPts=[{x:20.0,y:58.0},{x:21.6,y:58.5},{x:23.3,y:61.7},{x:24.9,y:85.8},{x:26.5,y:64.0},{x:28.2,y:27.0},{x:29.8,y:79.6},{x:31.4,y:64.2},{x:33.1,y:67.0},{x:34.7,y:77.7},{x:36.3,y:82.4},{x:38.0,y:109.8},{x:39.6,y:97.0},{x:41.2,y:83.1},{x:42.9,y:60.8},{x:44.5,y:54.4},{x:46.1,y:91.1},{x:47.8,y:122.3},{x:49.4,y:88.1},{x:51.0,y:85.4},{x:52.7,y:104.6},{x:54.3,y:50.4},{x:55.9,y:83.8},{x:57.6,y:107.6},{x:59.2,y:119.8},{x:60.8,y:90.0},{x:62.4,y:108.6},{x:64.1,y:106.4},{x:65.7,y:122.8},{x:67.3,y:71.1},{x:69.0,y:119.5},{x:70.6,y:62.6},{x:72.2,y:33.0},{x:73.9,y:90.8},{x:75.5,y:83.5},{x:77.1,y:135.1},{x:78.8,y:130.6},{x:80.4,y:79.2},{x:82.0,y:138.5},{x:83.7,y:88.1},{x:85.3,y:115.1},{x:86.9,y:110.7},{x:88.6,y:123.5},{x:90.2,y:144.6},{x:91.8,y:140.9},{x:93.5,y:134.2},{x:95.1,y:144.0},{x:96.7,y:140.6},{x:98.4,y:111.1},{x:100.0,y:109.9}];
+
+chartMap['scatterBlock']=()=>new Chart('c_scatter',{type:'scatter',data:{datasets:[{label:'Customers',data:scatterPts,backgroundColor:C.a2,borderColor:C.a5,pointRadius:3},{label:'ŷ = 45 + 0.85x',data:[{x:20,y:62},{x:100,y:130}],type:'line',borderColor:C.w,borderWidth:2.5,pointRadius:0}]},options:{responsive:true,scales:{x:{title:{display:true,text:'Income (£000s)'}},y:{title:{display:true,text:'Spend (£)'}}}}});
+
+/* ── DRAG SCATTER ── */
+let dragPoints=[],dragCanvas,dragCtx;
+chartMap['dragScatterBlock']=function(){
+  dragCanvas=document.getElementById('c_drag');dragCtx=dragCanvas.getContext('2d');
+  dragCanvas.width=dragCanvas.offsetWidth;dragCanvas.height=260;
+  dragCanvas.addEventListener('click',function(e){const rect=dragCanvas.getBoundingClientRect();
+    const px=(e.clientX-rect.left)/rect.width,py=(e.clientY-rect.top)/rect.height;
+    dragPoints.push({x:px*100,y:(1-py)*250});drawDrag();});drawDrag();
+};
+function resetDrag(){dragPoints=[];drawDrag();}
+window.addEventListener('resize',function(){if(dragCanvas){dragCanvas.width=dragCanvas.offsetWidth;drawDrag();}});
+function drawDrag(){
+  if(!dragCtx)return;const W=dragCanvas.width,H=dragCanvas.height;dragCtx.clearRect(0,0,W,H);
+  dragCtx.strokeStyle='rgba(255,255,255,.04)';dragCtx.lineWidth=1;
+  for(let i=0;i<=5;i++){const x=i/5*W;dragCtx.beginPath();dragCtx.moveTo(x,0);dragCtx.lineTo(x,H);dragCtx.stroke();}
+  for(let i=0;i<=5;i++){const y=i/5*H;dragCtx.beginPath();dragCtx.moveTo(0,y);dragCtx.lineTo(W,y);dragCtx.stroke();}
+  const toX=x=>x/100*W,toY=y=>(1-y/250)*H;
+  dragPoints.forEach(p=>{dragCtx.fillStyle='rgba(0,229,204,.5)';dragCtx.beginPath();dragCtx.arc(toX(p.x),toY(p.y),5,0,Math.PI*2);dragCtx.fill();dragCtx.strokeStyle='#00e5cc';dragCtx.lineWidth=1.5;dragCtx.stroke();});
+  document.getElementById('dragN').textContent=dragPoints.length;
+  if(dragPoints.length<2){document.getElementById('dragSlope').textContent='—';document.getElementById('dragR2').textContent='—';document.getElementById('dragEq').textContent='need 2+ points';return;}
+  const n=dragPoints.length,mx=dragPoints.reduce((a,p)=>a+p.x,0)/n,my=dragPoints.reduce((a,p)=>a+p.y,0)/n;
+  let num=0,den=0;dragPoints.forEach(p=>{num+=(p.x-mx)*(p.y-my);den+=(p.x-mx)*(p.x-mx);});
+  const b1=den>0?num/den:0,b0=my-b1*mx;
+  const ssTot=dragPoints.reduce((a,p)=>a+((p.y-my)*(p.y-my)),0);
+  const ssRes=dragPoints.reduce((a,p)=>{const yh=b0+b1*p.x;return a+((p.y-yh)*(p.y-yh));},0);
+  const r2=ssTot>0?Math.max(0,1-ssRes/ssTot):0;
+  dragCtx.strokeStyle='#ff6b35';dragCtx.lineWidth=2.5;dragCtx.beginPath();dragCtx.moveTo(toX(0),toY(b0));dragCtx.lineTo(toX(100),toY(b0+b1*100));dragCtx.stroke();
+  document.getElementById('dragSlope').textContent=b1.toFixed(2);document.getElementById('dragR2').textContent=(r2*100).toFixed(1)+'%';
+  document.getElementById('dragEq').textContent='ŷ='+b0.toFixed(1)+'+'+b1.toFixed(2)+'x';
+}
+
+/* ── SLOPE EXPLORER (fixed points, locked Y-axis) ── */
+let slopeChart=null;const slopeNoise=[];
+for(let i=0;i<40;i++)slopeNoise.push({rx:5+Math.random()*45,ry:(Math.random()-0.5)*2});
+chartMap['slopeDemo']=function(){
+  slopeChart=new Chart('c_slopeDemo',{type:'scatter',data:{datasets:[
+    {label:'Data',data:[],backgroundColor:C.a2,borderColor:C.a5,pointRadius:3.5},
+    {label:'Line',data:[],type:'line',borderColor:C.w,borderWidth:2.5,pointRadius:0,tension:0}
+  ]},options:{responsive:true,animation:false,scales:{x:{min:0,max:55,title:{display:true,text:'X'}},y:{min:-60,max:360,title:{display:true,text:'Y'}}}}});updateSlope();
+};
+function updateSlope(){
+  const slope=+document.getElementById('slopeSlider').value,noiseScale=+document.getElementById('noiseSlider').value;
+  const pts=slopeNoise.map(n=>({x:n.rx,y:10+slope*n.rx+n.ry*noiseScale}));
+  const mx=pts.reduce((a,p)=>a+p.x,0)/pts.length,my=pts.reduce((a,p)=>a+p.y,0)/pts.length;
+  const ssTot=pts.reduce((a,p)=>a+((p.y-my)*(p.y-my)),0);
+  const ssRes=pts.reduce((a,p)=>{const yhat=10+slope*p.x;return a+((p.y-yhat)*(p.y-yhat));},0);
+  const r2=ssTot>0?Math.max(0,1-ssRes/ssTot):0;
+  document.getElementById('slopeLbl').textContent='slope = '+slope.toFixed(1);
+  document.getElementById('noiseLbl').textContent='noise = '+noiseScale+' → R² ≈ '+Math.round(r2*100)+'%';
+  if(slopeChart){slopeChart.data.datasets[0].data=pts;slopeChart.data.datasets[1].data=[{x:0,y:10},{x:55,y:10+slope*55}];
+    slopeChart.options.scales.y.min=-60;slopeChart.options.scales.y.max=360;slopeChart.update('none');}
+}
+
+/* ── T-VALUES CHART ── */
+chartMap['tvalsBlock']=()=>new Chart('c_tvals',{type:'bar',data:{labels:['Income\n|t|=6.89','Distance\n|t|=4.39','Frequency\n|t|=6.94','D_Standard\n|t|=3.52'],datasets:[{data:[6.89,4.39,6.94,3.52],backgroundColor:[C.g5,C.g5,C.g5,C.g5],borderColor:[C.g,C.g,C.g,C.g],borderWidth:1.5}]},options:{responsive:true,plugins:{legend:{display:false},title:{display:true,text:'All |t|>2 → all significant',font:{size:11,weight:'normal'}}},scales:{y:{beginAtZero:true,title:{display:true,text:'|t-value|'}}}}});
+
+/* ── DUMMY CHART ── */
+chartMap['dummyBlock']=()=>{const x=[],r=[],d=[];for(let i=20;i<=100;i+=4){x.push(i);r.push(45+0.85*i);d.push(45+0.85*i-18.3);}
+  new Chart('c_dummy',{type:'line',data:{labels:x,datasets:[{label:'Premium',data:r,borderColor:C.a,borderWidth:2.5,pointRadius:0},{label:'Standard (−£18.3)',data:d,borderColor:C.p,borderWidth:2.5,pointRadius:0,borderDash:[6,3]}]},options:{responsive:true,plugins:{title:{display:true,text:'Standard line sits £18.30 below Premium',font:{size:10,weight:'normal'}}},scales:{x:{title:{display:true,text:'Income (£k)'}},y:{title:{display:true,text:'Spend (£)'}}}}});};
+
+/* ── MULTICOLLINEARITY SCATTER ── */
+chartMap['multicolBlock']=()=>{const p=[];for(let i=0;i<40;i++){const freq=1+Math.random()*8;p.push({x:freq,y:freq*4.2+2+(Math.random()-.5)*3});}
+  new Chart('c_multicol',{type:'scatter',data:{datasets:[{label:'Frequency vs Total Items (r=0.95)',data:p.sort((a,b)=>a.x-b.x),backgroundColor:C.w5,borderColor:C.w,pointRadius:3.5}]},options:{responsive:true,plugins:{title:{display:true,text:'Same info — drop one',font:{size:10,weight:'normal'}}},scales:{x:{title:{display:true,text:'Order Frequency'}},y:{title:{display:true,text:'Total Items'}}}}});};
+
+/* ── CALCULATORS ── */
+function calcZ(){const x=+document.getElementById('z-x').value,mu=+document.getElementById('z-mu').value,sig=+document.getElementById('z-sig').value;const z=(x-mu)/sig;document.getElementById('zR').innerHTML='<span class="lt">z:</span> <span class="v">'+z.toFixed(4)+'</span><br><span class="lt">P(Z>'+z.toFixed(2)+'):</span> <span class="v">'+((1-ncdf(z))*100).toFixed(2)+'%</span>';}
+function calcCI(){const m=+document.getElementById('ci-m').value,s=+document.getElementById('ci-s').value,n=+document.getElementById('ci-n').value,mult=+document.getElementById('ci-t').value,cl=document.getElementById('ci-cl').value;const se=s/Math.sqrt(n),moe=mult*se,lo=m-moe,hi=m+moe;let h='<span class="lt">SE:</span> <span class="v">'+se.toFixed(3)+'</span> · <span class="lt">Margin:</span> <span class="v">'+moe.toFixed(3)+'</span><br><span class="lt">CI:</span> <span class="v">['+lo.toFixed(1)+', '+hi.toFixed(1)+']</span>';if(cl){const c=+cl;const ins=c>=lo&&c<=hi;h+='<br><span class="lt">'+c+' in CI?</span> <span class="v" style="color:'+(ins?C.g:C.r)+'">'+(ins?'Yes → Fail to reject':'No → Reject')+'</span>';}document.getElementById('ciR').innerHTML=h;}
+function calcTT(){const m1=+document.getElementById('t1-m').value,s1=+document.getElementById('t1-s').value,n1=+document.getElementById('t1-n').value,m2=+document.getElementById('t2-m').value,s2=+document.getElementById('t2-s').value,n2=+document.getElementById('t2-n').value;const se=Math.sqrt(s1*s1/n1+s2*s2/n2),t=(m2-m1)/se,sig=Math.abs(t)>2;document.getElementById('ttR').innerHTML='<span class="lt">SE:</span> <span class="v">'+se.toFixed(3)+'</span> · <span class="lt">t:</span> <span class="v">'+t.toFixed(3)+'</span><br><span class="lt">|t|>2?</span> <span class="v" style="color:'+(sig?C.g:C.r)+'">'+(sig?'Yes → Reject H₀':'No → Fail to reject')+'</span>';}
+function calcTV(){const b=+document.getElementById('tv-b').value,se=+document.getElementById('tv-se').value;const t=b/se,sig=Math.abs(t)>2;document.getElementById('tvR').innerHTML='<span class="lt">t:</span> <span class="v">'+t.toFixed(3)+'</span> · <span class="lt">|t|='+Math.abs(t).toFixed(3)+'</span><br><span class="lt">Signif?</span> <span class="v" style="color:'+(sig?C.g:C.r)+'">'+(sig?'Yes':'No')+'</span>';}
+function calcFC(){const b0=+document.getElementById('fc-b0').value,rse=+document.getElementById('fc-rse').value,x1=+document.getElementById('fc-x1').value,b1=+document.getElementById('fc-b1').value,x2=+document.getElementById('fc-x2').value,b2=+document.getElementById('fc-b2').value,x3=+document.getElementById('fc-x3').value,b3=+document.getElementById('fc-b3').value,x4=+document.getElementById('fc-x4').value,b4=+document.getElementById('fc-b4').value;const y=b0+b1*x1+b2*x2+b3*x3+b4*x4;document.getElementById('fcR').innerHTML='<span class="lt">Ŷ:</span> <span class="v">'+y.toFixed(3)+'</span><br><span class="lt">95% PI:</span> <span class="v">['+(y-2*rse).toFixed(1)+', '+(y+2*rse).toFixed(1)+']</span>';}
+
+/* ── FLASHCARDS ── */
+const deck=[
+  {s:'c1',q:'FreshCart: Mean=£142, Median=£128. "Half spend below £142" — true?',a:'FALSE. Half spend below the MEDIAN (£128). The mean is pulled up by corporate accounts.'},
+  {s:'c1',q:'FreshCart deliveries: μ=32min, σ=8. What % exceed 45min?',a:'z=(45−32)/8=1.625. P(Z>1.63)≈5.2%. About 1 in 20.',f:'z=(x−μ)/σ'},
+  {s:'c2',q:'FreshCart: s=59, n=200. What is SE?',a:'SE=59/√200=£4.17. Individual spread is ±£59, but the average is precise to ±£4.17.',f:'SE=s/√n'},
+  {s:'c2',q:'Build a 95% CI (x̄=142, s=59, n=200).',a:'SE=4.17. CI=142±2×4.17=[£133.7,£150.3].',f:'CI=x̄±2×SE'},
+  {s:'c2',q:'"95% chance the true mean is in [133.7,150.3]" — correct?',a:'NO. μ is either in there or not. 95% means: if repeated 100 times, ~95 intervals would capture μ.'},
+  {s:'c2',q:'To halve the margin from ±8.34, how much data?',a:'Quadruple n to 800. Margin∝1/√n.'},
+  {s:'c3',q:'CEO claims £160. CI=[133.7,150.3]. Conclusion?',a:'£160 outside CI → Reject. Evidence that true average ≠ £160.',f:'Outside CI→Reject'},
+  {s:'c3',q:'Can you "accept" the CEO\'s claim if £160 were inside the CI?',a:'NEVER "accept H₀." Only "fail to reject." Not finding evidence against ≠ proving true.'},
+  {s:'c3',q:'p-value = 0.003. What does it mean?',a:'If μ really were £160, there\'s only 0.3% chance of data this extreme. Strong evidence against the claim. NOT: 0.3% chance claim is true.'},
+  {s:'c4',q:'Standard x̄=128 vs Premium x̄=156. Significant?',a:'SE=√(52²/120+48²/80)=7.16. t=28/7.16=3.91. |t|>2→Reject. Premium spends more.',f:'t=3.91'},
+  {s:'c4',q:'Same £28 gap — why might it not be significant at n=20?',a:'Smaller n→larger SE→smaller |t|. At n=20, SE≈£22, t≈1.3. Same effect, weaker lens.'},
+  {s:'c5',q:'Spend=45+0.85×Income. Interpret the slope.',a:'Each additional £1,000 income→£0.85 more monthly spend, on average.',f:'b₁=0.85'},
+  {s:'c5',q:'b₁=0.85, SE=0.12. Significant?',a:'t=0.85/0.12=7.08. |t|>2→yes.',f:'t=7.08'},
+  {s:'c5',q:'R²=34% but slope is significant. Contradiction?',a:'No. Real but weak relationship. Income explains 34%, other factors explain 66%. Quiet signal in a noisy room.'},
+  {s:'c5',q:'Predict spend for income=£55k. Give PI.',a:'Ŷ=45+0.85(55)=£91.75. PI=91.75±2×38=[£15.75,£167.75].',f:'Ŷ=£91.75'},
+  {s:'c6',q:'Income coeff drops from 0.85 (SLR) to 0.62 (MLR). Why?',a:'In SLR, 0.85 includes indirect effects via other variables. MLR isolates the direct effect holding distance, frequency, membership constant.'},
+  {s:'c6',q:'Adding age drops Adj R² from 57.2% to 56.5%. Action?',a:'Drop age. Adj R² dropped→complexity penalty outweighs benefit.'},
+  {s:'c6',q:'Membership: 2 levels. How many dummies?',a:'1 dummy (D_Standard). Premium is reference. Coeff=difference from Premium.',f:'k→k−1 dummies'},
+  {s:'c6',q:'D_Standard=−18.3. Meaning?',a:'Standard members spend £18.30 less than Premium, holding income/distance/frequency constant. t=−3.52→significant.'},
+  {s:'c6',q:'Frequency & Total Items: r=0.95. Problem?',a:'Multicollinearity. Same info. Including both→unstable coefficients. Drop Total Items.'},
+  {s:'c6',q:'Forecast: Premium, income=55, dist=8, freq=4.',a:'Ŷ=22.4+0.62(55)−1.8(8)+12.5(4)−18.3(0)=£92.10. PI=[£16.1,£168.1].',f:'Ŷ=£92.10'},
+  {s:'c6',q:'Intercept=22.4, |t|=1.1. Remove it?',a:'NEVER. Always keep the intercept regardless of significance.'},
+
+  {s:'c2',q:'Why does the SE formula work? What theorem?',a:'The Central Limit Theorem: sample means are approximately normal regardless of the original data shape, with spread = σ/√n.'},
+  {s:'c5',q:'Income coefficient: 0.85 in SLR, 0.62 in MLR. Why?',a:'SLR captured total effect (direct + indirect via other variables). MLR isolates the direct effect, controlling for distance/frequency/membership.'},
+  {s:'c6',q:'You add age and Adj R² drops. What do you do?',a:'Drop age. Adj R² penalises complexity. If it drops, the variable is noise and doesn\'t help the model.'},
+  {s:'c5',q:'Can you predict spend for income=£200k using FreshCart data (range £20k-£100k)?',a:'This is extrapolation — unreliable. The linear relationship may not hold outside the observed range. Flag this on the exam.'},
+];
+let fFilter='all',fDeck=[...deck],fIdx=0,fRates={};
+try{const s=localStorage.getItem('fc-rates');if(s)fRates=JSON.parse(s);}catch(e){}
+function fKey(c){return c.s+'|'+c.q.substring(0,20)}
+function fSort(){const p={hard:0,med:1,undefined:2,easy:3};fDeck.sort((a,b)=>(p[fRates[fKey(a)]]??2)-(p[fRates[fKey(b)]]??2));}
+function fFilt(btn,f){document.querySelectorAll('.fcf').forEach(b=>b.classList.remove('active'));btn.classList.add('active');fFilter=f;fDeck=f==='all'?[...deck]:deck.filter(c=>c.s===f);fSort();fIdx=0;updateFC();}
+function fShow(){const card=document.getElementById('fcard');if(card.classList.contains('flipped')){card.classList.remove('flipped');setTimeout(updateFC,350);}else updateFC();}
+function updateFC(){if(!fDeck.length)return;const c=fDeck[fIdx];document.getElementById('fcL').textContent={c1:'Chapter 1',c2:'Chapter 2',c3:'Chapter 3',c4:'Chapter 4',c5:'Chapter 5',c6:'Chapter 6'}[c.s];document.getElementById('fcQ').textContent=c.q;document.getElementById('fcA').textContent=c.a;const f=document.getElementById('fcF');if(c.f){f.style.display='inline-block';f.textContent=c.f;}else f.style.display='none';document.getElementById('fcSt').textContent=(fIdx+1)+' / '+fDeck.length;}
+function fFlip(){document.getElementById('fcard').classList.toggle('flipped')}
+function fNext(){fIdx=(fIdx+1)%fDeck.length;fShow();}
+function fPrev(){fIdx=(fIdx-1+fDeck.length)%fDeck.length;fShow();}
+function fRate(r){fRates[fKey(fDeck[fIdx])]=r;try{localStorage.setItem('fc-rates',JSON.stringify(fRates));}catch(e){}fNext();}
+document.addEventListener('DOMContentLoaded',()=>{initChecks();updateFC();});
+
+</script>
+</body>
+</html>
