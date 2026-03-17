@@ -417,8 +417,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 <p>"About half" describes the <strong>median</strong>, not the mean. Half of customers spend below <span class="result">£128</span> (the median). The mean (£142) is pulled up by a few corporate accounts with high spend.</p>
 <p>Since mean (£142) > median (£128), the data is <strong>right-skewed</strong> — a long tail of high values pulls the average up.</p><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
 <div class="interactive" id="outlierDemo" data-chart="outlierDemo">
-    <h4>Try it: drag the slider to add a corporate account</h4>
-    <p class="cd">Watch the mean jump while the median barely moves. This is why the median is more robust.</p>
+    <h4>Try it: what happens when a corporate account joins FreshCart?</h4>
+    <p class="cd">Most customers spend £80–£180/month. Drag the slider to add a big-spending corporate account and watch the mean get pulled while the median barely moves.</p>
     <canvas id="c_outlier"></canvas>
     <div class="sr">
       <label>Corporate spend:</label>
@@ -456,11 +456,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 <div class="step"><span class="step-n">Step 2:</span> Look up P(Z > 1.63) in the standard normal table = <span class="result">5.2%</span></div>
 <div class="conclusion">About <strong>5.2%</strong> of deliveries will trigger a complaint — roughly 1 in 20.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
 <div class="interactive" id="zChartBlock" data-chart="zChartBlock">
-    <h4>Try it: slide to change z and watch the tail probability</h4>
-    <p class="cd">The orange area shows how much of the distribution is beyond your z-score.</p>
+    <h4>Try it: how extreme is a delivery time?</h4>
+    <p class="cd">FreshCart deliveries average 32 min (σ=8). Slide to set a delivery time — the orange tail shows what fraction of deliveries are slower than that.</p>
     <canvas id="c_zscore"></canvas>
     <div class="sr">
-      <label>z:</label>
+      <label>Delivery time (min):</label>
       <input type="range" id="zSlider" min="0" max="3.5" step="0.01" value="1.63" style="accent-color:var(--ch1)" oninput="updateZ()">
       <span class="sv" id="zLbl" style="color:var(--ch1)">z = 1.63 → 5.2%</span>
     </div>
@@ -547,16 +547,16 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 <div class="step"><span class="step-n">Step 3:</span> CI = 142 ± 8.34 = <span class="result">[£133.7, £150.3]</span></div>
 <div class="conclusion">We are 95% confident the true average monthly spend is between <strong>£133.70 and £150.30</strong>.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
 <div class="interactive" id="ciExplorer" data-chart="ciExplorer">
-    <h4>Try it: watch the CI shrink as you add data</h4>
-    <p class="cd">Drag n to see the interval tighten. Drag confidence to see width vs coverage trade-off.</p>
+    <h4>Try it: how many customers do we need to survey?</h4>
+    <p class="cd">More customers (larger n) → tighter CI. Higher confidence → wider CI. Watch the trade-off play out on FreshCart's spending data.</p>
     <canvas id="c_ciExplore"></canvas>
     <div class="sr">
-      <label>n:</label>
+      <label>Customers surveyed:</label>
       <input type="range" id="ciNSlider" min="5" max="500" step="5" value="200" style="accent-color:var(--ch2)" oninput="updateCIexplore()">
       <span class="sv" id="ciNLbl" style="color:var(--ch2)">n=200</span>
     </div>
     <div class="sr">
-      <label>Conf:</label>
+      <label>Confidence level:</label>
       <input type="range" id="ciConfSlider" min="80" max="99" step="1" value="95" style="accent-color:var(--ch2)" oninput="updateCIexplore()">
       <span class="sv" id="ciConfLbl" style="color:var(--ch2)">95% → ±8.3</span>
     </div>
@@ -592,8 +592,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
   </div>
 
   <div class="interactive" id="ciDanceBlock" style="margin-top:1.25rem">
-    <h4>Watch: The Dance of Confidence Intervals</h4>
-    <p class="cd">Each bar is a CI from a fresh sample. Most capture the true mean (teal) — roughly 1 in 20 will miss (red).</p>
+    <h4>Watch: what if FreshCart surveyed 200 customers 25 different times?</h4>
+    <p class="cd">Each bar is a 95% CI from a different random sample of 200 FreshCart customers. Most capture the true average spend (red line) — but roughly 1 in 20 will miss.</p>
     <canvas id="c_ciDance" style="height:300px;width:100%"></canvas>
     <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
       <button class="play-btn" id="ciDancePlay" onclick="playCIDance()">▶ Play</button>
@@ -654,11 +654,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
   </div>
 </div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
 <div class="interactive" id="pvalDemo" data-chart="pvalDemo">
-    <h4>Try it: how the t-statistic maps to evidence strength</h4>
-    <p class="cd">Drag |t|. Watch the shaded area (≈ p-value) shrink. Past 2, you're in the rejection zone.</p>
+    <h4>Try it: how strong is the evidence against the CEO's claim?</h4>
+    <p class="cd">The |t|-statistic measures how far your data is from the claimed value (in SE units). Drag it — past |t|=2, the evidence is strong enough to reject.</p>
     <canvas id="c_pval"></canvas>
     <div class="sr">
-      <label>|t|:</label>
+      <label>Evidence strength |t|:</label>
       <input type="range" id="pvalSlider" min="0" max="4" step="0.05" value="1.5" style="accent-color:var(--ch3)" oninput="updatePval()">
       <span class="sv" id="pvalLbl" style="color:var(--ch3)">|t| = 1.50 → p ≈ 13.4%</span>
     </div>
@@ -728,17 +728,17 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
   </div>
 </div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
 <div class="interactive" id="powerDemo" data-chart="powerDemo">
-    <h4>Try it: the Power trade-off</h4>
-    <p class="cd">Blue = H₀ distribution. Orange = true effect. Adjust effect size, n, and α to see how power changes.</p>
+    <h4>Try it: could FreshCart's study miss a real difference?</h4>
+    <p class="cd">If Premium members truly do spend more, will your study detect it? Power = the probability of catching a real effect. Adjust the three levers below.</p>
     <div style="display:flex;gap:.35rem;margin-bottom:.5rem;flex-wrap:wrap">
-      <button class="play-btn" style="background:var(--red);font-size:.68rem;padding:.25rem .6rem" onclick="setPowerScenario(1)">Underpowered</button>
-      <button class="play-btn" style="background:var(--green);font-size:.68rem;padding:.25rem .6rem" onclick="setPowerScenario(2)">Well-Designed</button>
-      <button class="play-btn" style="background:var(--blue);font-size:.68rem;padding:.25rem .6rem" onclick="setPowerScenario(3)">Overwhelming</button>
+      <button class="play-btn" style="background:var(--red);font-size:.68rem;padding:.25rem .6rem" onclick="setPowerScenario(1)">Tiny pilot study</button>
+      <button class="play-btn" style="background:var(--green);font-size:.68rem;padding:.25rem .6rem" onclick="setPowerScenario(2)">Solid study design</button>
+      <button class="play-btn" style="background:var(--blue);font-size:.68rem;padding:.25rem .6rem" onclick="setPowerScenario(3)">Large-scale study</button>
     </div>
     <canvas id="c_power"></canvas>
-    <div class="sr"><label>Effect:</label><input type="range" id="pwrEffect" min="0.5" max="4" step="0.1" value="2" style="accent-color:var(--ch4)" oninput="updatePower()"><span class="sv" id="pwrEffLbl" style="color:var(--ch4)">effect = 2.0</span></div>
-    <div class="sr"><label>n:</label><input type="range" id="pwrN" min="10" max="200" step="5" value="30" style="accent-color:var(--ch4)" oninput="updatePower()"><span class="sv" id="pwrNLbl" style="color:var(--ch4)">n = 30</span></div>
-    <div class="sr"><label>α:</label><input type="range" id="pwrAlpha" min="1" max="10" step="0.5" value="5" style="accent-color:var(--ch4)" oninput="updatePower()"><span class="sv" id="pwrALbl" style="color:var(--ch4)">α = 5%</span></div>
+    <div class="sr"><label>True spending gap (£):</label><input type="range" id="pwrEffect" min="0.5" max="4" step="0.1" value="2" style="accent-color:var(--ch4)" oninput="updatePower()"><span class="sv" id="pwrEffLbl" style="color:var(--ch4)">effect = 2.0</span></div>
+    <div class="sr"><label>Customers per group:</label><input type="range" id="pwrN" min="10" max="200" step="5" value="30" style="accent-color:var(--ch4)" oninput="updatePower()"><span class="sv" id="pwrNLbl" style="color:var(--ch4)">n = 30</span></div>
+    <div class="sr"><label>Significance threshold (α):</label><input type="range" id="pwrAlpha" min="1" max="10" step="0.5" value="5" style="accent-color:var(--ch4)" oninput="updatePower()"><span class="sv" id="pwrALbl" style="color:var(--ch4)">α = 5%</span></div>
     <div class="dr-row">
       <span class="dr">Power: <span class="v" id="pwrVal">—</span></span>
       <span class="dr">Type II (β): <span class="v" id="pwrBeta">—</span></span>
@@ -853,11 +853,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 <div class="step"><span class="step-n">Step 2:</span> PI = 91.75 ± 2 × 38 = <span class="result">[£15.75, £167.75]</span></div>
 <div class="conclusion"><strong>Point forecast: £91.75/month.</strong> But the prediction interval is wide (£15.75 to £167.75) — income alone leaves a lot of uncertainty for any individual customer.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
 <div class="interactive" id="slopeDemo" data-chart="slopeDemo">
-    <h4>Try it: change slope and noise, watch R² respond</h4>
-    <p class="cd">Points stay fixed. Only the line and R² change. High slope + low noise = high R².</p>
+    <h4>Try it: what if income mattered more? Or customers were less random?</h4>
+    <p class="cd">Slope = how much each £1k of income changes spend. Noise = how much customers scatter around the trend. Watch how both affect R².</p>
     <canvas id="c_slopeDemo"></canvas>
-    <div class="sr"><label>Slope:</label><input type="range" id="slopeSlider" min="0" max="5" step="0.1" value="0.85" style="accent-color:var(--ch5)" oninput="updateSlope()"><span class="sv" id="slopeLbl" style="color:var(--ch5)">slope = 0.85</span></div>
-    <div class="sr"><label>Noise:</label><input type="range" id="noiseSlider" min="5" max="80" step="1" value="28" style="accent-color:var(--ch5)" oninput="updateSlope()"><span class="sv" id="noiseLbl" style="color:var(--ch5)">noise = 28 → R² ≈ 34%</span></div>
+    <div class="sr"><label>Income effect (£ per £1k):</label><input type="range" id="slopeSlider" min="0" max="5" step="0.1" value="0.85" style="accent-color:var(--ch5)" oninput="updateSlope()"><span class="sv" id="slopeLbl" style="color:var(--ch5)">slope = 0.85</span></div>
+    <div class="sr"><label>Customer randomness:</label><input type="range" id="noiseSlider" min="5" max="80" step="1" value="28" style="accent-color:var(--ch5)" oninput="updateSlope()"><span class="sv" id="noiseLbl" style="color:var(--ch5)">noise = 28 → R² ≈ 34%</span></div>
   </div>
 </div></div>
       <div class="dig">
@@ -905,26 +905,33 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
       <span class="db-item">Adj R² = <span class="v">57.2%</span></span>
       <span class="db-item">Residual SE = <span class="v">£38</span></span>
-      <span class="db-item">Correlation: Frequency ↔ Total_Items: <span class="v">r = 0.95</span></span>
+      <span class="db-item">Frequency ↔ Total_Items: <span class="v">r = 0.95</span></span>
+    </div>
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+      <span class="db-item">VIF — Income: <span class="v">1.3</span></span>
+      <span class="db-item">Distance: <span class="v">1.2</span></span>
+      <span class="db-item">Frequency: <span class="v">9.8</span></span>
+      <span class="db-item">Total_Items: <span class="v">10.1</span></span>
+      <span class="db-item">D_Standard: <span class="v">1.1</span></span>
     </div>
   </div>
 
     <div class="q-card">
       <div class="q-label" style="color:var(--ch6)">Question 6A</div>
-      <div class="q-text">Interpret each coefficient. Which predictors are significant? Is there a multicollinearity problem?</div>
+      <div class="q-text">Interpret each coefficient. Which predictors are significant? Check the VIF values — is there a multicollinearity problem?</div>
             <div class="try-box">
         <div class="try-label">Try it yourself first</div>
         <textarea placeholder="For each predictor: interpret, compute t=b/SE, check |t|>2."></textarea>
       </div>
       <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
-      <div class="hint-text">Income: t=0.62/0.09=? Distance: t=−1.8/0.41=?</div>
+      <div class="hint-text">Income: t=0.62/0.09=? Distance: t=−1.8/0.41=? For VIF: which predictors are above 5? Above 10?</div>
 <button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
       <div class="answer" id="a_6a"><div class="your-attempt"></div><div class="step"><span class="step-n">Income (b=0.62, SE=0.09):</span> t=6.89 ✓ — each additional £1,000 income → +£0.62 spend, <em>holding other variables constant</em></div>
 <div class="step"><span class="step-n">Distance (b=−1.8, SE=0.41):</span> t=−4.39 ✓ — each additional km from warehouse → −£1.80 spend</div>
 <div class="step"><span class="step-n">Frequency (b=12.5, SE=1.8):</span> t=6.94 ✓ — each additional order/month → +£12.50 spend</div>
 <div class="step"><span class="step-n">D_Standard (b=−18.3, SE=5.2):</span> t=−3.52 ✓ — Standard members spend £18.30 less than Premium (reference)</div>
-<div class="step"><span class="step-n">Multicollinearity:</span> Frequency and Total_Items have r=0.95 → <strong style="color:var(--red)">dangerously high</strong>. Drop Total_Items (Frequency is more actionable).</div>
-<div class="conclusion">All four predictors are significant (|t|>2). The model explains 57.2% of variance. But do NOT include Total_Items — it's redundant with Frequency.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
+<div class="step"><span class="step-n">Multicollinearity check:</span> Frequency and Total_Items have r = 0.95. The VIF confirms it: Frequency VIF = <strong style="color:var(--red)">9.8</strong>, Total_Items VIF = <strong style="color:var(--red)">10.1</strong> — both near 10, far above the safe threshold of ~5. Income (1.3), Distance (1.2), D_Standard (1.1) are all fine. <strong>Drop Total_Items</strong> (Frequency is more actionable for marketing).</div>
+<div class="conclusion">All four predictors are significant (|t|>2). The model explains 57.2% of variance. But do NOT include Total_Items — VIF ≈ 10 confirms it carries the same information as Frequency.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
 <div class="chart-box" id="tvalsBlock" data-chart="tvalsBlock">
     <h4>FreshCart: Predictor Significance</h4>
     <p class="cd">All four predictors pass the |t|>2 test.</p>
@@ -953,8 +960,14 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 <h5>Dummy Variables</h5>
 <p>Regression needs numbers. For categories (Premium/Standard), create <strong>dummy variables</strong>: 0/1 columns. k categories → k−1 dummies. The omitted category is the <strong>reference group</strong>.</p>
 <p>D_Standard = −18.3 means Standard spends £18.30 less than Premium (reference), all else equal.</p>
-<h5>Multicollinearity</h5>
-<p>When predictors are correlated with <em>each other</em> (not with Y), the model can't tell their effects apart. Coefficients become unstable — they may flip signs. Detect: |r| > 0.8–0.9 between predictors. Fix: drop one.</p>
+<h5>Multicollinearity & VIF</h5>
+<p>When predictors are correlated with <em>each other</em> (not with Y), the model can't tell their effects apart. Coefficients become unstable — they may flip signs.</p>
+<p><strong>Detecting it — two methods:</strong></p>
+<p>1. <strong>Correlation matrix:</strong> check pairwise |r| between predictors. |r| > 0.8–0.9 = problem.</p>
+<p>2. <strong>VIF (Variance Inflation Factor):</strong> measures how much a predictor's SE is inflated by correlation with other predictors. VIF = 1 means no multicollinearity. <strong>VIF > 5 = concerning. VIF > 10 = serious problem.</strong></p>
+<div class="fm">VIF = 1 / (1 − R²ⱼ) where R²ⱼ = R² from regressing predictor j on all other predictors</div>
+<p>FreshCart: Frequency VIF = 9.8, Total_Items VIF = 10.1. Both are near 10 because they share 95% of their variance. All other predictors have VIF ≈ 1 — no issues.</p>
+<p><strong>Fix:</strong> drop one of the collinear pair. Keep the one that's more actionable or has a stronger theoretical basis. Here: keep Frequency (marketing can influence order frequency), drop Total_Items (it's a consequence of frequency, not a lever).</p>
 <h5>The Intercept</h5>
 <p>Always keep the intercept. Never remove it based on its t-value or significance.</p></div>
       </div>
@@ -988,36 +1001,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
       <div class="chk"><input type="checkbox" id="chk_6bb" onchange="saveCheck()"><label for="chk_6bb">I've got this</label></div>
     </div>
 
-    <div class="q-card" style="border-left:3px solid var(--ch6)">
-      <div class="q-label" style="color:var(--ch6)">Question 6C</div>
-      <div class="q-text">You add "customer age" to the model. R² rises from 58.0% to 58.1%, but Adjusted R² drops from 57.2% to 56.5%. Should you keep age?</div>
-            <div class="try-box">
-        <div class="try-label">Try it yourself first</div>
-        <textarea placeholder="R² up but Adj R² down. Which do you trust? Keep or drop?"></textarea>
-      </div>
-      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
-      <div class="hint-text">R² always goes up. Adj R² penalises complexity. Which direction did it move?</div>
-<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
-      <div class="answer"><div class="your-attempt"></div>
-        <div class="step"><span class="step-n">R² went up:</span> It always goes up when you add a variable — even a useless one.</div>
-        <div class="step"><span class="step-n">Adj R² went down:</span> The penalty for added complexity outweighed the tiny improvement.</div>
-        <div class="conclusion"><strong>Drop age.</strong> Adjusted R² is the referee — if it drops, the variable is noise.</div>
-      </div>
-      <div class="dig">
-        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — R² vs Adjusted R²</button>
-        <div class="dig-body">
-          <h5>Why R² Always Goes Up</h5>
-          <p>Adding any variable — even random noise — explains a tiny bit more variance by chance. So R² can never decrease.</p>
-          <h5>Adjusted R² Adds a Penalty</h5>
-          <p>Adj R² = 1 − [(1−R²)(n−1)/(n−k−1)] where k = number of predictors. Each new predictor increases the penalty.</p>
-          <p><strong>Decision rule:</strong> Add variable → Adj R² goes up? Keep it. Goes down? Drop it.</p>
-        </div>
-      </div>
-      <div class="chk"><input type="checkbox" id="chk_6cc" onchange="saveCheck()"><label for="chk_6cc">I've got this</label></div>
-    </div>
-
     <div class="q-card">
-      <div class="q-label" style="color:var(--ch6)">Question 6D</div>
+      <div class="q-label" style="color:var(--ch6)">Question 6C</div>
       <div class="q-text">Forecast monthly spend for a Premium member, income=£55k, distance=8km, ordering 4×/month. Give a 95% PI.</div>
             <div class="try-box">
         <div class="try-label">Try it yourself first</div>
@@ -1059,7 +1044,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 
   <div class="exam-tip"><strong>Dummy variable template:</strong> "[Category] [direction: spend more/less] by £[|coefficient|] compared to [reference group], holding [list other variables] constant. t = [value], which is significant/not significant."</div>
 
-  <div class="exam-tip"><strong>Multicollinearity on the exam:</strong> If two predictors have |r| > 0.8–0.9, you MUST: (1) identify them, (2) note symptoms (unstable coefficients, flipped signs), (3) recommend dropping one. Say which one to keep and why (more actionable, better theoretical backing, etc.).</div>
+  <div class="exam-tip"><strong>Multicollinearity on the exam:</strong> If two predictors have |r| > 0.8–0.9 or <strong>VIF > 5</strong>, you MUST: (1) identify them and cite the VIF values, (2) note symptoms (unstable coefficients, inflated SEs, flipped signs), (3) recommend dropping one. Say which one to keep and why (more actionable, better theoretical basis).</div>
 
   <div class="exam-tip"><strong>MLR forecast template:</strong> Show every step: (1) Write the equation, (2) Plug in ALL values including dummy (0 or 1), (3) Calculate Ŷ, (4) Build PI = Ŷ ± 2 × Residual SE, (5) Interpret in context. "We predict this customer will spend £92.10/month, with a 95% prediction interval of [£16.10, £168.10]."</div>
 
@@ -1116,7 +1101,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <div class="q-label" style="color:var(--warm)">MULTIPLE REGRESSION</div>
     <div class="fm">Ŷ = b₀ + b₁X₁ + b₂X₂ + ... + b_k D</div>
     <div class="fm">PI = Ŷ ± 2 × Residual SE</div>
-    <p>Dummies: k categories → k−1 dummies. Adj R² drops → drop the variable. |r| > 0.9 between predictors → multicollinearity → drop one. Always keep the intercept.</p>
+    <p>Dummies: k categories → k−1 dummies. Adj R² drops → drop the variable. VIF > 5 or |r| > 0.9 → multicollinearity → drop one. Always keep the intercept.</p>
   </div>
 
   <div class="q-card" style="border-left:3px solid var(--warm)">
@@ -1125,7 +1110,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <p style="color:var(--text)"><strong>p < 0.05</strong> → reject H₀</p>
     <p style="color:var(--text)"><strong>Claim outside CI</strong> → reject</p>
     <p style="color:var(--text)"><strong>Adj R² drops</strong> → drop the variable</p>
-    <p style="color:var(--text)"><strong>|r| > 0.9</strong> → multicollinearity → drop one predictor</p>
+    <p style="color:var(--text)"><strong>VIF > 5 (or |r| > 0.9)</strong> → multicollinearity → drop one predictor</p>
   </div>
 </div>
 </section>
@@ -1151,7 +1136,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 
   <div class="trap"><strong>Trap 6: Removing the intercept</strong> — Even if the intercept is not significant, ALWAYS keep it. Removing it forces the line through the origin and distorts every other coefficient.</div>
 
-  <div class="trap"><strong>Trap 7: Ignoring multicollinearity</strong> — If two predictors have |r|>0.9, you MUST mention it. Say what the symptom is (unstable coefficients), what to do (drop one), and which one to keep and why.</div>
+  <div class="trap"><strong>Trap 7: Ignoring multicollinearity</strong> — If two predictors have |r|>0.9 or VIF>5, you MUST mention it. Cite the VIF values. Say what the symptom is (unstable coefficients, inflated SEs), what to do (drop one), and which one to keep and why.</div>
 
   <div class="trap"><strong>Trap 8: Extrapolation</strong> — If asked to predict for values outside the data range, flag that the prediction is unreliable. The linear relationship may not hold at extreme values.</div>
 
@@ -1293,7 +1278,7 @@ chartMap['zChartBlock']=function(){
 };
 function updateZ(){
   const z=parseFloat(document.getElementById('zSlider').value);const pr=1-ncdf(z);
-  document.getElementById('zLbl').textContent='z = '+z.toFixed(2)+' → '+(pr*100).toFixed(1)+'%';
+  const mins=(z*8+32).toFixed(0);document.getElementById('zLbl').textContent=mins+'min → z='+z.toFixed(2)+' → '+(pr*100).toFixed(1)+'% late';
   if(!zCh)return;zCh.data.datasets[1].data=zL.map(lbl=>parseFloat(lbl)>=z?npdf(parseFloat(lbl),0,1):0);
   zCh.data.datasets[1].label='P(Z>'+z.toFixed(2)+') = '+(pr*100).toFixed(1)+'%';zCh.update('none');
 }
@@ -1317,7 +1302,7 @@ function updateCIexplore(){
   const zMap={80:1.28,85:1.44,90:1.645,95:1.96,99:2.576};const keys=[80,85,90,95,99];let mult=2;
   for(let i=0;i<keys.length-1;i++){if(confPct>=keys[i]&&confPct<=keys[i+1]){const t=(confPct-keys[i])/(keys[i+1]-keys[i]);mult=zMap[keys[i]]*(1-t)+zMap[keys[i+1]]*t;break;}}
   const se=59/Math.sqrt(n);const margin=mult*se;
-  document.getElementById('ciNLbl').textContent='n='+n;
+  document.getElementById('ciNLbl').textContent=n+' customers';
   document.getElementById('ciConfLbl').textContent=confPct+'% → ±'+margin.toFixed(1);
   if(ciExpChart){ciExpChart.data.datasets[0].data=Array(50).fill(142+margin);ciExpChart.data.datasets[1].data=Array(50).fill(142-margin);
     ciExpChart.options.scales.y.min=Math.min(100,142-margin-15);ciExpChart.options.scales.y.max=Math.max(185,142+margin+15);ciExpChart.update('none');}
@@ -1393,9 +1378,9 @@ chartMap['powerDemo']=function(){
 function updatePower(){
   const eff=+document.getElementById('pwrEffect').value,n=+document.getElementById('pwrN').value,alpha=+document.getElementById('pwrAlpha').value/100;
   const seN=1/Math.sqrt(n/10);const critVal=ncdfInv(1-alpha/2)*seN;
-  document.getElementById('pwrEffLbl').textContent='effect = '+eff.toFixed(1);
-  document.getElementById('pwrNLbl').textContent='n = '+n;
-  document.getElementById('pwrALbl').textContent='α = '+(alpha*100)+'%';
+  document.getElementById('pwrEffLbl').textContent='£'+eff.toFixed(0)+'/mo gap';
+  document.getElementById('pwrNLbl').textContent=n+' per group';
+  document.getElementById('pwrALbl').textContent='α = '+(alpha*100)+'% (reject if p < this)';
   if(powerChart){
     powerChart.data.datasets[0].data=pwrL.map(x=>npdf(parseFloat(x),0,seN));
     powerChart.data.datasets[1].data=pwrL.map(x=>npdf(parseFloat(x),eff,seN));
@@ -1408,9 +1393,9 @@ function updatePower(){
     document.getElementById('pwrVal').style.color=powVal>.8?C.g:C.w;}
 }
 function setPowerScenario(n){
-  const s={1:{eff:1.0,n:15,alpha:5,text:'<strong style="color:#ef4444">Underpowered:</strong> Small effect, tiny sample. Power is very low — you\'ll miss the effect ~80% of the time.'},
-    2:{eff:2.0,n:60,alpha:5,text:'<strong style="color:#22c55e">Well-Designed:</strong> Power ≈ 80%. You\'ll detect the effect 4 out of 5 times. Standard target.'},
-    3:{eff:3.5,n:150,alpha:5,text:'<strong style="color:#3b82f6">Overwhelming:</strong> Power ≈ 99%. The distributions barely overlap. You\'d almost never miss.'}};
+  const s={1:{eff:1.0,n:15,alpha:5,text:'<strong style="color:#ef4444">Underpowered pilot:</strong> Premium members spend just £1/mo more, and you only surveyed 15 per group. You\'ll miss this tiny gap ~85% of the time.'},
+    2:{eff:2.0,n:60,alpha:5,text:'<strong style="color:#22c55e">Well-designed study:</strong> Premium members spend £2/mo more, 60 per group. Power ≈ 80% — you\'ll catch the difference 4 out of 5 times.'},
+    3:{eff:3.5,n:150,alpha:5,text:'<strong style="color:#3b82f6">Overwhelming evidence:</strong> Premium spends £3.50/mo more, 150 per group. Power ≈ 99%. The gap is so clear you\'d almost never miss it.'}};
   const sc=s[n];document.getElementById('pwrEffect').value=sc.eff;document.getElementById('pwrN').value=sc.n;
   document.getElementById('pwrAlpha').value=sc.alpha;document.getElementById('pwrInterpretation').innerHTML=sc.text;updatePower();
 }
@@ -1467,8 +1452,8 @@ function updateSlope(){
   const ssTot=pts.reduce((a,p)=>a+((p.y-my)*(p.y-my)),0);
   const ssRes=pts.reduce((a,p)=>{const yhat=10+slope*p.x;return a+((p.y-yhat)*(p.y-yhat));},0);
   const r2=ssTot>0?Math.max(0,1-ssRes/ssTot):0;
-  document.getElementById('slopeLbl').textContent='slope = '+slope.toFixed(1);
-  document.getElementById('noiseLbl').textContent='noise = '+noiseScale+' → R² ≈ '+Math.round(r2*100)+'%';
+  document.getElementById('slopeLbl').textContent='£'+slope.toFixed(2)+' per £1k income';
+  document.getElementById('noiseLbl').textContent='scatter = ±£'+noiseScale+' → R² = '+Math.round(r2*100)+'%';
   if(slopeChart){slopeChart.data.datasets[0].data=pts;slopeChart.data.datasets[1].data=[{x:0,y:10},{x:55,y:10+slope*55}];
     slopeChart.options.scales.y.min=-60;slopeChart.options.scales.y.max=360;slopeChart.update('none');}
 }
@@ -1512,13 +1497,13 @@ const deck=[
   {s:'c6',q:'Adding age drops Adj R² from 57.2% to 56.5%. Action?',a:'Drop age. Adj R² dropped→complexity penalty outweighs benefit.'},
   {s:'c6',q:'Membership: 2 levels. How many dummies?',a:'1 dummy (D_Standard). Premium is reference. Coeff=difference from Premium.',f:'k→k−1 dummies'},
   {s:'c6',q:'D_Standard=−18.3. Meaning?',a:'Standard members spend £18.30 less than Premium, holding income/distance/frequency constant. t=−3.52→significant.'},
-  {s:'c6',q:'Frequency & Total Items: r=0.95. Problem?',a:'Multicollinearity. Same info. Including both→unstable coefficients. Drop Total Items.'},
+  {s:'c6',q:'Frequency VIF=9.8, Total Items VIF=10.1, r=0.95. Problem?',a:'Multicollinearity — VIF>5 (near 10!) confirms they carry the same info. Including both→unstable coefficients, inflated SEs. Drop Total Items (Frequency is more actionable).'},
   {s:'c6',q:'Forecast: Premium, income=55, dist=8, freq=4.',a:'Ŷ=22.4+0.62(55)−1.8(8)+12.5(4)−18.3(0)=£92.10. PI=[£16.1,£168.1].',f:'Ŷ=£92.10'},
+  {s:'c6',q:'What does VIF measure? What thresholds matter?',a:'VIF = how much a predictor\'s SE is inflated by correlation with other predictors. VIF=1 → no issue. VIF>5 → concerning. VIF>10 → serious multicollinearity. Fix: drop one of the collinear pair.'},
   {s:'c6',q:'Intercept=22.4, |t|=1.1. Remove it?',a:'NEVER. Always keep the intercept regardless of significance.'},
 
   {s:'c2',q:'Why does the SE formula work? What theorem?',a:'The Central Limit Theorem: sample means are approximately normal regardless of the original data shape, with spread = σ/√n.'},
   {s:'c5',q:'Income coefficient: 0.85 in SLR, 0.62 in MLR. Why?',a:'SLR captured total effect (direct + indirect via other variables). MLR isolates the direct effect, controlling for distance/frequency/membership.'},
-  {s:'c6',q:'You add age and Adj R² drops. What do you do?',a:'Drop age. Adj R² penalises complexity. If it drops, the variable is noise and doesn\'t help the model.'},
   {s:'c5',q:'Can you predict spend for income=£200k using FreshCart data (range £20k-£100k)?',a:'This is extrapolation — unreliable. The linear relationship may not hold outside the observed range. Flag this on the exam.'},
 ];
 let fFilter='all',fDeck=[...deck],fIdx=0,fRates={};
