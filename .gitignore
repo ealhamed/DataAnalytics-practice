@@ -1,0 +1,41 @@
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+credentials.json
+token.json
+service-account*.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+
+# Node.js
+node_modules/
+
+# Claude / Superpowers
+.claude/
+.superpowers/
+CLAUDE.md
+
+# Data
+*.csv
+*.xlsx
+!data/sample_*
+
+# Logs & Temp
+*.log
+.tmp/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
