@@ -1550,10 +1550,14 @@ function toggleCalc(btn){
   btn.textContent=calc.classList.contains('show')?'🧮 Close calculator':'🧮 Open calculator';
 }
 window.addEventListener('scroll',()=>{
-  const h=document.documentElement.scrollHeight-window.innerHeight;
   document.getElementById('btt').classList.toggle('show',window.scrollY>300);
   const secs=['hero','ch1','ch2','ch3','ch4','ch5','ch6','tf','cheat','traps','cards'];let cur='hero';
-  secs.forEach(s=>{const e=document.getElementById(s);if(e&&e.getBoundingClientRect().top<180)cur=s;});
+  const atBottom=window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-10;
+  if(atBottom){
+    for(let i=secs.length-1;i>=0;i--){const e=document.getElementById(secs[i]);if(e&&e.getBoundingClientRect().top<window.innerHeight){cur=secs[i];break;}}
+  } else {
+    secs.forEach(s=>{const e=document.getElementById(s);if(e&&e.getBoundingClientRect().top<180)cur=s;});
+  }
   document.querySelectorAll('.np').forEach((p,i)=>p.classList.toggle('active',secs[i]===cur));
 });
 const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.06});
