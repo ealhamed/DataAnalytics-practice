@@ -55,12 +55,40 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 /* SECTIONS */
 .section{padding:4rem 2rem 3rem}.container{max-width:1050px;margin:0 auto}
 
+/* COLLAPSIBLE CHAPTERS */
+.section.collapsible .ch-body{display:none;animation:chOpen .4s ease}
+.section.collapsible.open .ch-body{display:block}
+@keyframes chOpen{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.ch-toggle{display:none;align-items:center;gap:.5rem;padding:.5rem .9rem;border-radius:100px;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--card-border);background:var(--card);color:var(--text2);font-family:var(--font-body);transition:var(--transition);margin-top:.6rem}
+.ch-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.ch-toggle .ch-arrow{transition:transform .3s;font-size:.6rem}
+.section.collapsible .ch-toggle{display:inline-flex}
+.section.collapsible.open .ch-toggle .ch-arrow{transform:rotate(90deg)}
+.section.collapsible .ch-head{margin-bottom:.5rem;cursor:pointer}
+.section.collapsible.open .ch-head{margin-bottom:2rem;cursor:default}
+.ch-qcount{font-size:.65rem;color:var(--text3);font-weight:500;margin-left:.4rem}
+
 /* CHAPTER HEADER */
 .ch-head{margin-bottom:2rem}
 .ch-num{font-family:var(--font-head);font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem;display:flex;align-items:center;gap:.5rem}
 .ch-num::before{content:'';width:20px;height:1px}
 .ch-q{font-family:var(--font-head);font-size:clamp(1.4rem,3.5vw,2rem);font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:.5rem}
 .ch-context{color:var(--text2);font-size:.88rem;max-width:600px}
+
+/* HIDDEN EXTRAS (try-boxes, inline tips/traps/takeaways) */
+.try-box{display:none}
+.ch-extras{display:none;margin-top:1rem}
+.ch-extras.show{display:block;animation:fadeIn .3s ease}
+.extras-toggle{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .7rem;border-radius:100px;font-size:.68rem;font-weight:600;color:var(--text3);cursor:pointer;border:1px solid var(--card-border);background:transparent;font-family:var(--font-body);transition:var(--transition);margin-top:.75rem}
+.extras-toggle:hover{color:var(--text);border-color:var(--text3)}
+.extras-toggle .arr{transition:transform .2s;font-size:.6rem}
+.extras-toggle.open .arr{transform:rotate(90deg)}
+
+/* CALC COLLAPSED */
+.calc{display:none}
+.calc.show{display:block;animation:fadeIn .3s ease}
+.calc-toggle{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .7rem;border-radius:100px;font-size:.68rem;font-weight:600;color:var(--text3);cursor:pointer;border:1px solid var(--card-border);background:transparent;font-family:var(--font-body);transition:var(--transition);margin:.5rem 0}
+.calc-toggle:hover{color:var(--accent);border-color:var(--accent)}
 
 /* DATA BOX */
 .data-box{background:var(--bg2);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.1rem 1.4rem;margin-bottom:1.75rem;display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center}
@@ -414,13 +442,15 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
   </div>
 </section>
 
-<section class="section ch1" id="ch1">
+<section class="section ch1 collapsible" id="ch1">
 <div class="container">
   <div class="ch-head">
     <div class="ch-num">Chapter 1</div>
-    <div class="ch-q">What does our customer data look like?</div>
+    <div class="ch-q">What does our customer data look like? <span class="ch-qcount">· 2 questions</span></div>
     <p class="ch-context">You've just been handed the FreshCart dataset: 200 customers, their monthly spend, delivery times, and more. Before diving into models, you need to understand what you're looking at.</p>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand chapter</button>
+  <div class="ch-body">
 
   <div class="data-box">
     <span class="db-item">Customers: <span class="v">200</span></span>
@@ -505,6 +535,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
       <div class="chk"><input type="checkbox" id="chk_1b" onchange="saveCheck()"><label for="chk_1b">I've got this</label></div>
     </div>
 
+  <button class="calc-toggle" onclick="toggleCalc(this)">🧮 Open calculator</button>
   <div class="calc">
     <h4>Z-Score Calculator</h4>
     <div class="fm">z = (x − μ) / σ</div>
@@ -513,16 +544,19 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <div class="calc-res" id="zR"><span class="lt">Enter values</span></div>
   </div>
 
+  </div><!-- /ch-body -->
 </div>
 </section>
 
-<section class="section ch2" id="ch2">
+<section class="section ch2 collapsible" id="ch2">
 <div class="container">
   <div class="ch-head">
     <div class="ch-num">Chapter 2</div>
-    <div class="ch-q">How confident are we in our numbers?</div>
+    <div class="ch-q">How confident are we in our numbers? <span class="ch-qcount">· 2 questions</span></div>
     <p class="ch-context">We know the sample mean is £142. But how close is that to the <em>true</em> average across all possible customers?</p>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand chapter</button>
+  <div class="ch-body">
 
   <div class="data-box">
     <span class="db-item">x̄ = <span class="v">£142</span></span>
@@ -629,6 +663,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     </div>
   </div>
 
+  <button class="calc-toggle" onclick="toggleCalc(this)">🧮 Open calculator</button>
   <div class="calc">
     <h4>CI Builder & Claim Tester</h4>
     <div class="fm">CI = x̄ ± 2 × (s / √n)</div>
@@ -638,23 +673,28 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <div class="calc-res" id="ciR"><span class="lt">Enter values</span></div>
   </div>
 
-
+  <button class="extras-toggle" onclick="toggleExtras(this)"><span class="arr">▶</span> Review notes &amp; exam tips</button>
+  <div class="ch-extras">
   <div class="exam-tip"><strong>s vs SE — the #1 exam mistake:</strong> If the question gives you s = 59 and asks for a CI, you MUST divide by √n first to get SE. Using s directly in the CI formula will give an answer that's ~14× too wide. Look for this trap in every CI question.</div>
 
   <div class="exam-tip"><strong>CI interpretation:</strong> Never write "95% probability the true mean is in this interval." Write: "We are 95% confident that the true population mean lies between [lower] and [upper]." The confidence is in the <strong>method</strong>, not any single interval.</div>
+  </div>
 
   <div class="takeaway"><strong>Chapter 2 summary:</strong> SE = s/√n (always smaller than s). CI = x̄ ± 2 × SE for 95%. "95% confident" means the method works 95% of the time, not that this specific interval has a 95% probability. The CLT is why all of this works — sample means are approximately normal.</div>
 
+  </div><!-- /ch-body -->
 </div>
 </section>
 
-<section class="section ch3" id="ch3">
+<section class="section ch3 collapsible" id="ch3">
 <div class="container">
   <div class="ch-head">
     <div class="ch-num">Chapter 3</div>
-    <div class="ch-q">Is the CEO's £160 claim credible?</div>
+    <div class="ch-q">Is the CEO's £160 claim credible? <span class="ch-qcount">· 1 question</span></div>
     <p class="ch-context">The CEO tells investors that average customer spend is £160/month. Your CI says [£133.7, £150.3]. Time to test the claim.</p>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand chapter</button>
+  <div class="ch-body">
 
   <div class="data-box">
     <span class="db-item">CI: <span class="v">[£133.7, £150.3]</span></span>
@@ -713,22 +753,28 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
       <div class="chk"><input type="checkbox" id="chk_3a" onchange="saveCheck()"><label for="chk_3a">I've got this</label></div>
     </div>
 
+  <button class="extras-toggle" onclick="toggleExtras(this)"><span class="arr">▶</span> Review notes &amp; exam tips</button>
+  <div class="ch-extras">
   <div class="exam-tip"><strong>Setting up hypotheses:</strong> H₀ always has "=". The claim you're testing goes into H₀. Hₐ has ≠ (two-sided) or < / > (one-sided). If the question says "test whether average spend is £160," then H₀: μ = 160.</div>
 
   <div class="trap"><strong>"Accept H₀" = instant mark loss.</strong> Write "fail to reject H₀" or "insufficient evidence to reject." Never "accept." Absence of evidence is not evidence of absence.</div>
+  </div>
 
   <div class="takeaway"><strong>Chapter 3 summary:</strong> Build CI → check if claim is inside. Outside = reject H₀. Inside = fail to reject. p-value = probability of data this extreme IF H₀ were true. Small p = strong evidence against H₀. Never "accept" H₀.</div>
 
+  </div><!-- /ch-body -->
 </div>
 </section>
 
-<section class="section ch4" id="ch4">
+<section class="section ch4 collapsible" id="ch4">
 <div class="container">
   <div class="ch-head">
     <div class="ch-num">Chapter 4</div>
-    <div class="ch-q">Do Premium members actually spend more?</div>
+    <div class="ch-q">Do Premium members actually spend more? <span class="ch-qcount">· 1 question</span></div>
     <p class="ch-context">FreshCart offers two tiers. Marketing says Premium members spend more. Let's test it.</p>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand chapter</button>
+  <div class="ch-body">
 
   <div class="data-box">
     <span class="db-item">Standard: <span class="v">x̄=£128, s=£52, n=120</span></span>
@@ -786,6 +832,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
       <div class="chk"><input type="checkbox" id="chk_4a" onchange="saveCheck()"><label for="chk_4a">I've got this</label></div>
     </div>
 
+  <button class="calc-toggle" onclick="toggleCalc(this)">🧮 Open calculator</button>
   <div class="calc">
     <h4>Two-Sample t-Test Calculator</h4>
     <div class="fm">t = (x̄₁ − x̄₂) / √(s₁²/n₁ + s₂²/n₂)</div>
@@ -795,21 +842,26 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <div class="calc-res" id="ttR"><span class="lt">Enter values</span></div>
   </div>
 
-
+  <button class="extras-toggle" onclick="toggleExtras(this)"><span class="arr">▶</span> Review notes &amp; exam tips</button>
+  <div class="ch-extras">
   <div class="exam-tip"><strong>Two-sample t-test on the exam:</strong> Show all 4 steps: (1) State H₀/Hₐ, (2) Calculate SE = √(s₁²/n₁ + s₂²/n₂), (3) Calculate t = difference/SE, (4) Compare |t| to 2 and state conclusion in context.</div>
+  </div>
 
   <div class="takeaway"><strong>Chapter 4 summary:</strong> Two-sample test compares two group means. t = gap / noise. |t| > 2 → significant. Power = probability of detecting a real effect. Larger n and larger effects → more power. Same effect can be significant at n=200 but not at n=20.</div>
 
+  </div><!-- /ch-body -->
 </div>
 </section>
 
-<section class="section ch5" id="ch5">
+<section class="section ch5 collapsible" id="ch5">
 <div class="container">
   <div class="ch-head">
     <div class="ch-num">Chapter 5</div>
-    <div class="ch-q">Does household income predict how much customers spend?</div>
+    <div class="ch-q">Does household income predict how much customers spend? <span class="ch-qcount">· 2 questions</span></div>
     <p class="ch-context">The CEO wants to know what drives spending. You start with the simplest model: does household income predict how much a customer spends each month?</p>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand chapter</button>
+  <div class="ch-body">
 
   <div class="data-box">
     <span class="db-item">Equation: <span class="v">Ŷ = 45 + 0.85 × Income</span></span>
@@ -902,6 +954,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
       <div class="chk"><input type="checkbox" id="chk_5b" onchange="saveCheck()"><label for="chk_5b">I've got this</label></div>
     </div>
 
+  <button class="calc-toggle" onclick="toggleCalc(this)">🧮 Open calculator</button>
   <div class="calc">
     <h4>Coefficient t-Value Calculator</h4>
     <div class="fm">t = b / SE(b) → |t| > 2 = significant</div>
@@ -910,7 +963,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <div class="calc-res" id="tvR"><span class="lt">Enter values</span></div>
   </div>
 
-
+  <button class="extras-toggle" onclick="toggleExtras(this)"><span class="arr">▶</span> Review notes &amp; exam tips</button>
+  <div class="ch-extras">
   <div class="trap"><strong>Extrapolation trap:</strong> FreshCart income data ranges from ~£20k to ~£100k. If asked to predict spend for someone earning £200k, you MUST flag this: "This is extrapolation beyond the observed data range. The prediction is unreliable because we don't know if the linear relationship holds at extreme values."</div>
 
   <div class="exam-tip"><strong>Interpreting the slope — full template:</strong> "For each additional [1 unit of X], [Y] increases/decreases by [b₁] [units of Y], <strong>on average</strong>." Always include direction, units, and "on average." For FreshCart: "For each additional £1,000 of income, monthly spend increases by £0.85, on average."</div>
@@ -918,19 +972,23 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
   <div class="exam-tip"><strong>R² vs significance:</strong> R² = 34% means the model explains 34% of variance. The slope can be significant (|t|>2) even when R² is low — a real but weak signal. Don't confuse "significant" with "strong." Significance tells you the relationship <strong>exists</strong>; R² tells you how <strong>useful</strong> it is.</div>
 
   <div class="exam-tip"><strong>PI vs CI on the exam:</strong> PI ≈ Ŷ ± 2 × Residual SE (for a <strong>single</strong> new customer). CI = for the <strong>average</strong> of all customers at that X value. PI is always wider. If the question asks "predict spend for a customer," use PI. If it asks "estimate average spend," use CI.</div>
+  </div>
 
   <div class="takeaway"><strong>Chapter 5 summary:</strong> Ŷ = b₀ + b₁X. Slope = change in Y per unit X, on average. t = b₁/SE → |t|>2 means significant. R² = fraction of variance explained. PI = Ŷ ± 2×RSE for individuals. Never extrapolate outside data range. A significant slope with low R² means the relationship is real but weak.</div>
 
+  </div><!-- /ch-body -->
 </div>
 </section>
 
-<section class="section ch6" id="ch6">
+<section class="section ch6 collapsible" id="ch6">
 <div class="container">
   <div class="ch-head">
     <div class="ch-num">Chapter 6</div>
-    <div class="ch-q">What drives spending when we control for everything?</div>
+    <div class="ch-q">What drives spending when we control for everything? <span class="ch-qcount">· 5 questions</span></div>
     <p class="ch-context">Income alone tells part of the story. The board wants the full picture — what happens when you factor in how far the customer lives, how often they order, and whether they're on the Premium plan?</p>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand chapter</button>
+  <div class="ch-body">
 
   <div class="data-box" style="flex-direction:column;gap:.5rem">
     <span class="db-item" style="width:100%;font-family:var(--font-mono);font-size:.8rem;color:var(--text)">Ŷ = 22.4 + 0.62×Income − 1.8×Distance + 12.5×Frequency − 18.3×D_Standard</span>
@@ -1139,6 +1197,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
       <div class="chk"><input type="checkbox" id="chk_6e" onchange="saveCheck()"><label for="chk_6e">I've got this</label></div>
     </div>
 
+  <button class="calc-toggle" onclick="toggleCalc(this)">🧮 Open calculator</button>
   <div class="calc">
     <h4>MLR Forecaster</h4>
     <div class="fm">Ŷ = b₀ + b₁X₁ + b₂X₂ + b₃X₃ + b₄D &nbsp;|&nbsp; PI = Ŷ ± 2 × RSE</div>
@@ -1151,7 +1210,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <div class="calc-res" id="fcR"><span class="lt">Enter values</span></div>
   </div>
 
-
+  <button class="extras-toggle" onclick="toggleExtras(this)"><span class="arr">▶</span> Review notes &amp; exam tips</button>
+  <div class="ch-extras">
   <div class="exam-tip"><strong>Dummy variable template:</strong> "[Category] [direction: spend more/less] by £[|coefficient|] compared to [reference group], holding [list other variables] constant. t = [value], which is significant/not significant."</div>
 
   <div class="exam-tip"><strong>Multicollinearity on the exam:</strong> If two predictors have |r| > 0.8–0.9 or <strong>VIF > 5</strong>, you MUST: (1) identify them and cite the VIF values, (2) note symptoms (unstable coefficients, inflated SEs, flipped signs), (3) recommend dropping one. Say which one to keep and why (more actionable, better theoretical basis).</div>
@@ -1159,9 +1219,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
   <div class="exam-tip"><strong>MLR forecast template:</strong> Show every step: (1) Write the equation, (2) Plug in ALL values including dummy (0 or 1), (3) Calculate Ŷ, (4) Build PI = Ŷ ± 2 × Residual SE, (5) Interpret in context. "We predict this customer will spend £92.10/month, with a 95% prediction interval of [£16.10, £168.10]."</div>
 
   <div class="trap"><strong>Intercept trap:</strong> If the intercept is not significant (|t| < 2), do NOT remove it. Always keep the intercept. Removing it forces the regression through the origin and distorts all other coefficients. This is a common exam trap.</div>
+  </div>
 
   <div class="takeaway"><strong>Chapter 6 summary:</strong> MLR isolates each predictor's effect "holding all else constant." Coefficients shrink vs SLR (omitted variable bias removed). k categories → k−1 dummies. Reference group's effect = 0 by definition. Multicollinearity: drop one of any pair with |r|>0.9. Adj R² penalises complexity — if it drops, drop the variable. Always keep the intercept. Forecast with PI = Ŷ ± 2×RSE.</div>
 
+  </div><!-- /ch-body -->
 </div>
 </section>
 
@@ -1434,6 +1496,45 @@ function toggleAnswer(btn){
   });}
 }
 function toggleDig(btn){btn.classList.toggle('open');btn.nextElementSibling.classList.toggle('show');}
+function toggleChapter(btn){
+  const sec=btn.closest('.section');
+  const wasOpen=sec.classList.contains('open');
+  sec.classList.toggle('open');
+  btn.innerHTML=wasOpen?'<span class="ch-arrow">▶</span> Expand chapter':'<span class="ch-arrow">▶</span> Collapse chapter';
+  if(!wasOpen){
+    sec.querySelectorAll('[data-chart]').forEach(el=>{
+      if(!el.dataset.done){el.dataset.done='1';const fn=chartMap[el.dataset.chart];if(fn)fn();}
+    });
+  }
+}
+/* Click ch-head to expand when collapsed */
+document.querySelectorAll('.collapsible .ch-head').forEach(h=>{
+  h.addEventListener('click',()=>{
+    const sec=h.closest('.section');
+    if(!sec.classList.contains('open')){
+      sec.querySelector('.ch-toggle').click();
+    }
+  });
+});
+/* Nav/chapter-nav clicks auto-expand target chapter */
+const origGo=go;
+go=function(s){
+  origGo(s);
+  const id=s.replace('#','');
+  const sec=document.getElementById(id);
+  if(sec&&sec.classList.contains('collapsible')&&!sec.classList.contains('open')){
+    setTimeout(()=>sec.querySelector('.ch-toggle').click(),100);
+  }
+};
+function toggleExtras(btn){
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('show');
+}
+function toggleCalc(btn){
+  const calc=btn.nextElementSibling;
+  calc.classList.toggle('show');
+  btn.textContent=calc.classList.contains('show')?'🧮 Close calculator':'🧮 Open calculator';
+}
 window.addEventListener('scroll',()=>{
   const h=document.documentElement.scrollHeight-window.innerHeight;
   document.getElementById('btt').classList.toggle('show',window.scrollY>300);
