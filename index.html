@@ -76,7 +76,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 .ch-context{color:var(--text2);font-size:.88rem;max-width:600px}
 
 /* HIDDEN EXTRAS (try-boxes, inline tips/traps/takeaways) */
-.try-box{display:none}
+.try-box{margin:.6rem 0}
 .ch-extras{display:none;margin-top:1rem}
 .ch-extras.show{display:block;animation:fadeIn .3s ease}
 .extras-toggle{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .7rem;border-radius:100px;font-size:.68rem;font-weight:600;color:var(--text3);cursor:pointer;border:1px solid var(--card-border);background:transparent;font-family:var(--font-body);transition:var(--transition);margin-top:.75rem}
@@ -461,17 +461,17 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <span class="db-item">Delivery σ: <span class="v">8 min</span></span>
   </div>
 
-    <div class="q-card">
+    <div class="q-card" id="yn_card_1a">
       <div class="q-label" style="color:var(--ch1)">Question 1A</div>
       <div class="q-text">A report states: "About half of FreshCart customers spend less than £142 per month." Is this correct?</div>
-            <div class="try-box">
-        <div class="try-label">Try it yourself first</div>
-        <textarea placeholder="What measure does 'about half' refer to — mean or median?"></textarea>
-      </div>
       <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
-      <div class="hint-text">Which measure splits data exactly in half when sorted?</div>
-<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
-      <div class="answer" id="a_1a"><div class="your-attempt"></div><div class="step"><span class="step-n">Answer:</span> <strong style="color:var(--red)">Incorrect.</strong></div>
+      <div class="hint-text">Which measure splits data exactly in half when sorted? Is that the mean or the median?</div>
+      <div class="tf-buttons">
+        <button class="tf-btn tf-true" onclick="answerYN('1a','correct',this)">Correct</button>
+        <button class="tf-btn tf-false" onclick="answerYN('1a','incorrect',this)">Incorrect</button>
+      </div>
+      <div class="tf-result" id="yn_result_1a"></div>
+      <div class="tf-explanation" id="yn_exp_1a"><div class="step"><span class="step-n">Answer:</span> <strong style="color:var(--red)">Incorrect.</strong></div>
 <p>"About half" describes the <strong>median</strong>, not the mean. Half of customers spend below <span class="result">£128</span> (the median). The mean (£142) is pulled up by a few corporate accounts with high spend.</p>
 <p>Since mean (£142) > median (£128), the data is <strong>right-skewed</strong> — a long tail of high values pulls the average up.</p><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
 <div class="interactive" id="outlierDemo" data-chart="outlierDemo">
@@ -564,18 +564,18 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <span class="db-item">n = <span class="v">200</span></span>
   </div>
 
-    <div class="q-card">
+    <div class="q-card" id="yn_card_2a">
       <div class="q-label" style="color:var(--ch2)">Question 2A</div>
       <div class="q-text">The standard deviation of customer spend is £59. Does this mean our estimate of the average is also uncertain by about ±£59?</div>
-            <div class="try-box">
-        <div class="try-label">Try it yourself first</div>
-        <textarea placeholder="What formula converts s to the uncertainty of the average?"></textarea>
-      </div>
       <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
-      <div class="hint-text">SE = s/√n. Try s=59, n=200.</div>
-<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
-      <div class="answer" id="a_2a"><div class="your-attempt"></div><div class="step"><span class="step-n">Answer:</span> <strong style="color:var(--red)">No.</strong> £59 is the spread of <em>individual</em> customers. The uncertainty in the <em>average</em> is much smaller.</div>
-<div class="step"><span class="step-n">The key formula:</span> <span class="fm">SE = s / √n = 59 / √200 = <span class="result">£4.17</span></span></div>
+      <div class="hint-text">The formula that converts s to the uncertainty of the average is: <span class="fm" style="display:inline;padding:.2rem .5rem;margin:0">SE = s / √n</span>. Try s=59, n=200. Is that anywhere near ±£59?</div>
+      <div class="tf-buttons">
+        <button class="tf-btn tf-true" onclick="answerYN('2a','yes',this)">Yes</button>
+        <button class="tf-btn tf-false" onclick="answerYN('2a','no',this)">No</button>
+      </div>
+      <div class="tf-result" id="yn_result_2a"></div>
+      <div class="tf-explanation" id="yn_exp_2a"><div class="step"><span class="step-n">Answer:</span> <strong style="color:var(--red)">No.</strong> £59 is the spread of <em>individual</em> customers. The uncertainty in the <em>average</em> is much smaller.</div>
+<div class="step"><span class="step-n">The calculation:</span> SE = s / √n = 59 / √200 = <span class="result">£4.17</span></div>
 <p>Individual customers vary by ±£59. But our estimate of the average is precise to about <strong>±£4.17</strong>. That's 14× more precise — because averaging 200 people cancels out a lot of noise.</p><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
 <div class="chart-box" id="sVsSeBlock" data-chart="sVsSeBlock">
     <h4>FreshCart: s vs SE — the difference matters</h4>
@@ -1823,6 +1823,35 @@ function calcTV(){const b=+document.getElementById('tv-b').value,se=+document.ge
 function calcFC(){const b0=+document.getElementById('fc-b0').value,rse=+document.getElementById('fc-rse').value,x1=+document.getElementById('fc-x1').value,b1=+document.getElementById('fc-b1').value,x2=+document.getElementById('fc-x2').value,b2=+document.getElementById('fc-b2').value,x3=+document.getElementById('fc-x3').value,b3=+document.getElementById('fc-b3').value,x4=+document.getElementById('fc-x4').value,b4=+document.getElementById('fc-b4').value;if(isNaN(b0)||isNaN(rse)||isNaN(x1)||isNaN(b1)||isNaN(x2)||isNaN(b2)||isNaN(x3)||isNaN(b3)||isNaN(x4)||isNaN(b4)){document.getElementById('fcR').innerHTML=_err;return;}const y=b0+b1*x1+b2*x2+b3*x3+b4*x4;document.getElementById('fcR').innerHTML='<span class="lt">Ŷ:</span> <span class="v">'+y.toFixed(3)+'</span><br><span class="lt">95% PI:</span> <span class="v">['+(y-2*rse).toFixed(1)+', '+(y+2*rse).toFixed(1)+']</span>';}
 
 /* ── TRUE/FALSE ── */
+/* ── YES/NO BUTTON QUESTIONS ── */
+const ynAnswers={'1a':'incorrect','2a':'no'};
+function answerYN(id,choice,btn){
+  const card=document.getElementById('yn_card_'+id);
+  if(card.dataset.answered) return;
+  card.dataset.answered='1';
+  const correct=ynAnswers[id];
+  const isCorrect=choice===correct;
+  const btns=card.querySelectorAll('.tf-btn');
+  btns.forEach(b=>{
+    b.disabled=true;
+    if(b===btn){
+      b.classList.add(isCorrect?'chosen-correct':'chosen-wrong');
+    } else if(!isCorrect){
+      b.classList.add('was-correct');
+    }
+  });
+  const res=document.getElementById('yn_result_'+id);
+  res.textContent=isCorrect?'Correct!':'Incorrect';
+  res.className='tf-result show '+(isCorrect?'correct':'wrong');
+  const exp=document.getElementById('yn_exp_'+id);
+  exp.classList.add('show');
+  exp.querySelectorAll('[data-chart]').forEach(el=>{
+    if(!el.dataset.done){el.dataset.done='1';const fn=chartMap[el.dataset.chart];if(fn)fn();}
+  });
+  const chk=card.querySelector('.chk input');
+  if(chk&&isCorrect){chk.checked=true;saveCheck();}
+}
+
 const tfAnswers={1:'false',2:'false',3:'false',4:'false',5:'false',6:'true'};
 let tfScore=0,tfAnswered=0;
 function answerTF(n,choice,btn){
