@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FreshCart Analytics — Data Analytics Revision Tool</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" integrity="sha384-vsrfeLOOY6KuIYKDlmVH5UiBmgIdB1oEf7p01YgWHuqmOHfZr374+odEv96n9tNC" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -194,6 +194,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
   .btt{bottom:1rem;right:1rem;width:36px;height:36px;font-size:.95rem}
   .prog-row{flex-direction:column;gap:.3rem}.prog-lbl{text-align:center}
   .calc .cr{flex-direction:column}
+  .tf-buttons{gap:.4rem}.tf-btn{padding:.6rem .8rem;font-size:.82rem}
+  .tf-score{padding:.5rem .75rem}.tf-score-label{font-size:.7rem;min-width:36px}
+  .tf-explanation{padding:.9rem;font-size:.8rem}
+  #tf .q-card table{font-size:.7rem}
+  #tf .q-card th,#tf .q-card td{padding:.3rem .4rem}
 }
 
 
@@ -229,6 +234,27 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 .trap{border-radius:var(--radius);padding:.85rem 1.1rem;margin:.75rem 0;font-size:.82rem;line-height:1.7;background:linear-gradient(135deg,rgba(239,68,68,.05),rgba(255,107,53,.04));border:1px solid rgba(239,68,68,.12)}
 .trap::before{content:'⚠️ EXAM TRAP';display:block;font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--red);margin-bottom:.3rem}
 .trap strong{color:var(--red)}
+
+/* TRUE/FALSE */
+.tf-buttons{display:flex;gap:.6rem;margin:.75rem 0}
+.tf-btn{flex:1;padding:.7rem 1.2rem;border-radius:var(--radius-xs);font-size:.9rem;font-weight:700;cursor:pointer;transition:var(--transition);font-family:var(--font-head);border:2px solid var(--card-border);background:var(--card);color:var(--text);letter-spacing:.02em}
+.tf-btn:hover{transform:translateY(-2px)}
+.tf-btn.tf-true:hover{border-color:var(--green);color:var(--green);background:rgba(34,197,94,.06)}
+.tf-btn.tf-false:hover{border-color:var(--red);color:var(--red);background:rgba(239,68,68,.06)}
+.tf-btn:disabled{cursor:default;transform:none;opacity:.5}
+.tf-btn.chosen-correct{border-color:var(--green);background:rgba(34,197,94,.12);color:var(--green)}
+.tf-btn.chosen-wrong{border-color:var(--red);background:rgba(239,68,68,.12);color:var(--red)}
+.tf-btn.was-correct{border-color:var(--green);opacity:.7;color:var(--green)}
+.tf-result{display:none;margin-top:.5rem;padding:.15rem .6rem;border-radius:100px;font-size:.72rem;font-weight:700;width:fit-content}
+.tf-result.show{display:inline-block;animation:fadeIn .3s ease}
+.tf-result.correct{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.tf-result.wrong{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)}
+.tf-explanation{display:none;margin-top:.75rem;padding:1.25rem;background:var(--bg2);border:1px solid var(--card-border);border-radius:var(--radius-xs);font-size:.84rem;color:var(--text2);line-height:1.8}
+.tf-explanation.show{display:block;animation:fadeIn .3s ease}
+.tf-score{display:flex;align-items:center;gap:.6rem;padding:.75rem 1rem;background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);margin-bottom:1.5rem}
+.tf-score-bar{flex:1;height:8px;background:var(--bg4);border-radius:4px;overflow:hidden}
+.tf-score-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--green));border-radius:4px;transition:width .5s ease}
+.tf-score-label{font-size:.78rem;font-weight:600;color:var(--text2);font-family:var(--font-mono);min-width:40px;text-align:right}
 
 @media print{
   body{background:#fff!important;color:#222!important}
@@ -285,6 +311,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <button class="np" onclick="go('#ch4')">4 · Comparing</button>
     <button class="np" onclick="go('#ch5')">5 · Prediction</button>
     <button class="np" onclick="go('#ch6')">6 · Full Model</button>
+    <button class="np" onclick="go('#tf')">T/F Challenge</button>
     <button class="np" onclick="go('#cheat')">Cheat Sheet</button>
     <button class="np" onclick="go('#traps')">Exam Traps</button>
     <button class="np" onclick="go('#cards')">Flashcards</button>
@@ -335,8 +362,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
           <div style="font-size:.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600">Chapters</div>
         </div>
         <div style="flex:1;min-width:100px;text-align:center;padding:.75rem;background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius)">
-          <div style="font-family:var(--font-mono);font-size:1.8rem;font-weight:800;color:var(--warm)">12</div>
-          <div style="font-size:.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600">Questions</div>
+          <div style="font-family:var(--font-mono);font-size:1.8rem;font-weight:800;color:var(--warm)">19</div>
+          <div style="font-size:.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600">Practice Items</div>
         </div>
         <div style="flex:1;min-width:100px;text-align:center;padding:.75rem;background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius)">
           <div style="font-family:var(--font-mono);font-size:1.8rem;font-weight:800;color:var(--green)">1</div>
@@ -377,6 +404,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
       <button class="cn" style="border-color:rgba(59,130,246,.3);color:var(--ch4)" onclick="go('#ch4')">4 · Premium vs Standard?</button>
       <button class="cn" style="border-color:rgba(234,179,8,.3);color:var(--ch5)" onclick="go('#ch5')">5 · Does income predict spend?</button>
       <button class="cn" style="border-color:rgba(34,197,94,.3);color:var(--ch6)" onclick="go('#ch6')">6 · The full picture</button>
+      <button class="cn" style="border-color:rgba(239,68,68,.3);color:var(--red)" onclick="go('#tf')">True/False Challenge</button>
       <button class="cn" style="border-color:rgba(255,107,53,.3);color:var(--warm)" onclick="go('#cheat')">Formula Cheat Sheet</button>
     </div>
     <div class="prog-row">
@@ -646,6 +674,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
       <div class="answer" id="a_3a"><div class="your-attempt"></div><div class="step"><span class="step-n">Step 1:</span> Set up hypotheses.<br>H₀: μ = 160 (the CEO's claim)<br>Hₐ: μ ≠ 160 (the claim is wrong)</div>
 <div class="step"><span class="step-n">Step 2:</span> Check: does £160 fall inside our 95% CI [£133.7, £150.3]?<br>£160 is <strong style="color:var(--red)">outside</strong> the interval.</div>
 <div class="step"><span class="step-n">Step 3:</span> Since the claimed value is outside the CI → <span class="result">Reject H₀</span></div>
+<div class="step"><span class="step-n">Alternative method — t-stat:</span> t = (160 − 142) / SE = 18 / 4.17 = <span class="result">4.32</span>. Since |t| = 4.32 > 2, we reject H₀. Both methods give the same conclusion.</div>
 <div class="conclusion"><strong>There is significant evidence that the true average spend is not £160.</strong> The CEO is overestimating customer spending.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
 <div class="chart-box" id="ciTestBlock" data-chart="ciTestBlock">
     <h4>FreshCart: The CEO's claim vs your CI</h4>
@@ -791,15 +820,18 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 
     <div class="q-card">
       <div class="q-label" style="color:var(--ch5)">Question 5A</div>
-      <div class="q-text">Interpret the slope (b₁ = 0.85). What does it mean in plain English? Is it statistically significant?</div>
+      <div class="q-text">Write the equation for the assumed true model and the fitted model. Then interpret the slope (b₁ = 0.85) in plain English — is it statistically significant? Evaluate the model's predictive power.</div>
             <div class="try-box">
         <div class="try-label">Try it yourself first</div>
-        <textarea placeholder="Interpret 0.85 in English. Then: t=b₁/SE. Significant?"></textarea>
+        <textarea placeholder="True model: Y = ? + ? + ?. Fitted model: Ŷ = ? + ?×Income. Then interpret 0.85. t=b₁/SE — significant?"></textarea>
       </div>
       <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
-      <div class="hint-text">For each £1,000 more income, spend changes by... t=0.85/0.12=?</div>
+      <div class="hint-text">True model has 5 parts: Y, β₀, β₁, X, ε. Then: for each £1,000 more income, spend changes by... t=0.85/0.12=?</div>
 <button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
-      <div class="answer" id="a_5a"><div class="your-attempt"></div><div class="step"><span class="step-n">Interpretation:</span> "For each additional £1,000 of household income, monthly spend increases by <span class="result">£0.85</span>, <strong>on average</strong>."</div>
+      <div class="answer" id="a_5a"><div class="your-attempt"></div>
+<div class="step"><span class="step-n">True model:</span> Y = β₀ + β₁X + ε, where Y = monthly spend (dependent variable), β₀ = intercept, β₁ = slope (effect of income on spend), X = household income (independent variable), ε = error term (captures everything the model doesn't explain).</div>
+<div class="step"><span class="step-n">Fitted model:</span> <span class="fm">Ŷ = 45 + 0.85 × Income</span></div>
+<div class="step"><span class="step-n">Interpretation:</span> "For each additional £1,000 of household income, monthly spend increases by <span class="result">£0.85</span>, <strong>on average</strong>."</div>
 <div class="step"><span class="step-n">Significance:</span> t = 0.85 / 0.12 = <span class="result">7.08</span>. |t| > 2 → the slope is <span class="result">significant</span>. Income genuinely predicts spending.</div>
 <div class="step"><span class="step-n">R²:</span> Income explains <span class="result">34%</span> of the variation in spend. The other 66% comes from other factors (distance, frequency, membership).</div>
 <div class="conclusion"><strong>The relationship is real and meaningful</strong>, but income alone is an incomplete predictor.</div><div class="answer-visual"><div class="answer-visual-label">See it in action</div>
@@ -1029,6 +1061,84 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
       <div class="chk"><input type="checkbox" id="chk_6b" onchange="saveCheck()"><label for="chk_6b">I've got this</label></div>
     </div>
 
+    <div class="q-card">
+      <div class="q-label" style="color:var(--ch6)">Question 6D</div>
+      <div class="q-text">FreshCart has two membership tiers: Premium and Standard. The regression output only shows "D_Standard." Why isn't there a "D_Premium" coefficient? What does D_Standard = 0 mean for a Premium member?</div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="How many dummies do you need for k categories? What is the 'reference group'?"></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">k categories need k−1 dummies. One category is always left out as the baseline.</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer" id="a_6d"><div class="your-attempt"></div>
+<div class="step"><span class="step-n">What kind of variable is membership?</span> It is a <strong>categorical (dummy) variable</strong> — it takes discrete categories (Premium/Standard), not continuous values.</div>
+<div class="step"><span class="step-n">Why only D_Standard?</span> With k = 2 categories, you need k − 1 = <span class="result">1 dummy variable</span>. The model automatically selects one category as the <strong>reference group</strong> (baseline). Here, Premium is the reference — its coefficient is 0 by definition.</div>
+<div class="step"><span class="step-n">What D_Standard = 0 means for Premium:</span> When a customer is Premium, D_Standard = 0, so the dummy term contributes <span class="result">−18.3 × 0 = £0</span> to the prediction. Premium is the baseline against which Standard is compared.</div>
+<div class="step"><span class="step-n">The interpretation:</span> D_Standard = −18.3 means Standard members spend <strong>£18.30 less than Premium members</strong>, on average, holding all other variables constant. It does <strong style="color:var(--red)">NOT</strong> mean Premium members have a coefficient of +18.3 — their effect is simply zero (the reference point).</div>
+<div class="conclusion"><strong>k categories → k−1 dummies.</strong> The omitted category is the reference group (coefficient = 0). Every other category's coefficient measures the difference from that baseline.</div></div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — what if there were 3 tiers?</button>
+        <div class="dig-body"><h5>Multiple Categories</h5>
+<p>If FreshCart had three tiers — Basic, Standard, Premium — you'd need <strong>2 dummies</strong> (k−1 = 3−1 = 2). Say Premium is the reference:</p>
+<p>D_Basic = 1 if Basic, 0 otherwise. D_Standard = 1 if Standard, 0 otherwise. Premium gets D_Basic = 0 and D_Standard = 0.</p>
+<p>Each coefficient measures the difference from Premium. If D_Basic = −30 and D_Standard = −18.3, Basic members spend £30 less than Premium and Standard spend £18.30 less than Premium.</p>
+<h5>Choice of Reference Group</h5>
+<p>It doesn't matter which category you pick as the reference — the predictions are identical. But the coefficients will change because they're always <strong>relative to the baseline</strong>. Pick the reference that makes interpretation easiest (often the largest group or the "control" condition).</p></div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_6d" onchange="saveCheck()"><label for="chk_6d">I've got this</label></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label" style="color:var(--ch6)">Question 6E</div>
+      <div class="q-text">Your analyst sends you partial FreshCart regression output — the t-value column is cut off. Calculate the missing t-values to 3 decimal places. Which predictors are significant at 5%? Is it necessary to calculate the intercept's t-value to decide whether to keep it?</div>
+      <div style="background:var(--bg2);border:1px solid var(--card-border);border-radius:var(--radius-xs);padding:.8rem 1rem;margin:.75rem 0;overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:.82rem;font-family:var(--font-mono)">
+          <thead><tr style="border-bottom:1px solid var(--card-border)">
+            <th style="text-align:left;padding:.4rem .6rem;color:var(--text2);font-weight:600">Predictor</th>
+            <th style="text-align:right;padding:.4rem .6rem;color:var(--text2);font-weight:600">Coefficient</th>
+            <th style="text-align:right;padding:.4rem .6rem;color:var(--text2);font-weight:600">Std Error</th>
+            <th style="text-align:right;padding:.4rem .6rem;color:var(--accent);font-weight:600">t-value</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .6rem">(Intercept)</td><td style="text-align:right;padding:.4rem .6rem">22.400</td><td style="text-align:right;padding:.4rem .6rem">8.100</td><td style="text-align:right;padding:.4rem .6rem;color:var(--text3)">?</td></tr>
+            <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .6rem">Income</td><td style="text-align:right;padding:.4rem .6rem">0.620</td><td style="text-align:right;padding:.4rem .6rem">0.090</td><td style="text-align:right;padding:.4rem .6rem;color:var(--text3)">?</td></tr>
+            <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .6rem">Distance</td><td style="text-align:right;padding:.4rem .6rem">−1.800</td><td style="text-align:right;padding:.4rem .6rem">0.410</td><td style="text-align:right;padding:.4rem .6rem;color:var(--text3)">?</td></tr>
+            <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .6rem">Frequency</td><td style="text-align:right;padding:.4rem .6rem">12.500</td><td style="text-align:right;padding:.4rem .6rem">1.800</td><td style="text-align:right;padding:.4rem .6rem;color:var(--text3)">?</td></tr>
+            <tr><td style="padding:.4rem .6rem">D_Standard</td><td style="text-align:right;padding:.4rem .6rem">−18.300</td><td style="text-align:right;padding:.4rem .6rem">5.200</td><td style="text-align:right;padding:.4rem .6rem;color:var(--text3)">?</td></tr>
+          </tbody>
+        </table>
+      </div>
+            <div class="try-box">
+        <div class="try-label">Try it yourself first</div>
+        <textarea placeholder="t = coefficient / std error. Compute all 5. Which have |t| > 2?"></textarea>
+      </div>
+      <button class="hint-btn" onclick="toggleHint(this)">💡 Hint</button>
+      <div class="hint-text">t = b / SE(b). For Income: t = 0.620 / 0.090 = ? Compare each |t| to 2.</div>
+<button class="reveal-btn" onclick="toggleAnswer(this)">Check my answer ▾</button>
+      <div class="answer" id="a_6e"><div class="your-attempt"></div>
+<div class="step"><span class="step-n">Formula:</span> t = coefficient / std error</div>
+<div class="step"><span class="step-n">Intercept:</span> t = 22.400 / 8.100 = <span class="result">2.765</span> &nbsp; |t| > 2 ✓</div>
+<div class="step"><span class="step-n">Income:</span> t = 0.620 / 0.090 = <span class="result">6.889</span> &nbsp; |t| > 2 ✓</div>
+<div class="step"><span class="step-n">Distance:</span> t = −1.800 / 0.410 = <span class="result">−4.390</span> &nbsp; |t| > 2 ✓</div>
+<div class="step"><span class="step-n">Frequency:</span> t = 12.500 / 1.800 = <span class="result">6.944</span> &nbsp; |t| > 2 ✓</div>
+<div class="step"><span class="step-n">D_Standard:</span> t = −18.300 / 5.200 = <span class="result">−3.519</span> &nbsp; |t| > 2 ✓</div>
+<p style="margin-top:.5rem"><strong>All four predictors</strong> (Income, Distance, Frequency, D_Standard) are significant at the 5% level — all have |t| > 2.</p>
+<div class="step"><span class="step-n">The intercept question:</span> <strong style="color:var(--accent)">No</strong> — it is <strong>never</strong> necessary to calculate the intercept's t-value to decide whether to keep it. <strong>Always keep the intercept</strong>, regardless of its significance. Removing it forces the regression through the origin (Ŷ = 0 when all X = 0), which distorts every other coefficient in the model.</div>
+<div class="conclusion"><strong>All predictors are significant.</strong> The model (Adj R² = 57.2%) with all significant predictors and no multicollinearity issues (after dropping Total_Items) is a valid model.</div></div>
+      <div class="dig">
+        <button class="dig-btn" onclick="toggleDig(this)"><span class="arr">▶</span> Dig deeper — reading regression output tables</button>
+        <div class="dig-body"><h5>The Coefficient Table</h5>
+<p>Every regression output gives you a table with four key columns: <strong>Coefficient</strong> (the estimate), <strong>Std Error</strong> (how uncertain that estimate is), <strong>t-value</strong> (= coefficient / SE), and <strong>p-value</strong> (probability of seeing this t if the true coefficient were 0).</p>
+<p>The shortcut: <strong>|t| > 2 ≈ p < 0.05 ≈ significant at 5%</strong>. You can use either t or p — they tell you the same thing.</p>
+<h5>Why 3 Decimal Places?</h5>
+<p>Exams often ask for a specific number of decimal places. This tests whether you can compute precisely and present clearly. Always show the full calculation: t = −18.300 / 5.200 = −3.519, not just "t ≈ −3.5".</p>
+<h5>Validating the Overall Model</h5>
+<p>A valid model needs: (1) significant F-test (at least one predictor matters), (2) most/all individual predictors significant, (3) reasonable Adj R², (4) no severe multicollinearity. This FreshCart model passes all four checks.</p></div>
+      </div>
+      <div class="chk"><input type="checkbox" id="chk_6e" onchange="saveCheck()"><label for="chk_6e">I've got this</label></div>
+    </div>
+
   <div class="calc">
     <h4>MLR Forecaster</h4>
     <div class="fm">Ŷ = b₀ + b₁X₁ + b₂X₂ + b₃X₃ + b₄D &nbsp;|&nbsp; PI = Ŷ ± 2 × RSE</div>
@@ -1055,6 +1165,125 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 </div>
 </section>
 
+
+<section class="section" id="tf">
+<div class="container">
+  <div class="ch-head">
+    <div class="ch-num" style="color:var(--red)">Exam Prep</div>
+    <div class="ch-q" style="color:var(--red)">True/False Challenge</div>
+    <p class="ch-context">Six rapid-fire conceptual questions — exactly like Question 1 on the final exam. All based on the FreshCart data you already know. Click True or False for each statement.</p>
+  </div>
+
+  <div class="tf-score">
+    <div class="tf-score-bar"><div class="tf-score-fill" id="tfScoreFill" style="width:0%"></div></div>
+    <span class="tf-score-label" id="tfScoreLabel">0 / 6</span>
+  </div>
+
+    <div class="q-card" style="border-left:3px solid var(--red)" id="tf_card_1">
+      <div class="q-label" style="color:var(--red)">True/False 1</div>
+      <div class="q-text">"The correlation between Income and Spend is r = 0.58. This means R² for the Income-only model is also 0.58."</div>
+      <div class="tf-buttons">
+        <button class="tf-btn tf-true" onclick="answerTF(1,'true',this)">True</button>
+        <button class="tf-btn tf-false" onclick="answerTF(1,'false',this)">False</button>
+      </div>
+      <div class="tf-result" id="tf_result_1"></div>
+      <div class="tf-explanation" id="tf_exp_1">
+<div class="step"><span class="step-n">Answer:</span> <strong style="color:var(--red)">False.</strong></div>
+<p>R² = r² = 0.58² = <span class="result">0.336 ≈ 34%</span>, not 0.58.</p>
+<p>Key distinction: <strong>correlation r</strong> ranges from <strong>−1 to +1</strong> (captures direction). <strong>R²</strong> ranges from <strong>0 to 1</strong> (always positive — it's a squared value). A negative correlation like r = −0.7 gives R² = 0.49, not −0.49.</p>
+<p><strong>Bonus nuance:</strong> Regular R² is always between 0 and 1. But <strong>Adjusted R²</strong> can go negative — it happens when the model is so poor that the penalty for adding predictors pushes it below zero. So "R² of a regression is always between 0 and 1" is true for R² but <strong style="color:var(--red)">false for Adjusted R²</strong>.</p>
+<div class="conclusion"><strong>r and R² are related but not equal.</strong> R² = r² in simple regression. Correlation has direction (±); R² does not. And Adjusted R² can be negative.</div></div>
+      <div class="chk"><input type="checkbox" id="chk_tf1" onchange="saveCheck()"><label for="chk_tf1">I've got this</label></div>
+    </div>
+
+    <div class="q-card" style="border-left:3px solid var(--red)" id="tf_card_2">
+      <div class="q-label" style="color:var(--red)">True/False 2</div>
+      <div class="q-text">"FreshCart's Income-only model has R² = 34%. This means the Income coefficient cannot be statistically significant."</div>
+      <div class="tf-buttons">
+        <button class="tf-btn tf-true" onclick="answerTF(2,'true',this)">True</button>
+        <button class="tf-btn tf-false" onclick="answerTF(2,'false',this)">False</button>
+      </div>
+      <div class="tf-result" id="tf_result_2"></div>
+      <div class="tf-explanation" id="tf_exp_2">
+<div class="step"><span class="step-n">Answer:</span> <strong style="color:var(--red)">False.</strong></div>
+<p>The Income coefficient has t = 0.85 / 0.12 = <span class="result">7.08</span>, which is highly significant (|t| >> 2).</p>
+<p><strong>Low R² does not mean insignificant.</strong> R² tells you how much variance the model explains (strength). The t-value tells you whether the relationship exists at all (significance). You can have a highly significant but weak relationship — like a quiet but real signal in a noisy room.</p>
+<p>Think of it this way: with a large enough sample, even a tiny effect becomes detectable. Significance depends on sample size; R² does not.</p>
+<div class="conclusion"><strong>Significance ≠ strength.</strong> |t| > 2 means the relationship is real. R² tells you how useful it is. Both matter, but they answer different questions.</div></div>
+      <div class="chk"><input type="checkbox" id="chk_tf2" onchange="saveCheck()"><label for="chk_tf2">I've got this</label></div>
+    </div>
+
+    <div class="q-card" style="border-left:3px solid var(--red)" id="tf_card_3">
+      <div class="q-label" style="color:var(--red)">True/False 3</div>
+      <div class="q-text">"After testing the CEO's £160 claim, we found it outside the CI. We therefore accept H₀: μ = 142."</div>
+      <div class="tf-buttons">
+        <button class="tf-btn tf-true" onclick="answerTF(3,'true',this)">True</button>
+        <button class="tf-btn tf-false" onclick="answerTF(3,'false',this)">False</button>
+      </div>
+      <div class="tf-result" id="tf_result_3"></div>
+      <div class="tf-explanation" id="tf_exp_3">
+<div class="step"><span class="step-n">Answer:</span> <strong style="color:var(--red)">False.</strong> Two errors:</div>
+<div class="step"><span class="step-n">Error 1 — "accept H₀":</span> We <strong>never</strong> "accept" H₀. We either <strong>reject H₀</strong> (evidence against it) or <strong>fail to reject H₀</strong> (insufficient evidence). Absence of evidence is not evidence of absence.</div>
+<div class="step"><span class="step-n">Error 2 — wrong H₀:</span> H₀ was μ = <strong>160</strong> (the CEO's claim being tested), not μ = 142. The sample mean (142) is not a hypothesis — it's an observation. The correct conclusion: <span class="result">"We reject H₀: μ = 160."</span></div>
+<div class="conclusion"><strong>Two instant-mark-loss mistakes:</strong> (1) Never say "accept H₀" — say "reject" or "fail to reject." (2) H₀ contains the claim being tested, not the sample statistic.</div></div>
+      <div class="chk"><input type="checkbox" id="chk_tf3" onchange="saveCheck()"><label for="chk_tf3">I've got this</label></div>
+    </div>
+
+    <div class="q-card" style="border-left:3px solid var(--red)" id="tf_card_4">
+      <div class="q-label" style="color:var(--red)">True/False 4</div>
+      <div class="q-text">"Our 95% CI is [£133.7, £150.3]. There is a 95% probability that the true mean falls in this range."</div>
+      <div class="tf-buttons">
+        <button class="tf-btn tf-true" onclick="answerTF(4,'true',this)">True</button>
+        <button class="tf-btn tf-false" onclick="answerTF(4,'false',this)">False</button>
+      </div>
+      <div class="tf-result" id="tf_result_4"></div>
+      <div class="tf-explanation" id="tf_exp_4">
+<div class="step"><span class="step-n">Answer:</span> <strong style="color:var(--red)">False.</strong></div>
+<p>Once calculated, the true mean μ either <strong>is</strong> or <strong>is not</strong> in the interval — it's not a probability question for any specific interval.</p>
+<p><strong>Correct interpretation:</strong> "If we repeated the sampling and CI construction many times, <strong>about 95% of those intervals</strong> would contain the true mean." The confidence is in the <strong>method</strong>, not in any single interval.</p>
+<p>The correct way to write it: <span class="result">"We are 95% confident that the true population mean lies between £133.70 and £150.30."</span></p>
+<div class="conclusion"><strong>"95% confident" ≠ "95% probability."</strong> The probability describes the long-run success rate of the method, not the contents of one specific interval.</div></div>
+      <div class="chk"><input type="checkbox" id="chk_tf4" onchange="saveCheck()"><label for="chk_tf4">I've got this</label></div>
+    </div>
+
+    <div class="q-card" style="border-left:3px solid var(--red)" id="tf_card_5">
+      <div class="q-label" style="color:var(--red)">True/False 5</div>
+      <div class="q-text">"In the MLR, D_Standard = −18.3. This means Premium members have a coefficient of +18.3."</div>
+      <div class="tf-buttons">
+        <button class="tf-btn tf-true" onclick="answerTF(5,'true',this)">True</button>
+        <button class="tf-btn tf-false" onclick="answerTF(5,'false',this)">False</button>
+      </div>
+      <div class="tf-result" id="tf_result_5"></div>
+      <div class="tf-explanation" id="tf_exp_5">
+<div class="step"><span class="step-n">Answer:</span> <strong style="color:var(--red)">False.</strong></div>
+<p>Premium is the <strong>reference group</strong>. Its coefficient is <strong>0</strong> (the baseline), not +18.3.</p>
+<p>D_Standard = −18.3 means Standard members spend <strong>£18.30 less than Premium members</strong>. But Premium doesn't "have" a +18.3 effect — it simply defines the zero point. All other categories are measured <em>relative</em> to it.</p>
+<p>Think of it like altitude: if you set sea level as the reference (0 metres), a valley at −18.3m is 18.3m below sea level. But sea level's "coefficient" is 0, not +18.3.</p>
+<div class="conclusion"><strong>The reference group's coefficient is always 0</strong> — it's the baseline. Other categories' coefficients measure the difference from that baseline, not the other way around.</div></div>
+      <div class="chk"><input type="checkbox" id="chk_tf5" onchange="saveCheck()"><label for="chk_tf5">I've got this</label></div>
+    </div>
+
+    <div class="q-card" style="border-left:3px solid var(--red)" id="tf_card_6">
+      <div class="q-label" style="color:var(--red)">True/False 6</div>
+      <div class="q-text">"Adding Total_Items to the FreshCart MLR alongside Frequency will always improve R² but may hurt Adjusted R²."</div>
+      <div class="tf-buttons">
+        <button class="tf-btn tf-true" onclick="answerTF(6,'true',this)">True</button>
+        <button class="tf-btn tf-false" onclick="answerTF(6,'false',this)">False</button>
+      </div>
+      <div class="tf-result" id="tf_result_6"></div>
+      <div class="tf-explanation" id="tf_exp_6">
+<div class="step"><span class="step-n">Answer:</span> <strong style="color:var(--green)">True.</strong></div>
+<p><strong>R² never decreases</strong> when you add a predictor — even a completely useless one. Adding any variable gives the model more freedom to fit the data, so R² goes up (or stays the same).</p>
+<p><strong>Adjusted R² penalises for complexity.</strong> Its formula includes a penalty term for each added predictor: Adj R² = 1 − [(1 − R²)(n − 1) / (n − k − 1)]. If the new variable doesn't improve the model enough to offset the penalty, Adjusted R² drops.</p>
+<p>Total_Items and Frequency have r = 0.95 (VIF ≈ 10) — they carry nearly identical information. Adding Total_Items alongside Frequency would increase R² slightly but Adjusted R² would likely drop because the redundant variable adds complexity without genuine explanatory power.</p>
+<div class="conclusion"><strong>Use Adjusted R² (not R²) to compare models</strong> with different numbers of predictors. If Adj R² drops when you add a variable, that variable hurts the model.</div></div>
+      <div class="chk"><input type="checkbox" id="chk_tf6" onchange="saveCheck()"><label for="chk_tf6">I've got this</label></div>
+    </div>
+
+  <div class="takeaway"><strong>True/False summary:</strong> These six traps appear on almost every exam. (1) R² = r², not r. (2) Low R² ≠ insignificant coefficient. (3) Never "accept" H₀. (4) "95% confident" ≠ "95% probability." (5) Reference group coefficient = 0, not the opposite of another category. (6) Adj R² penalises complexity; R² does not.</div>
+
+</div>
+</section>
 
 <section class="section" id="cheat">
 <div class="container">
@@ -1208,7 +1437,7 @@ function toggleDig(btn){btn.classList.toggle('open');btn.nextElementSibling.clas
 window.addEventListener('scroll',()=>{
   const h=document.documentElement.scrollHeight-window.innerHeight;
   document.getElementById('btt').classList.toggle('show',window.scrollY>300);
-  const secs=['hero','ch1','ch2','ch3','ch4','ch5','ch6','cheat','traps','cards'];let cur='hero';
+  const secs=['hero','ch1','ch2','ch3','ch4','ch5','ch6','tf','cheat','traps','cards'];let cur='hero';
   secs.forEach(s=>{const e=document.getElementById(s);if(e&&e.getBoundingClientRect().top<180)cur=s;});
   document.querySelectorAll('.np').forEach((p,i)=>p.classList.toggle('active',secs[i]===cur));
 });
@@ -1227,7 +1456,7 @@ function initChecks(){
 function updateProgress(){
   const all=document.querySelectorAll('.chk input');const done=[...all].filter(c=>c.checked).length;
   const strip=document.getElementById('masterProg');strip.innerHTML='';
-  const colors=['#00e5cc','#00e5cc','#8b5cf6','#8b5cf6','#8b5cf6','#ff6b35','#3b82f6','#3b82f6','#eab308','#eab308','#22c55e','#22c55e','#22c55e','#22c55e'];
+  const colors=['#00e5cc','#00e5cc','#8b5cf6','#8b5cf6','#8b5cf6','#ff6b35','#3b82f6','#3b82f6','#eab308','#eab308','#22c55e','#22c55e','#22c55e','#22c55e','#22c55e','#22c55e','#ef4444','#ef4444','#ef4444','#ef4444','#ef4444','#ef4444'];
   all.forEach((cb,i)=>{const s=document.createElement('div');s.className='seg';if(cb.checked)s.style.background=colors[i]||'#00e5cc';strip.appendChild(s);});
   document.getElementById('progLbl').textContent=done+' / '+all.length+' mastered';
 }
@@ -1476,6 +1705,37 @@ function calcCI(){const m=+document.getElementById('ci-m').value,s=+document.get
 function calcTT(){const m1=+document.getElementById('t1-m').value,s1=+document.getElementById('t1-s').value,n1=+document.getElementById('t1-n').value,m2=+document.getElementById('t2-m').value,s2=+document.getElementById('t2-s').value,n2=+document.getElementById('t2-n').value;if(isNaN(m1)||isNaN(s1)||isNaN(n1)||isNaN(m2)||isNaN(s2)||isNaN(n2)||n1<=0||n2<=0){document.getElementById('ttR').innerHTML=_err;return;}const se=Math.sqrt(s1*s1/n1+s2*s2/n2),t=(m2-m1)/se,sig=Math.abs(t)>2;document.getElementById('ttR').innerHTML='<span class="lt">SE:</span> <span class="v">'+se.toFixed(3)+'</span> · <span class="lt">t:</span> <span class="v">'+t.toFixed(3)+'</span><br><span class="lt">|t|>2?</span> <span class="v" style="color:'+(sig?C.g:C.r)+'">'+(sig?'Yes → Reject H₀':'No → Fail to reject')+'</span>';}
 function calcTV(){const b=+document.getElementById('tv-b').value,se=+document.getElementById('tv-se').value;if(isNaN(b)||isNaN(se)||se===0){document.getElementById('tvR').innerHTML=_err;return;}const t=b/se,sig=Math.abs(t)>2;document.getElementById('tvR').innerHTML='<span class="lt">t:</span> <span class="v">'+t.toFixed(3)+'</span> · <span class="lt">|t|='+Math.abs(t).toFixed(3)+'</span><br><span class="lt">Signif?</span> <span class="v" style="color:'+(sig?C.g:C.r)+'">'+(sig?'Yes':'No')+'</span>';}
 function calcFC(){const b0=+document.getElementById('fc-b0').value,rse=+document.getElementById('fc-rse').value,x1=+document.getElementById('fc-x1').value,b1=+document.getElementById('fc-b1').value,x2=+document.getElementById('fc-x2').value,b2=+document.getElementById('fc-b2').value,x3=+document.getElementById('fc-x3').value,b3=+document.getElementById('fc-b3').value,x4=+document.getElementById('fc-x4').value,b4=+document.getElementById('fc-b4').value;if(isNaN(b0)||isNaN(rse)||isNaN(x1)||isNaN(b1)||isNaN(x2)||isNaN(b2)||isNaN(x3)||isNaN(b3)||isNaN(x4)||isNaN(b4)){document.getElementById('fcR').innerHTML=_err;return;}const y=b0+b1*x1+b2*x2+b3*x3+b4*x4;document.getElementById('fcR').innerHTML='<span class="lt">Ŷ:</span> <span class="v">'+y.toFixed(3)+'</span><br><span class="lt">95% PI:</span> <span class="v">['+(y-2*rse).toFixed(1)+', '+(y+2*rse).toFixed(1)+']</span>';}
+
+/* ── TRUE/FALSE ── */
+const tfAnswers={1:'false',2:'false',3:'false',4:'false',5:'false',6:'true'};
+let tfScore=0,tfAnswered=0;
+function answerTF(n,choice,btn){
+  const card=document.getElementById('tf_card_'+n);
+  if(card.dataset.answered) return;
+  card.dataset.answered='1';
+  const correct=tfAnswers[n];
+  const isCorrect=choice===correct;
+  const btns=card.querySelectorAll('.tf-btn');
+  btns.forEach(b=>{
+    b.disabled=true;
+    if(b===btn){
+      b.classList.add(isCorrect?'chosen-correct':'chosen-wrong');
+    } else if((b.classList.contains('tf-true')&&correct==='true')||(b.classList.contains('tf-false')&&correct==='false')){
+      if(!isCorrect) b.classList.add('was-correct');
+    }
+  });
+  const res=document.getElementById('tf_result_'+n);
+  res.textContent=isCorrect?'Correct!':'Incorrect';
+  res.className='tf-result show '+(isCorrect?'correct':'wrong');
+  const exp=document.getElementById('tf_exp_'+n);
+  exp.classList.add('show');
+  tfAnswered++;
+  if(isCorrect) tfScore++;
+  document.getElementById('tfScoreFill').style.width=(tfScore/6*100)+'%';
+  document.getElementById('tfScoreLabel').textContent=tfScore+' / '+tfAnswered;
+  const chk=card.querySelector('.chk input');
+  if(chk&&isCorrect){chk.checked=true;saveCheck();}
+}
 
 /* ── FLASHCARDS ── */
 const deck=[
