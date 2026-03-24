@@ -1228,13 +1228,15 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 </section>
 
 
-<section class="section" id="tf">
+<section class="section collapsible" id="tf">
 <div class="container">
   <div class="ch-head">
     <div class="ch-num" style="color:var(--red)">Exam Prep</div>
-    <div class="ch-q" style="color:var(--red)">True/False Challenge</div>
-    <p class="ch-context">Six rapid-fire conceptual questions — exactly like Question 1 on the final exam. All based on the FreshCart data you already know. Click True or False for each statement.</p>
+    <div class="ch-q" style="color:var(--red)">True/False Challenge <span class="ch-qcount">· 6 questions</span></div>
+    <p class="ch-context">Six rapid-fire conceptual questions — exactly like Question 1 on the final exam. Click True or False.</p>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand chapter</button>
+  <div class="ch-body">
 
   <div class="tf-score">
     <div class="tf-score-bar"><div class="tf-score-fill" id="tfScoreFill" style="width:0%"></div></div>
@@ -1344,16 +1346,19 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 
   <div class="takeaway"><strong>True/False summary:</strong> These six traps appear on almost every exam. (1) R² = r², not r. (2) Low R² ≠ insignificant coefficient. (3) Never "accept" H₀. (4) "95% confident" ≠ "95% probability." (5) Reference group coefficient = 0, not the opposite of another category. (6) Adj R² penalises complexity; R² does not.</div>
 
+  </div><!-- /ch-body -->
 </div>
 </section>
 
-<section class="section" id="cheat">
+<section class="section collapsible" id="cheat">
 <div class="container">
   <div class="ch-head">
     <div class="ch-num" style="color:var(--warm)">Reference</div>
-    <div class="ch-q" style="color:var(--warm)">Formula Cheat Sheet</div>
+    <div class="ch-q" style="color:var(--warm)">Formula Cheat Sheet <span class="ch-qcount">· 7 formulas</span></div>
     <p class="ch-context">Every formula you need, all in one place. Print this page (Ctrl+P) for a paper copy.</p>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand chapter</button>
+  <div class="ch-body">
 
   <div class="q-card" style="border-left:3px solid var(--warm)">
     <div class="q-label" style="color:var(--warm)">DESCRIPTIVE</div>
@@ -1403,17 +1408,21 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <p style="color:var(--text)"><strong>Adj R² drops</strong> → drop the variable</p>
     <p style="color:var(--text)"><strong>VIF > 5 (or |r| > 0.9)</strong> → multicollinearity → drop one predictor</p>
   </div>
+
+  </div><!-- /ch-body -->
 </div>
 </section>
 
 
-<section class="section" id="traps">
+<section class="section collapsible" id="traps">
 <div class="container">
   <div class="ch-head">
     <div class="ch-num" style="color:var(--red)">Watch Out</div>
-    <div class="ch-q" style="color:var(--red)">Common Exam Traps</div>
-    <p class="ch-context">The ten most common mistakes people make with these concepts. Worth a read before any test or presentation.</p>
+    <div class="ch-q" style="color:var(--red)">Common Exam Traps <span class="ch-qcount">· 10 traps</span></div>
+    <p class="ch-context">The ten most common mistakes. Worth a read before any test.</p>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand chapter</button>
+  <div class="ch-body">
 
   <div class="trap"><strong>Trap 1: "Half of customers spend below £142"</strong> — WRONG. Half spend below the <strong>median</strong> (£128), not the mean. When mean ≠ median, they test this.</div>
 
@@ -1435,16 +1444,19 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 
   <div class="trap"><strong>Trap 10: PI vs CI confusion</strong> — PI = for a single new observation (wider). CI = for the mean of all observations at that X (narrower). "Predict for a customer" = PI. "Estimate average spend" = CI.</div>
 
+  </div><!-- /ch-body -->
 </div>
 </section>
 
-<section class="section" id="cards">
+<section class="section collapsible" id="cards">
 <div class="container">
   <div class="ch-head">
     <div class="ch-num" style="color:var(--purple)">Review</div>
-    <div class="ch-q" style="color:var(--purple)">Flashcards</div>
-    <p class="ch-context">Quick-fire recall practice. Rate each card — hard cards surface first next time. Progress saves locally.</p>
+    <div class="ch-q" style="color:var(--purple)">Flashcards <span class="ch-qcount">· quick recall</span></div>
+    <p class="ch-context">Quick-fire recall practice. Rate each card — hard cards surface first next time.</p>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand chapter</button>
+  <div class="ch-body">
   <div class="fc-controls">
     <button class="fcf active" onclick="fFilt(this,'all')">All</button>
     <button class="fcf" onclick="fFilt(this,'c1')">Ch1</button>
@@ -1466,6 +1478,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <button class="fcb hard" onclick="fRate('hard')">Hard</button>
     <button class="fcb" onclick="fNext()">Next →</button>
   </div>
+
+  </div><!-- /ch-body -->
 </div>
 </section>
 
@@ -1516,15 +1530,15 @@ document.querySelectorAll('.collapsible .ch-head').forEach(h=>{
     }
   });
 });
-/* Nav/chapter-nav clicks auto-expand target chapter */
+/* Nav/chapter-nav clicks auto-expand target chapter, then scroll */
 const origGo=go;
 go=function(s){
-  origGo(s);
   const id=s.replace('#','');
   const sec=document.getElementById(id);
   if(sec&&sec.classList.contains('collapsible')&&!sec.classList.contains('open')){
-    setTimeout(()=>sec.querySelector('.ch-toggle').click(),100);
+    sec.querySelector('.ch-toggle').click();
   }
+  setTimeout(()=>origGo(s),50);
 };
 function toggleExtras(btn){
   btn.classList.toggle('open');
