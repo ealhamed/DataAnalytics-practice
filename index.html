@@ -65,7 +65,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 .section.collapsible .ch-toggle{display:inline-flex}
 .section.collapsible.open .ch-toggle .ch-arrow{transform:rotate(90deg)}
 .section.collapsible .ch-head{margin-bottom:.5rem;cursor:pointer}
-.section.collapsible.open .ch-head{margin-bottom:2rem;cursor:default}
+.section.collapsible.open .ch-head{margin-bottom:2rem;cursor:pointer}
 .ch-qcount{font-size:.65rem;color:var(--text3);font-weight:500;margin-left:.4rem}
 
 /* CHAPTER HEADER */
@@ -1521,13 +1521,10 @@ function toggleChapter(btn){
     });
   }
 }
-/* Click ch-head to expand when collapsed */
+/* Click ch-head to toggle chapter open/closed */
 document.querySelectorAll('.collapsible .ch-head').forEach(h=>{
   h.addEventListener('click',()=>{
-    const sec=h.closest('.section');
-    if(!sec.classList.contains('open')){
-      sec.querySelector('.ch-toggle').click();
-    }
+    h.closest('.section').querySelector('.ch-toggle').click();
   });
 });
 /* Nav/chapter-nav clicks auto-expand target chapter, then scroll */
