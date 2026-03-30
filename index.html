@@ -384,7 +384,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
   <div class="nav-logo" id="navLogo"><span class="fc">FreshCart</span><span class="sub">Analytics</span></div>
   <select class="ds-select" id="dsSelect" onchange="switchDataset(this.value)">
     <option value="freshcart">FreshCart Analytics</option>
-    <option value="embads">EMBADS 2027 Exam</option>
+    <option value="embads">Practice Exam</option>
   </select>
   <div class="nav-pills" id="navPills-freshcart">
     <button class="np active" onclick="go('#hero')">Home</button>
@@ -1565,18 +1565,18 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
   <div class="container" style="position:relative;z-index:1">
     <div class="embads-intro" style="background:linear-gradient(135deg,rgba(139,92,246,.06),rgba(59,130,246,.06),rgba(255,107,53,.04));border:1px solid rgba(139,92,246,.12);border-radius:24px;padding:2.5rem;max-width:820px;margin:0 auto 2rem;text-align:left;position:relative;overflow:hidden">
       <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:radial-gradient(circle,rgba(139,92,246,.12),transparent 70%);pointer-events:none"></div>
-      <p style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:.75rem">EMBADS2027 EXAM PRACTICE</p>
+      <p style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:.75rem">PRACTICE EXAM</p>
       <h1 style="font-family:var(--font-head);font-size:clamp(2rem,5vw,3.2rem);font-weight:900;letter-spacing:-.03em;line-height:1.1;margin-bottom:1rem">
         <span style="background:linear-gradient(135deg,var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Data Analytics</span> for Executives
       </h1>
       <p style="font-size:clamp(.95rem,2.2vw,1.15rem);color:var(--text);line-height:1.8;margin-bottom:1rem">
-        Practice with the <span style="color:var(--purple);font-weight:700">CD62 S AUT25</span> exam paper. Three questions covering
+        Three questions covering
         <span style="color:var(--accent);font-weight:700">multiple choice</span>,
         <span style="color:var(--blue);font-weight:700">inferential statistics</span>, and
         <span style="color:var(--warm);font-weight:700">linear regression</span>.
       </p>
       <p style="font-size:.82rem;color:var(--text2);line-height:1.7">
-        Faculty: <strong style="color:var(--text)">Kostis Christodoulou</strong> &middot; Total: <strong style="color:var(--text)">75 points</strong> (Q1: 20 + Q2: 25 + Q3: 30)
+        Total: <strong style="color:var(--text)">75 points</strong> (Q1: 20 + Q2: 25 + Q3: 30)
       </p>
       <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.25rem">
         <div style="flex:1;min-width:100px;text-align:center;padding:.75rem;background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius)">
@@ -1597,13 +1597,15 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 </section>
 
 <!-- ── Q1: MULTIPLE CHOICE (20 points) ── -->
-<section class="section embads" id="embads-q1">
+<section class="section embads collapsible" id="embads-q1">
 <div class="container">
   <div class="ch-head">
-    <div class="ch-num">Question 1 &middot; 20 Points</div>
+    <div class="ch-num">Question 1 &middot; 20 Points<span class="ch-qcount">4 items</span></div>
     <h2 class="ch-q">Multiple Choice</h2>
     <p class="ch-context">Circle your answer and provide brief written justification for each.</p>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand section</button>
+  <div class="ch-body">
 
   <div class="embads-score">
     <div class="embads-score-bar"><div class="embads-score-fill" id="mcqScoreFill" style="width:0%"></div></div>
@@ -1702,17 +1704,20 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     </div>
   </div>
 
+  </div><!-- /ch-body -->
 </div>
 </section>
 
 <!-- ── Q2: INFERENTIAL STATISTICS (25 points) ── -->
-<section class="section embads-q2" id="embads-q2">
+<section class="section embads-q2 collapsible" id="embads-q2">
 <div class="container">
   <div class="ch-head">
-    <div class="ch-num">Question 2 &middot; 25 Points</div>
+    <div class="ch-num">Question 2 &middot; 25 Points<span class="ch-qcount">4 parts</span></div>
     <h2 class="ch-q">Inferential Statistics — TechLearn</h2>
     <p class="ch-context">TechLearn offers an online learning platform. They claim their new adaptive algorithm helps students complete an average of 35 courses per year. Historical data: &mu; = 32 courses, &sigma; = 14 courses.</p>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand section</button>
+  <div class="ch-body">
 
   <div class="data-box">
     <div class="db-item">Claimed mean: <span class="v">35 courses</span></div>
@@ -1804,17 +1809,20 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     </div>
   </div>
 
+  </div><!-- /ch-body -->
 </div>
 </section>
 
 <!-- ── Q3: LINEAR REGRESSION (30 points) ── -->
-<section class="section embads-q3" id="embads-q3">
+<section class="section embads-q3 collapsible" id="embads-q3">
 <div class="container">
   <div class="ch-head">
-    <div class="ch-num">Question 3 &middot; 30 Points</div>
+    <div class="ch-num">Question 3 &middot; 30 Points<span class="ch-qcount">5 parts</span></div>
     <h2 class="ch-q">Linear Regression — RetailEdge</h2>
     <p class="ch-context">You manage analytics at RetailEdge, an online marketplace. Leadership wants to understand drivers of customer lifetime value (CLV) to optimize marketing spend. Dataset: n = 450 customers.</p>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand section</button>
+  <div class="ch-body">
 
   <div class="data-box">
     <div class="db-item">Response: <span class="v">CLV (&pound;)</span></div>
@@ -1949,16 +1957,19 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     </div>
   </div>
 
+  </div><!-- /ch-body -->
 </div>
 </section>
 
 <!-- ── FORMULA SHEET ── -->
-<section class="section embads" id="embads-formulas">
+<section class="section embads collapsible" id="embads-formulas">
 <div class="container">
   <div class="ch-head">
-    <div class="ch-num">Reference</div>
+    <div class="ch-num">Reference<span class="ch-qcount">6 formulas</span></div>
     <h2 class="ch-q">Formula Sheet</h2>
   </div>
+  <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand section</button>
+  <div class="ch-body">
 
   <div class="q-card" style="margin-bottom:1rem">
     <div class="q-label">Standard Error for the Mean</div>
@@ -2000,11 +2011,12 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     &bull; <strong>VIF > 5</strong> &rarr; multicollinearity concern</p>
   </div>
 
+  </div><!-- /ch-body -->
 </div>
 </section>
 
 <footer style="text-align:center;padding:2rem 1rem;border-top:1px solid var(--card-border)">
-  <div style="color:var(--text3);font-size:.68rem">EMBADS2027 Data Analytics for Executives — Exam Practice</div>
+  <div style="color:var(--text3);font-size:.68rem">Data Analytics for Executives — Practice Exam</div>
   <div style="margin-top:.6rem;font-size:.78rem;color:var(--purple);font-weight:600">With warm regards from ESH</div>
 </footer>
 
@@ -2022,8 +2034,8 @@ function switchDataset(ds,skipScroll){
   document.getElementById('navPills-embads').style.display=ds==='embads'?'':'none';
   const logo=document.getElementById('navLogo');
   if(ds==='embads'){
-    logo.innerHTML='<span class="fc" style="color:var(--purple)">EMBADS</span><span class="sub">Exam</span>';
-    document.title='EMBADS 2027 — Data Analytics Exam Practice';
+    logo.innerHTML='<span class="fc" style="color:var(--purple)">Practice</span><span class="sub">Exam</span>';
+    document.title='Data Analytics — Practice Exam';
   } else {
     logo.innerHTML='<span class="fc">FreshCart</span><span class="sub">Analytics</span>';
     document.title='FreshCart Analytics — Data Analytics Revision Tool';
