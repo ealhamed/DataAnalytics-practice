@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FreshCart Analytics — Data Analytics Revision Tool</title>
+<title>Data Analytics — Practice Exam</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" integrity="sha384-vsrfeLOOY6KuIYKDlmVH5UiBmgIdB1oEf7p01YgWHuqmOHfZr374+odEv96n9tNC" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -390,12 +390,12 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 <body>
 
 <nav class="nav">
-  <div class="nav-logo" id="navLogo"><span class="fc">FreshCart</span><span class="sub">Analytics</span></div>
+  <div class="nav-logo" id="navLogo"><span class="fc" style="color:var(--purple)">Practice</span><span class="sub">Exam</span></div>
   <select class="ds-select" id="dsSelect" onchange="switchDataset(this.value)">
-    <option value="freshcart">FreshCart Analytics</option>
     <option value="embads">Practice Exam</option>
+    <option value="freshcart">FreshCart Analytics</option>
   </select>
-  <div class="nav-pills" id="navPills-freshcart">
+  <div class="nav-pills" id="navPills-freshcart" style="display:none">
     <button class="np active" onclick="go('#hero')">Home</button>
     <button class="np" onclick="go('#ch1')">1 · Data</button>
     <button class="np" onclick="go('#ch2')">2 · Confidence</button>
@@ -408,7 +408,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <button class="np" onclick="go('#traps')">Exam Traps</button>
     <button class="np" onclick="go('#cards')">Flashcards</button>
   </div>
-  <div class="nav-pills" id="navPills-embads" style="display:none">
+  <div class="nav-pills" id="navPills-embads">
     <button class="np active" onclick="go('#embads-hero')">Home</button>
     <button class="np" onclick="go('#embads-q1')">Q1 · Logic</button>
     <button class="np" onclick="go('#embads-q2')">Q2 · Inference</button>
@@ -418,7 +418,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 </nav>
 <button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-<div id="ds-freshcart" class="dataset-content active">
+<div id="ds-freshcart" class="dataset-content">
 
 <section id="hero">
   <div class="hero-orb ho1"></div>
@@ -1566,7 +1566,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 <!-- ═══════════════════════════════════════════════════ -->
 <!-- EMBADS 2027 EXAM PRACTICE                          -->
 <!-- ═══════════════════════════════════════════════════ -->
-<div id="ds-embads" class="dataset-content">
+<div id="ds-embads" class="dataset-content active">
 
 <section id="embads-hero" class="section" style="padding-top:5.5rem;padding-bottom:2.5rem;text-align:center;position:relative;overflow:hidden">
   <div class="hero-orb ho1"></div>
@@ -2079,7 +2079,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 <script>
 
 /* ── DATASET SWITCHER ── */
-let currentDS='freshcart';
+let currentDS='embads';
 function switchDataset(ds,skipScroll){
   currentDS=ds;
   document.querySelectorAll('.dataset-content').forEach(el=>el.classList.remove('active'));
@@ -2101,7 +2101,7 @@ function switchDataset(ds,skipScroll){
 document.addEventListener('DOMContentLoaded',()=>{
   try{
     const saved=localStorage.getItem('ds-active');
-    if(saved&&saved!=='freshcart'){
+    if(saved&&saved!=='embads'){
       document.getElementById('dsSelect').value=saved;
       switchDataset(saved,true);
     }
