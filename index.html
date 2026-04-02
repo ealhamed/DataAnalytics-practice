@@ -112,6 +112,15 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 .answer .result{color:var(--accent);font-family:var(--font-mono);font-weight:600}
 .answer .conclusion{margin-top:.5rem;padding:.6rem .9rem;background:rgba(0,229,204,.05);border:1px solid rgba(0,229,204,.1);border-radius:var(--radius-xs);color:var(--text)}
 
+/* STEPPED REVEAL (Practice Exam only) */
+#ds-embads .answer .step,#ds-embads .answer .conclusion{display:none}
+#ds-embads .answer .step.revealed,#ds-embads .answer .conclusion.revealed{display:block;animation:fadeIn .3s ease}
+#ds-embads .answer .your-attempt{display:block}
+.next-step-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem 1.1rem;border-radius:100px;font-size:.78rem;font-weight:600;cursor:pointer;transition:var(--transition);border:1px solid var(--purple);background:rgba(139,92,246,.08);color:var(--purple);font-family:var(--font-body);margin-top:.75rem}
+.next-step-btn:hover{background:rgba(139,92,246,.18);border-color:var(--purple)}
+.next-step-btn.done{opacity:.4;pointer-events:none;border-color:var(--card-border);color:var(--text3);background:transparent}
+.step-counter{font-size:.68rem;color:var(--text3);margin-left:.5rem;font-family:var(--font-mono)}
+
 /* DIG DEEPER */
 .dig{margin-top:.75rem}
 .dig-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .7rem;border-radius:100px;font-size:.72rem;font-weight:600;color:var(--text3);cursor:pointer;border:1px solid var(--card-border);background:transparent;font-family:var(--font-body);transition:var(--transition)}
@@ -401,7 +410,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
   </div>
   <div class="nav-pills" id="navPills-embads" style="display:none">
     <button class="np active" onclick="go('#embads-hero')">Home</button>
-    <button class="np" onclick="go('#embads-q1')">Q1 · MCQ</button>
+    <button class="np" onclick="go('#embads-q1')">Q1 · Logic</button>
     <button class="np" onclick="go('#embads-q2')">Q2 · Inference</button>
     <button class="np" onclick="go('#embads-q3')">Q3 · Regression</button>
     <button class="np" onclick="go('#embads-formulas')">Formulas</button>
@@ -1565,30 +1574,30 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
   <div class="container" style="position:relative;z-index:1">
     <div class="embads-intro" style="background:linear-gradient(135deg,rgba(139,92,246,.06),rgba(59,130,246,.06),rgba(255,107,53,.04));border:1px solid rgba(139,92,246,.12);border-radius:24px;padding:2.5rem;max-width:820px;margin:0 auto 2rem;text-align:left;position:relative;overflow:hidden">
       <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:radial-gradient(circle,rgba(139,92,246,.12),transparent 70%);pointer-events:none"></div>
-      <p style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:.75rem">PRACTICE EXAM</p>
+      <p style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:.75rem">SAMPLE EXAM 2026</p>
       <h1 style="font-family:var(--font-head);font-size:clamp(2rem,5vw,3.2rem);font-weight:900;letter-spacing:-.03em;line-height:1.1;margin-bottom:1rem">
-        <span style="background:linear-gradient(135deg,var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Data Analytics</span> for Executives
+        <span style="background:linear-gradient(135deg,var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Data Analytics</span> Sample Exam
       </h1>
       <p style="font-size:clamp(.95rem,2.2vw,1.15rem);color:var(--text);line-height:1.8;margin-bottom:1rem">
         Three questions covering
-        <span style="color:var(--accent);font-weight:700">multiple choice</span>,
-        <span style="color:var(--blue);font-weight:700">inferential statistics</span>, and
-        <span style="color:var(--warm);font-weight:700">linear regression</span>.
+        <span style="color:var(--purple);font-weight:700">statistical logic &amp; decisions</span>,
+        <span style="color:var(--blue);font-weight:700">inference &amp; risk</span>, and
+        <span style="color:var(--warm);font-weight:700">regression &amp; causality</span>.
       </p>
       <p style="font-size:.82rem;color:var(--text2);line-height:1.7">
-        Total: <strong style="color:var(--text)">75 points</strong> (Q1: 20 + Q2: 25 + Q3: 30)
+        Total: <strong style="color:var(--text)">75 points</strong> (Q1: 20 + Q2: 25 + Q3: 28) &middot; Show all steps for full marks
       </p>
       <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.25rem">
         <div style="flex:1;min-width:100px;text-align:center;padding:.75rem;background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius)">
           <div style="font-family:var(--font-mono);font-size:1.8rem;font-weight:800;color:var(--purple)">4</div>
-          <div style="font-size:.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600">MCQ Items</div>
+          <div style="font-size:.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600">Logic Parts</div>
         </div>
         <div style="flex:1;min-width:100px;text-align:center;padding:.75rem;background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius)">
           <div style="font-family:var(--font-mono);font-size:1.8rem;font-weight:800;color:var(--blue)">4</div>
           <div style="font-size:.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600">Inference Parts</div>
         </div>
         <div style="flex:1;min-width:100px;text-align:center;padding:.75rem;background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius)">
-          <div style="font-family:var(--font-mono);font-size:1.8rem;font-weight:800;color:var(--warm)">5</div>
+          <div style="font-family:var(--font-mono);font-size:1.8rem;font-weight:800;color:var(--warm)">3</div>
           <div style="font-size:.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600">Regression Parts</div>
         </div>
       </div>
@@ -1596,111 +1605,136 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
   </div>
 </section>
 
-<!-- ── Q1: MULTIPLE CHOICE (20 points) ── -->
+<!-- ── Q1: STATISTICAL LOGIC & EXECUTIVE DECISION-MAKING (20 points) ── -->
 <section class="section embads collapsible" id="embads-q1">
 <div class="container">
   <div class="ch-head">
-    <div class="ch-num">Question 1 &middot; 20 Points<span class="ch-qcount">4 items</span></div>
-    <h2 class="ch-q">Multiple Choice</h2>
-    <p class="ch-context">Circle your answer and provide brief written justification for each.</p>
+    <div class="ch-num">Question 1 &middot; 20 Points<span class="ch-qcount">4 parts</span></div>
+    <h2 class="ch-q">Statistical Logic &amp; Executive Decision-Making</h2>
+    <p class="ch-context">Four scenarios that test whether you can move beyond the math and think like a decision-maker.</p>
   </div>
   <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand section</button>
   <div class="ch-body">
 
-  <div class="embads-score">
-    <div class="embads-score-bar"><div class="embads-score-fill" id="mcqScoreFill" style="width:0%"></div></div>
-    <div class="embads-score-label" id="mcqScoreLabel">0 / 0</div>
-  </div>
-
-  <!-- Q1(i) -->
-  <div class="q-card" id="mcq_1" data-correct="c">
-    <div class="q-label">Question 1(i) &middot; 5 Points</div>
-    <div class="q-text">A logistics company tests a new routing algorithm with 180 drivers in the treatment group and 180 in control. The test yields a p-value of 0.04 for the difference in average delivery times. At the 5% significance level:</div>
-    <div class="mcq-options">
-      <div class="mcq-opt" onclick="answerMCQ('mcq_1','a',this)"><span class="opt-letter">a.</span> The result proves the new algorithm causes faster deliveries.</div>
-      <div class="mcq-opt" onclick="answerMCQ('mcq_1','b',this)"><span class="opt-letter">b.</span> There is a 4% probability the null hypothesis is true.</div>
-      <div class="mcq-opt" onclick="answerMCQ('mcq_1','c',this)"><span class="opt-letter">c.</span> We reject the null hypothesis and conclude evidence exists of a difference.</div>
-      <div class="mcq-opt" onclick="answerMCQ('mcq_1','d',this)"><span class="opt-letter">d.</span> We need a larger sample to draw any conclusions.</div>
+  <!-- Q1(i) — The "Significant" Productivity Hack -->
+  <div class="q-card">
+    <div class="q-label">Question 1(i) &middot; 5 Points &mdash; The &ldquo;Significant&rdquo; Productivity Hack</div>
+    <div class="q-text">A logistics firm tests a new wearable device intended to reduce package sorting time. They provide raw data for &ldquo;Seconds per Package&rdquo;:</div>
+    <table style="width:100%;border-collapse:collapse;font-size:.85rem;margin:.75rem 0">
+      <thead><tr style="border-bottom:2px solid var(--card-border)">
+        <th style="text-align:left;padding:.5rem;color:var(--text)">Group</th>
+        <th style="text-align:right;padding:.5rem;color:var(--text)">n</th>
+        <th style="text-align:right;padding:.5rem;color:var(--text)">Mean (x&#772;)</th>
+        <th style="text-align:right;padding:.5rem;color:var(--text)">Variance (s&sup2;)</th>
+      </tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .5rem">Group A (Wearable)</td><td style="text-align:right;padding:.4rem .5rem">160</td><td style="text-align:right;padding:.4rem .5rem">44.2</td><td style="text-align:right;padding:.4rem .5rem">9.0</td></tr>
+        <tr><td style="padding:.4rem .5rem">Group B (Control)</td><td style="text-align:right;padding:.4rem .5rem">160</td><td style="text-align:right;padding:.4rem .5rem">45.8</td><td style="text-align:right;padding:.4rem .5rem">16.0</td></tr>
+      </tbody>
+    </table>
+    <div class="q-text" style="margin-top:.5rem">
+      <strong>Tasks:</strong><br>
+      1. Calculate the Standard Error (SE) for the difference between the two means.<br>
+      2. Calculate the t-statistic.<br>
+      3. Using a critical t-value of 1.96 (&alpha; = 0.05), state your statistical conclusion.<br>
+      4. <strong>The &ldquo;Financial Hurdle&rdquo;:</strong> The devices cost &pound;40,000/year. The Operations Director states: &ldquo;Every 1-second reduction saves &pound;20,000/year in labor.&rdquo; Does this investment break even?<br>
+      5. <strong>Critique:</strong> The HR Director worries sorting speed increased because workers knew they were being monitored, not because of the devices. How does this threaten Internal Validity?
     </div>
-    <div class="mcq-feedback" id="mcq_1_fb">
-      <strong style="color:var(--accent)">Correct answer: C</strong><br><br>
-      <strong>Why C:</strong> p-value = 0.04 < 0.05 (significance level), so we reject H₀. There is statistically significant evidence of a difference in delivery times.<br><br>
-      <strong>Why not A:</strong> Statistical tests never "prove" causation. We find evidence, not proof. Also, "causes" implies causation which requires careful experimental design consideration.<br>
-      <strong>Why not B:</strong> The p-value is NOT the probability that H₀ is true. It's the probability of observing data this extreme <em>if</em> H₀ were true.<br>
-      <strong>Why not D:</strong> n=180 per group is sufficient. The test already yielded a significant result.
-      <div class="exam-tip" style="margin-top:.75rem"><strong>Never say "proves"</strong> in hypothesis testing. We "reject" or "fail to reject." And the p-value is about the data given H₀, not the probability of H₀.</div>
+    <div class="try-box">
+      <div class="try-label">Your answer</div>
+      <textarea placeholder="Calculate SE, t-stat, conclude, assess financial hurdle, critique internal validity..."></textarea>
     </div>
-  </div>
-
-  <!-- Q1(ii) -->
-  <div class="q-card" id="mcq_2" data-correct="b">
-    <div class="q-label">Question 1(ii) &middot; 5 Points</div>
-    <div class="q-text">Your analytics team constructs a 90% confidence interval for mean customer satisfaction score: [7.2, 8.1]. The marketing director asks what this means. The correct interpretation is:</div>
-    <div class="mcq-options">
-      <div class="mcq-opt" onclick="answerMCQ('mcq_2','a',this)"><span class="opt-letter">a.</span> 90% of all customers have satisfaction scores between 7.2 and 8.1.</div>
-      <div class="mcq-opt" onclick="answerMCQ('mcq_2','b',this)"><span class="opt-letter">b.</span> If we repeated this sampling process many times, about 90% of the intervals would contain the true population mean.</div>
-      <div class="mcq-opt" onclick="answerMCQ('mcq_2','c',this)"><span class="opt-letter">c.</span> There's a 90% probability the true mean falls between 7.2 and 8.1.</div>
-      <div class="mcq-opt" onclick="answerMCQ('mcq_2','d',this)"><span class="opt-letter">d.</span> The sample mean will fall in this range 90% of the time.</div>
-    </div>
-    <div class="mcq-feedback" id="mcq_2_fb">
-      <strong style="color:var(--accent)">Correct answer: B</strong><br><br>
-      <strong>Why B:</strong> This is the frequentist interpretation. The confidence level refers to the long-run success rate of the <em>method</em>, not any single interval.<br><br>
-      <strong>Why not A:</strong> The CI is about the population <em>mean</em>, not individual scores. Individual scores have much wider spread.<br>
-      <strong>Why not C:</strong> The true mean is a fixed (unknown) number. It's either in the interval or it's not — there's no probability about it. The 90% refers to the procedure.<br>
-      <strong>Why not D:</strong> The sample mean is always at the center of the CI. This doesn't describe what 90% means.
-      <div class="trap" style="margin-top:.75rem">The #1 exam trap: saying "90% probability the true mean is in the interval." The mean is fixed — the interval is random. 90% describes the <strong>method's reliability</strong>, not any single interval.</div>
-    </div>
-  </div>
-
-  <!-- Q1(iii) -->
-  <div class="q-card" id="mcq_3" data-correct="d">
-    <div class="q-label">Question 1(iii) &middot; 5 Points</div>
-    <div class="q-text">An e-commerce platform tests two checkout designs with n=200 users per group. They construct a 95% confidence interval for the difference in average transaction value. If they quadruple the sample size to n=800 per group while keeping confidence level at 95%, the width of the confidence interval would:</div>
-    <div class="data-box" style="margin-bottom:1rem">
-      <div class="db-item">Formula: <span class="v">SE = SD / &radic;n</span></div>
-      <div class="db-item">Original n: <span class="v">200</span></div>
-      <div class="db-item">New n: <span class="v">800</span></div>
-    </div>
-    <div class="mcq-options">
-      <div class="mcq-opt" onclick="answerMCQ('mcq_3','a',this)"><span class="opt-letter">a.</span> Be four times as wide</div>
-      <div class="mcq-opt" onclick="answerMCQ('mcq_3','b',this)"><span class="opt-letter">b.</span> Be twice as wide</div>
-      <div class="mcq-opt" onclick="answerMCQ('mcq_3','c',this)"><span class="opt-letter">c.</span> Remain the same</div>
-      <div class="mcq-opt" onclick="answerMCQ('mcq_3','d',this)"><span class="opt-letter">d.</span> Be half as wide</div>
-      <div class="mcq-opt" onclick="answerMCQ('mcq_3','e',this)"><span class="opt-letter">e.</span> Be one-quarter as wide</div>
-    </div>
-    <div class="mcq-feedback" id="mcq_3_fb">
-      <strong style="color:var(--accent)">Correct answer: D — Half as wide</strong><br><br>
-      <div class="step"><span class="step-n">Key insight:</span> CI width is proportional to SE, and SE = SD / &radic;n</div>
-      <div class="step"><span class="step-n">Step 1:</span> Quadrupling n means &radic;n doubles (&radic;4 = 2)</div>
-      <div class="step"><span class="step-n">Step 2:</span> SE<sub>new</sub> = SD / &radic;800 = SD / (2&radic;200) = SE<sub>old</sub> / 2</div>
-      <div class="step"><span class="step-n">Result:</span> <span class="result">Width halves when you quadruple n</span></div>
-      <div class="takeaway" style="margin-top:.75rem">To halve the margin of error, you need <strong>4x the sample size</strong>. This is the "square root law" — precision grows with &radic;n, not n.</div>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution &#9656;</button>
+    <div class="answer">
+      <div class="your-attempt"></div>
+      <div class="step"><span class="step-n">Step 1 &mdash; Standard Error:</span><br>
+        SE = &radic;(s&sup2;&#8321;/n&#8321; + s&sup2;&#8322;/n&#8322;) = &radic;(9/160 + 16/160) = &radic;(0.05625 + 0.1) = &radic;0.15625 = <span class="result">0.395</span></div>
+      <div class="step"><span class="step-n">Step 2 &mdash; t-statistic:</span><br>
+        t = (x&#772;&#8321; &minus; x&#772;&#8322;) / SE = (44.2 &minus; 45.8) / 0.395 = &minus;1.6 / 0.395 = <span class="result">&minus;4.05</span></div>
+      <div class="step"><span class="step-n">Step 3 &mdash; Conclusion:</span><br>
+        |&minus;4.05| = 4.05 &gt; 1.96 &rarr; <span class="result">Reject H&#8320;</span>. The difference is statistically significant at the 5% level.</div>
+      <div class="step"><span class="step-n">Step 4 &mdash; Financial Hurdle:</span><br>
+        Mean difference = 45.8 &minus; 44.2 = 1.6 seconds.<br>
+        Savings = 1.6 &times; &pound;20,000 = &pound;32,000/year.<br>
+        Cost = &pound;40,000/year.<br>
+        <span class="result">&pound;32,000 &lt; &pound;40,000 &rarr; Does NOT break even (&pound;8,000 annual loss).</span></div>
+      <div class="step"><span class="step-n">Step 5 &mdash; Hawthorne Effect:</span><br>
+        This is the <strong>Hawthorne Effect</strong>: workers perform better simply because they know they are being observed in a study, not because of the wearable device itself. This threatens <strong>internal validity</strong> because the observed improvement may not be caused by the treatment (the device) but by the awareness of being monitored.</div>
+      <div class="conclusion"><strong>Key insight:</strong> Statistically significant &ne; financially worthwhile. The wearable &ldquo;works&rdquo; statistically but loses &pound;8k/year. And even the statistical result is suspect due to the Hawthorne Effect.</div>
     </div>
   </div>
 
-  <!-- Q1(iv) -->
-  <div class="q-card" id="mcq_4" data-correct="a">
-    <div class="q-label">Question 1(iv) &middot; 5 Points</div>
-    <div class="q-text">A ride-sharing company estimates: Surge_Price = &beta;₀ + &beta;₁ &times; Active_Drivers + &epsilon;</div>
-    <div class="data-box" style="margin-bottom:1rem">
-      <div class="db-item">Coefficient (Active_Drivers): <span class="v">-0.0085</span></div>
-      <div class="db-item">SE: <span class="v">0.0034</span></div>
-      <div class="db-item">R&sup2;: <span class="v">0.41</span></div>
-      <div class="db-item">n: <span class="v">520</span></div>
+  <!-- Q1(ii) — The Interval Interpretation -->
+  <div class="q-card">
+    <div class="q-label">Question 1(ii) &middot; 5 Points &mdash; The Interval Interpretation</div>
+    <div class="q-text">You are presented with two 95% Confidence Intervals for &ldquo;Average Customer Spend&rdquo;:</div>
+    <div class="data-box" style="margin:.75rem 0">
+      <div class="db-item">Segment X (New Users): <span class="v">[&pound;42, &pound;88]</span> (n = 40)</div>
+      <div class="db-item">Segment Y (Returning Users): <span class="v">[&pound;62, &pound;68]</span> (n = 1,200)</div>
     </div>
-    <div class="mcq-options">
-      <div class="mcq-opt" onclick="answerMCQ('mcq_4','a',this)"><span class="opt-letter">a.</span> The number of active drivers explains 41% of variation in surge pricing.</div>
-      <div class="mcq-opt" onclick="answerMCQ('mcq_4','b',this)"><span class="opt-letter">b.</span> Each additional active driver causes surge prices to decrease by $0.0085.</div>
-      <div class="mcq-opt" onclick="answerMCQ('mcq_4','c',this)"><span class="opt-letter">c.</span> The t-statistic for &beta;₁ is approximately 0.41.</div>
-      <div class="mcq-opt" onclick="answerMCQ('mcq_4','d',this)"><span class="opt-letter">d.</span> Active drivers and surge price have a positive relationship.</div>
+    <div class="q-text">The CEO says: &ldquo;Segment X is more exciting because it has the potential for &pound;88 spend. Segment Y is boring; it&rsquo;s capped at &pound;68. Let&rsquo;s pivot our marketing entirely to Segment X.&rdquo;<br><br><strong>Task:</strong> Critique the CEO&rsquo;s logic. What does the width of these intervals tell you about risk? Which estimate is more reliable for a budget forecast?</div>
+    <div class="try-box">
+      <div class="try-label">Your answer</div>
+      <textarea placeholder="Critique the CEO's reasoning about the two CIs..."></textarea>
     </div>
-    <div class="mcq-feedback" id="mcq_4_fb">
-      <strong style="color:var(--accent)">Correct answer: A</strong><br><br>
-      <strong>Why A:</strong> R&sup2; = 0.41 means 41% of the variation in surge pricing is explained by the number of active drivers. This is the definition of R&sup2;.<br><br>
-      <strong>Why not B:</strong> "Causes" is too strong — regression shows association, not causation. The correct phrasing would be "is associated with a decrease."<br>
-      <strong>Why not C:</strong> t = coefficient / SE = -0.0085 / 0.0034 = -2.5 (not 0.41). The 0.41 is R&sup2;, not the t-statistic.<br>
-      <strong>Why not D:</strong> The coefficient is <em>negative</em> (-0.0085), so the relationship is negative — more drivers, lower surge price.
-      <div class="exam-tip" style="margin-top:.75rem">Always check: <strong>t = coefficient / SE</strong>. Here t = -0.0085 / 0.0034 &asymp; -2.5. Since |t| > 2, the coefficient is significant at the 5% level.</div>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution &#9656;</button>
+    <div class="answer">
+      <div class="your-attempt"></div>
+      <div class="step"><span class="step-n">CI Width Analysis:</span><br>
+        Segment X width: &pound;88 &minus; &pound;42 = <strong>&pound;46</strong> (very wide &rarr; high uncertainty)<br>
+        Segment Y width: &pound;68 &minus; &pound;62 = <strong>&pound;6</strong> (very narrow &rarr; high precision)</div>
+      <div class="step"><span class="step-n">Why the CEO is wrong:</span><br>
+        The wide interval for Segment X does not mean &ldquo;potential for &pound;88.&rdquo; It means we are very <strong>uncertain</strong> about the true mean. The &pound;88 upper bound reflects our <em>lack of knowledge</em>, not a &ldquo;ceiling&rdquo; of customer behavior. With only n = 40, our estimate is noisy and unreliable.</div>
+      <div class="step"><span class="step-n">Which is more reliable?</span><br>
+        <span class="result">Segment Y</span> is far more reliable for budgeting. Its narrow CI (&pound;6 range) means we can predict average spend with high confidence. Segment X&rsquo;s &pound;46 range means the true average could be anywhere from &pound;42 to &pound;88 &mdash; a terrible basis for budget decisions.</div>
+      <div class="conclusion"><strong>Key insight:</strong> A wide CI signals <strong>risk and uncertainty</strong>, not &ldquo;exciting potential.&rdquo; For financial forecasting, prefer the segment with the narrower, more precise estimate.</div>
+    </div>
+  </div>
+
+  <!-- Q1(iii) — The P-Value "Ghost" -->
+  <div class="q-card">
+    <div class="q-label">Question 1(iii) &middot; 5 Points &mdash; The P-Value &ldquo;Ghost&rdquo;</div>
+    <div class="q-text">A web analyst runs an A/B test on a button color. Version A has a 5.0% conversion rate; Version B has 5.2%. The p-value is 0.48. The analyst says: &ldquo;The test is a failure. It <em>proves</em> that button color has zero impact on user behavior.&rdquo;<br><br><strong>Task:</strong> Identify two flaws in the analyst&rsquo;s statement. If the company has 10 million visitors a month, why might a &ldquo;non-significant&rdquo; 0.2% difference still be business-critical?</div>
+    <div class="try-box">
+      <div class="try-label">Your answer</div>
+      <textarea placeholder="Identify the two flaws and explain business significance..."></textarea>
+    </div>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution &#9656;</button>
+    <div class="answer">
+      <div class="your-attempt"></div>
+      <div class="step"><span class="step-n">Flaw 1 &mdash; &ldquo;Proves zero impact&rdquo;:</span><br>
+        Failure to reject H&#8320; does <strong>NOT</strong> mean H&#8320; is true. &ldquo;Absence of evidence &ne; evidence of absence.&rdquo; A non-significant result means we don&rsquo;t have <em>enough evidence</em> to conclude a difference &mdash; it does not prove there is none.</div>
+      <div class="step"><span class="step-n">Flaw 2 &mdash; &ldquo;The test is a failure&rdquo;:</span><br>
+        A non-significant result is still a valid result. The test worked correctly &mdash; it told us we can&rsquo;t confidently distinguish the two versions with this sample. It may indicate the sample was too small (low statistical power).</div>
+      <div class="step"><span class="step-n">Business significance:</span><br>
+        With 10 million visitors/month, a 0.2% increase = <span class="result">20,000 additional conversions per month</span>. Depending on revenue per conversion, this could be worth millions in annual revenue. Statistical non-significance at the current sample size doesn&rsquo;t mean the effect is zero or worthless.</div>
+      <div class="conclusion"><strong>Key insight:</strong> Statistical significance and <strong>business significance</strong> are different things. Always consider the practical magnitude of the effect alongside the p-value.</div>
+    </div>
+  </div>
+
+  <!-- Q1(iv) — Significance vs. R² -->
+  <div class="q-card">
+    <div class="q-label">Question 1(iv) &middot; 5 Points &mdash; Significance vs. R&sup2;</div>
+    <div class="q-text">A junior analyst runs a regression of &ldquo;Monthly Energy Bill&rdquo; on &ldquo;Household Square Footage.&rdquo;</div>
+    <div class="data-box" style="margin:.75rem 0">
+      <div class="db-item">Coefficient for SqFt: <span class="v">0.12 (p &lt; 0.0001)</span></div>
+      <div class="db-item">R&sup2;: <span class="v">0.11</span></div>
+    </div>
+    <div class="q-text">The analyst concludes: &ldquo;Since the p-value is so low, Square Footage is the primary and most important driver of energy costs.&rdquo;<br><br><strong>Task:</strong> Correct this interpretation. What does the low R&sup2; tell us about the &ldquo;primary&rdquo; drivers of energy costs?</div>
+    <div class="try-box">
+      <div class="try-label">Your answer</div>
+      <textarea placeholder="Correct the analyst's interpretation of p-value vs R²..."></textarea>
+    </div>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution &#9656;</button>
+    <div class="answer">
+      <div class="your-attempt"></div>
+      <div class="step"><span class="step-n">The error:</span><br>
+        A highly significant p-value means Square Footage has a <strong>real, non-zero effect</strong> on energy bills. But significance says nothing about how <em>much</em> of the total variation it explains.</div>
+      <div class="step"><span class="step-n">What R&sup2; = 0.11 tells us:</span><br>
+        Square Footage explains only <span class="result">11% of the variation</span> in energy bills. That means <strong>89%</strong> of the variation is driven by other factors &mdash; insulation quality, household behavior, weather, appliance efficiency, etc.</div>
+      <div class="step"><span class="step-n">Correct interpretation:</span><br>
+        Square Footage is a <strong>statistically significant but minor</strong> predictor. It is <em>not</em> the &ldquo;primary driver&rdquo; &mdash; the primary drivers are the unmeasured variables that account for the other 89%.</div>
+      <div class="conclusion"><strong>Key insight:</strong> <strong>Significant p-value</strong> = the variable matters. <strong>Low R&sup2;</strong> = it doesn&rsquo;t matter <em>much</em>. Never confuse &ldquo;statistically real&rdquo; with &ldquo;practically dominant.&rdquo;</div>
     </div>
   </div>
 
@@ -1708,104 +1742,129 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 </div>
 </section>
 
-<!-- ── Q2: INFERENTIAL STATISTICS (25 points) ── -->
+<!-- ── Q2: INFERENCE & THE RISK MATRIX (25 points) ── -->
 <section class="section embads-q2 collapsible" id="embads-q2">
 <div class="container">
   <div class="ch-head">
     <div class="ch-num">Question 2 &middot; 25 Points<span class="ch-qcount">4 parts</span></div>
-    <h2 class="ch-q">Inferential Statistics — TechLearn</h2>
-    <p class="ch-context">TechLearn offers an online learning platform. They claim their new adaptive algorithm helps students complete an average of 35 courses per year. Historical data: &mu; = 32 courses, &sigma; = 14 courses.</p>
+    <h2 class="ch-q">Inference &amp; The Risk Matrix</h2>
+    <p class="ch-context">Confidence intervals as decision tools &mdash; from retention studies to real-estate expansion to executive memos.</p>
   </div>
   <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand section</button>
   <div class="ch-body">
 
-  <div class="data-box">
-    <div class="db-item">Claimed mean: <span class="v">35 courses</span></div>
-    <div class="db-item">Historical mean: <span class="v">32 courses</span></div>
-    <div class="db-item">Historical SD: <span class="v">14 courses</span></div>
-  </div>
-
-  <!-- Q2(i) -->
+  <!-- Q2(i) — The "Incomplete" Retention Study -->
   <div class="q-card">
-    <div class="q-label">Question 2(i) &middot; 5 Points</div>
-    <div class="q-text">An education research firm samples n = 196 students using the adaptive algorithm. State the approximate distribution of the sample mean, its mean and standard error.</div>
-    <div class="try-box">
-      <div class="try-label">Your answer</div>
-      <textarea placeholder="State the distribution, mean, and standard error..."></textarea>
-    </div>
-    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution ▸</button>
-    <div class="answer">
-      <div class="step"><span class="step-n">Distribution:</span> By CLT, with n = 196 (large), the sample mean is approximately normally distributed.</div>
-      <div class="step"><span class="step-n">Mean:</span> E(X&#772;) = &mu; = <span class="result">32 courses</span> (using the historical population mean)</div>
-      <div class="step"><span class="step-n">Standard Error:</span> SE = &sigma; / &radic;n = 14 / &radic;196 = 14 / 14 = <span class="result">1.0</span></div>
-      <div class="conclusion">X&#772; ~ N(32, 1) — The sample mean follows a Normal distribution with mean 32 and standard error 1.</div>
-    </div>
-  </div>
-
-  <!-- Q2(ii) -->
-  <div class="q-card">
-    <div class="q-label">Question 2(ii) &middot; 7 Points</div>
-    <div class="q-text">Using the same sample (n = 196), calculate the probability that the sample mean annual course completion falls between 33 and 36 courses.</div>
-    <div class="try-box">
-      <div class="try-label">Your answer</div>
-      <textarea placeholder="Calculate P(33 < X̄ < 36)..."></textarea>
-    </div>
-    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution ▸</button>
-    <div class="answer">
-      <div class="step"><span class="step-n">Assumption:</span> We use the <strong>historical population mean &mu; = 32</strong> (not TechLearn's claim of 35) since the question asks about the sampling distribution based on known historical data.</div>
-      <div class="step"><span class="step-n">Step 1:</span> SE = 14 / &radic;196 = 1.0 (from part i)</div>
-      <div class="step"><span class="step-n">Step 2:</span> Z for X&#772; = 33: Z = (33 - 32) / 1 = <span class="result">1.0</span></div>
-      <div class="step"><span class="step-n">Step 3:</span> Z for X&#772; = 36: Z = (36 - 32) / 1 = <span class="result">4.0</span></div>
-      <div class="step"><span class="step-n">Step 4:</span> P(Z > 1.0) = 0.1587, P(Z > 4.0) &asymp; 0.0000</div>
-      <div class="step"><span class="step-n">Step 5:</span> P(33 < X&#772; < 36) = P(Z > 1.0) - P(Z > 4.0) = 0.1587 - 0.0000 = <span class="result">0.1587</span></div>
-      <div class="conclusion">There is approximately a <strong>15.87%</strong> probability that the sample mean falls between 33 and 36 courses, assuming the true population mean is 32 (the historical value).</div>
-      <div class="exam-tip" style="margin-top:.75rem">Remember: the Z-table gives the <strong>upper tail probability</strong> P(Z > z). To find P(a < Z < b), compute P(Z > a) - P(Z > b). Always state which &mu; you're using to calculate Z-scores.</div>
-    </div>
-  </div>
-
-  <!-- Q2(iii) -->
-  <div class="q-card">
-    <div class="q-label">Question 2(iii) &middot; 5 Points</div>
-    <div class="q-text">After a pilot program with 400 students, the research team observes a sample mean of 33.5 courses/year with a sample SD of 10 courses. Construct a 95% CI to test TechLearn's 35-course claim. State your decision and managerial implication.</div>
-    <div class="data-box" style="margin-bottom:1rem">
-      <div class="db-item">n: <span class="v">400</span></div>
-      <div class="db-item">x&#772;: <span class="v">33.5</span></div>
-      <div class="db-item">s: <span class="v">10</span></div>
+    <div class="q-label">Question 2(i) &middot; 6 Points &mdash; The &ldquo;Incomplete&rdquo; Retention Study</div>
+    <div class="q-text">An app developer claims their new onboarding flow increases &ldquo;Day-30 Retention.&rdquo; They provide a 95% CI of <strong>[18%, 22%]</strong>. Historical data shows a population standard deviation (&sigma;) of 10%.</div>
+    <div class="q-text" style="margin-top:.5rem">
+      <strong>Tasks:</strong><br>
+      1. What was the Sample Mean in their study?<br>
+      2. <strong>Deducing n:</strong> Based on the CI width and &sigma;, calculate the Sample Size (n) used.<br>
+      3. If the historical retention rate is 17%, does this study &ldquo;prove&rdquo; the new flow is better? What is the statistical margin of safety?
     </div>
     <div class="try-box">
       <div class="try-label">Your answer</div>
-      <textarea placeholder="Build the 95% CI and test the claim of 35..."></textarea>
+      <textarea placeholder="Find the sample mean, deduce n from the CI width, assess the claim..."></textarea>
     </div>
-    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution ▸</button>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution &#9656;</button>
     <div class="answer">
-      <div class="step"><span class="step-n">Step 1:</span> SE = s / &radic;n = 10 / &radic;400 = 10 / 20 = <span class="result">0.5</span></div>
-      <div class="step"><span class="step-n">Step 2:</span> 95% CI = x&#772; &plusmn; 2 &times; SE = 33.5 &plusmn; 2(0.5) = 33.5 &plusmn; 1.0</div>
-      <div class="step"><span class="step-n">Result:</span> <span class="result">95% CI = [32.5, 34.5]</span></div>
-      <div class="step"><span class="step-n">Decision:</span> 35 is <strong>outside</strong> the CI &rarr; <span class="result">Reject the claim</span></div>
-      <div class="conclusion"><strong>Managerial implication:</strong> The data does not support TechLearn's claim of 35 courses. The true average is likely between 32.5 and 34.5 — still above the historical 32, suggesting some improvement, but not as much as claimed. TechLearn should revise their marketing claims.</div>
+      <div class="your-attempt"></div>
+      <div class="step"><span class="step-n">Step 1 &mdash; Sample Mean:</span><br>
+        The sample mean is the midpoint of the CI: (18 + 22) / 2 = <span class="result">20%</span></div>
+      <div class="step"><span class="step-n">Step 2 &mdash; Deducing n:</span><br>
+        Margin of Error = 22 &minus; 20 = 2<br>
+        ME = z* &times; (&sigma; / &radic;n) &rarr; 2 = 1.96 &times; (10 / &radic;n)<br>
+        &radic;n = 1.96 &times; 10 / 2 = 9.8<br>
+        n = 9.8&sup2; &asymp; <span class="result">96</span></div>
+      <div class="step"><span class="step-n">Step 3 &mdash; Is the new flow better?</span><br>
+        Historical retention = 17%. The entire CI [18%, 22%] is <strong>above 17%</strong>.<br>
+        <span class="result">Yes</span>, the data supports the claim that the new flow improves retention.<br>
+        The &ldquo;margin of safety&rdquo; is 18% &minus; 17% = <strong>1 percentage point</strong> &mdash; the lower bound of the CI just barely clears the historical rate.</div>
+      <div class="conclusion"><strong>Key insight:</strong> If the entire CI lies above the benchmark, we have evidence of improvement. But a 1% margin of safety is thin &mdash; a slightly different sample could include 17%.</div>
     </div>
   </div>
 
-  <!-- Q2(iv) -->
+  <!-- Q2(ii) — The High-Stakes Expansion -->
   <div class="q-card">
-    <div class="q-label">Question 2(iv) &middot; 8 Points</div>
-    <div class="q-text">Management compares two groups: Group A (adaptive algorithm): n₁ = 150, x&#772;₁ = 34, SD₁ = 9. Group B (standard platform): n₂ = 140, x&#772;₂ = 30, SD₂ = 10. Test whether the adaptive algorithm makes a significant difference at the 5% level.</div>
-    <div class="data-box" style="margin-bottom:1rem">
-      <div class="db-item">Group A: <span class="v">n=150, x&#772;=34, SD=9</span></div>
-      <div class="db-item">Group B: <span class="v">n=140, x&#772;=30, SD=10</span></div>
+    <div class="q-label">Question 2(ii) &middot; 9 Points &mdash; The High-Stakes Expansion</div>
+    <div class="q-text">A retail chain uses a &ldquo;Risk Matrix&rdquo; for opening new locations. They require a <strong>98% Confidence Interval</strong> for &ldquo;Projected Year 1 Profit&rdquo; (in &pound;000s) from a pilot store.</div>
+    <div class="data-box" style="margin:.75rem 0">
+      <div class="db-item">n = <span class="v">64 days</span> of pilot data</div>
+      <div class="db-item">Sample Mean Profit: <span class="v">&pound;1.5k / day</span></div>
+      <div class="db-item">Population SD (&sigma;): <span class="v">&pound;0.8k / day</span></div>
+      <div class="db-item">z for 98% CI: <span class="v">2.33</span></div>
+    </div>
+    <div class="q-text" style="margin-top:.5rem">
+      <strong>Tasks:</strong><br>
+      1. Calculate the 98% CI for daily profit.<br>
+      2. Apply the Decision Rule:<br>
+      &nbsp;&nbsp;&bull; <strong style="color:var(--green)">Green:</strong> Entire CI above &pound;1.2k &rarr; Open 10 stores<br>
+      &nbsp;&nbsp;&bull; <strong style="color:var(--yellow)">Yellow:</strong> CI contains &pound;1.2k, but mean &gt; &pound;1.3k &rarr; Open 1 store<br>
+      &nbsp;&nbsp;&bull; <strong style="color:var(--red)">Red:</strong> CI contains &pound;1.0k or below &rarr; Exit Market<br>
+      3. Which category? Justify.<br>
+      4. <strong>Ethics of &ldquo;Confidence Shopping&rdquo;:</strong> If the analyst had used a 90% CI (z = 1.645) instead, would &ldquo;Green&rdquo; be met? Why is changing confidence level after seeing data a violation of integrity?
     </div>
     <div class="try-box">
       <div class="try-label">Your answer</div>
-      <textarea placeholder="State hypotheses, calculate t-statistic, conclude..."></textarea>
+      <textarea placeholder="Calculate CI, apply decision rule, discuss ethics..."></textarea>
     </div>
-    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution ▸</button>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution &#9656;</button>
     <div class="answer">
-      <div class="step"><span class="step-n">Hypotheses:</span><br>H₀: &mu;₁ - &mu;₂ = 0 (no difference)<br>H₁: &mu;₁ - &mu;₂ &ne; 0 (there is a difference)</div>
-      <div class="step"><span class="step-n">Step 1:</span> SE = &radic;(s₁&sup2;/n₁ + s₂&sup2;/n₂) = &radic;(81/150 + 100/140) = &radic;(0.54 + 0.714) = &radic;1.254 = <span class="result">1.12</span></div>
-      <div class="step"><span class="step-n">Step 2:</span> t = (x&#772;₁ - x&#772;₂) / SE = (34 - 30) / 1.12 = 4 / 1.12 = <span class="result">3.57</span></div>
-      <div class="step"><span class="step-n">Step 3:</span> |t| = 3.57 > 2 &rarr; <span class="result">Reject H₀</span> at 5% significance level</div>
-      <div class="conclusion"><strong>Conclusion:</strong> There is statistically significant evidence that the adaptive algorithm leads to more course completions than the standard platform.<br><br><strong>Managerial recommendation:</strong> The adaptive algorithm increases course completions by approximately 4 courses/year. This is both statistically significant and practically meaningful. Management should consider rolling out the adaptive algorithm to all students, while monitoring costs and ensuring the improvement justifies the investment.</div>
-      <div class="fm" style="margin-top:.75rem">t = (x&#772;₁ - x&#772;₂ - 0) / &radic;(s₁&sup2;/n₁ + s₂&sup2;/n₂)</div>
+      <div class="your-attempt"></div>
+      <div class="step"><span class="step-n">Step 1 &mdash; Standard Error:</span><br>
+        SE = &sigma; / &radic;n = 0.8 / &radic;64 = 0.8 / 8 = <span class="result">0.1</span></div>
+      <div class="step"><span class="step-n">Step 2 &mdash; 98% CI:</span><br>
+        CI = 1.5 &plusmn; (2.33 &times; 0.1) = 1.5 &plusmn; 0.233<br>
+        <span class="result">CI = [&pound;1.267k, &pound;1.733k]</span></div>
+      <div class="step"><span class="step-n">Step 3 &mdash; Decision:</span><br>
+        Lower bound = &pound;1.267k &gt; &pound;1.2k &rarr; Entire CI is above &pound;1.2k.<br>
+        <span class="result" style="color:var(--green)">Category: GREEN &mdash; Open 10 stores.</span></div>
+      <div class="step"><span class="step-n">Step 4 &mdash; Ethics of Confidence Shopping:</span><br>
+        A 90% CI: 1.5 &plusmn; (1.645 &times; 0.1) = 1.5 &plusmn; 0.16 = [&pound;1.34k, &pound;1.66k]. This would <em>also</em> be Green (lower bound 1.34 &gt; 1.2).<br><br>
+        However, changing the confidence level <strong>after seeing the data</strong> to make the result look better is a form of <strong>p-hacking</strong>. The confidence level must be set <em>before</em> the analysis. Retroactively shrinking the interval to meet a threshold undermines the integrity of the decision framework.</div>
+      <div class="conclusion"><strong>Key insight:</strong> The decision rule is only trustworthy if the confidence level is locked in <em>before</em> data collection. Post-hoc adjustments = gaming the system.</div>
+    </div>
+  </div>
+
+  <!-- Q2(iii) — Verification of Accuracy -->
+  <div class="q-card">
+    <div class="q-label">Question 2(iii) &middot; 5 Points &mdash; Verification of Accuracy</div>
+    <div class="q-text">A team reports: &ldquo;In our study of 100 customers, we found a 95% CI for wait times of <strong>[8.2, 8.8] minutes</strong>.&rdquo; You know the standard deviation of wait times is <strong>5 minutes</strong>.<br><br><strong>Task:</strong> Mathematically verify if this CI is possible. If not, what does this tell you about the team&rsquo;s reporting?</div>
+    <div class="try-box">
+      <div class="try-label">Your answer</div>
+      <textarea placeholder="Calculate the expected margin of error and compare to the reported CI..."></textarea>
+    </div>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution &#9656;</button>
+    <div class="answer">
+      <div class="your-attempt"></div>
+      <div class="step"><span class="step-n">Step 1 &mdash; Expected ME:</span><br>
+        ME = z* &times; (&sigma; / &radic;n) = 1.96 &times; (5 / &radic;100) = 1.96 &times; 0.5 = <span class="result">0.98</span></div>
+      <div class="step"><span class="step-n">Step 2 &mdash; Reported ME:</span><br>
+        Reported ME = (8.8 &minus; 8.2) / 2 = <span class="result">0.3</span></div>
+      <div class="step"><span class="step-n">Step 3 &mdash; Comparison:</span><br>
+        Expected ME (0.98) &ne; Reported ME (0.3). The reported CI is <strong>far too narrow</strong> given the known SD.<br>
+        <span class="result">The reported CI is mathematically impossible.</span></div>
+      <div class="step"><span class="step-n">What went wrong?</span><br>
+        The team likely reported the <strong>Standard Error</strong> (0.5) as if it were the SD, or used a much smaller SD than the actual population value. This is a reporting error that overstates precision.</div>
+      <div class="conclusion"><strong>Key insight:</strong> Always sanity-check reported CIs. If ME = z* &times; SE and the numbers don&rsquo;t add up, the report is wrong.</div>
+    </div>
+  </div>
+
+  <!-- Q2(iv) — Leadership Memo -->
+  <div class="q-card">
+    <div class="q-label">Question 2(iv) &middot; 5 Points &mdash; Leadership Memo</div>
+    <div class="q-text">The CMO wants to spend <strong>&pound;1M</strong> on a celebrity endorsement based on a survey of <strong>30 people</strong> where 20 said they &ldquo;might buy&rdquo; the product.<br><br><strong>Task:</strong> Write a 4&ndash;5 sentence memo advising the CMO. Reference the &ldquo;Law of Large Numbers&rdquo; and the risks of &ldquo;Small Sample Bias.&rdquo;</div>
+    <div class="try-box">
+      <div class="try-label">Your memo</div>
+      <textarea placeholder="Dear CMO, ..."></textarea>
+    </div>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution &#9656;</button>
+    <div class="answer">
+      <div class="your-attempt"></div>
+      <div class="step"><span class="step-n">Sample Memo:</span><br>
+        <em>&ldquo;The survey indicates 66% (20/30) of respondents &lsquo;might buy,&rsquo; but this result is based on only 30 people and is highly susceptible to <strong>Small Sample Bias</strong>. With such a small n, a handful of enthusiastic respondents can dramatically skew the percentage. The <strong>Law of Large Numbers</strong> tells us that as we increase the sample, this 66% rate will likely regress toward the true (and probably much lower) population rate. I recommend conducting a larger pilot study (n &gt; 200) before committing &pound;1M. Additionally, &lsquo;might buy&rsquo; is a weak commitment &mdash; actual purchase rates are typically far below stated purchase intent.&rdquo;</em></div>
+      <div class="conclusion"><strong>Key insight:</strong> Small samples produce noisy, unreliable estimates. Never make million-pound decisions on n = 30.</div>
     </div>
   </div>
 
@@ -1813,147 +1872,129 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 </div>
 </section>
 
-<!-- ── Q3: LINEAR REGRESSION (30 points) ── -->
+<!-- ── Q3: ADVANCED REGRESSION & CAUSALITY (28 points) ── -->
 <section class="section embads-q3 collapsible" id="embads-q3">
 <div class="container">
   <div class="ch-head">
-    <div class="ch-num">Question 3 &middot; 30 Points<span class="ch-qcount">5 parts</span></div>
-    <h2 class="ch-q">Linear Regression — RetailEdge</h2>
-    <p class="ch-context">You manage analytics at RetailEdge, an online marketplace. Leadership wants to understand drivers of customer lifetime value (CLV) to optimize marketing spend. Dataset: n = 450 customers.</p>
+    <div class="ch-num">Question 3 &middot; 28 Points<span class="ch-qcount">3 parts</span></div>
+    <h2 class="ch-q">Advanced Regression &amp; Causality</h2>
+    <p class="ch-context">From delivery models to prediction intervals to the dangerous leap from correlation to causation.</p>
   </div>
   <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand section</button>
   <div class="ch-body">
 
-  <div class="data-box">
-    <div class="db-item">Response: <span class="v">CLV (&pound;)</span></div>
-    <div class="db-item">Predictors: <span class="v">TENURE, FREQUENCY, PRIME, SATISFACTION, CATEGORY</span></div>
-    <div class="db-item">n: <span class="v">450</span></div>
-    <div class="db-item">Significance: <span class="v">&alpha; = 5%</span></div>
-  </div>
-
-  <!-- Q3(i) -->
+  <!-- Q3(i) — The Delivery Model -->
   <div class="q-card">
-    <div class="q-label">Question 3(i) &middot; 5 Points</div>
-    <div class="q-text">Model 1 uses only TENURE. Write the equation, interpret the TENURE coefficient, assess significance, and comment on predictive power.</div>
-    <div class="data-box" style="margin-bottom:1rem">
-      <div class="db-item">Intercept: <span class="v">245.0 (SE: 35.2)</span></div>
-      <div class="db-item">TENURE: <span class="v">12.5 (SE: 2.1)</span></div>
-      <div class="db-item">R&sup2;: <span class="v">0.28</span></div>
+    <div class="q-label">Question 3(i) &middot; 8 Points &mdash; The Delivery Model</div>
+    <div class="q-text">A food delivery app models &ldquo;Delivery Time&rdquo; (minutes):</div>
+    <div class="fm" style="margin:.75rem 0;font-size:.95rem">Time = 10 + 2.5(Distance_km) + 8(IsRain) &minus; 1.2(CourierExperience_yrs)</div>
+    <table style="width:100%;border-collapse:collapse;font-size:.85rem;margin:.75rem 0">
+      <thead><tr style="border-bottom:2px solid var(--card-border)">
+        <th style="text-align:left;padding:.5rem;color:var(--text)">Variable</th>
+        <th style="text-align:right;padding:.5rem;color:var(--text)">Coefficient</th>
+        <th style="text-align:right;padding:.5rem;color:var(--text)">p-value</th>
+      </tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .5rem">Intercept</td><td style="text-align:right;padding:.4rem .5rem">10.0</td><td style="text-align:right;padding:.4rem .5rem">&lt; 0.001</td></tr>
+        <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .5rem">Distance (km)</td><td style="text-align:right;padding:.4rem .5rem">2.5</td><td style="text-align:right;padding:.4rem .5rem">&lt; 0.001</td></tr>
+        <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .5rem">IsRain (1 = Yes)</td><td style="text-align:right;padding:.4rem .5rem">8.0</td><td style="text-align:right;padding:.4rem .5rem">0.002</td></tr>
+        <tr><td style="padding:.4rem .5rem">Experience (yrs)</td><td style="text-align:right;padding:.4rem .5rem">&minus;1.2</td><td style="text-align:right;padding:.4rem .5rem">0.045</td></tr>
+      </tbody>
+    </table>
+    <div class="q-text" style="margin-top:.5rem">
+      <strong>Tasks:</strong><br>
+      1. Interpret the IsRain coefficient for a non-technical dispatcher.<br>
+      2. Interpret the Experience coefficient.<br>
+      3. A courier has 5 years of experience, it is a sunny day (0), and the distance is 4 km. What is the predicted delivery time?<br>
+      4. If the p-value for Experience was 0.25 instead of 0.045, how would that change your advice to the HR team regarding &ldquo;hiring for experience&rdquo;?
     </div>
     <div class="try-box">
       <div class="try-label">Your answer</div>
-      <textarea placeholder="Write the equation, interpret slope, check significance, comment on R²..."></textarea>
+      <textarea placeholder="Interpret coefficients, predict, discuss p-value change..."></textarea>
     </div>
-    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution ▸</button>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution &#9656;</button>
     <div class="answer">
-      <div class="step"><span class="step-n">Equation:</span> <span class="result">CLV = 245.0 + 12.5 &times; TENURE</span></div>
-      <div class="step"><span class="step-n">Interpretation:</span> For each additional month of tenure, CLV increases by &pound;12.50, on average.</div>
-      <div class="step"><span class="step-n">Significance:</span> t = 12.5 / 2.1 = <span class="result">5.95</span>. Since |t| > 2, TENURE is statistically significant at 5%.</div>
-      <div class="step"><span class="step-n">Predictive power:</span> R&sup2; = 0.28. TENURE alone explains <span class="result">28%</span> of variation in CLV. This is modest — 72% remains unexplained. The model captures a real effect but has limited predictive power. Other variables likely matter.</div>
+      <div class="your-attempt"></div>
+      <div class="step"><span class="step-n">1 &mdash; IsRain interpretation:</span><br>
+        <span class="result">Rain adds 8 minutes to delivery time</span>, holding distance and experience constant. In plain language: &ldquo;When it rains, expect deliveries to take about 8 minutes longer than usual.&rdquo;</div>
+      <div class="step"><span class="step-n">2 &mdash; Experience interpretation:</span><br>
+        <span class="result">Every additional year of courier experience reduces delivery time by 1.2 minutes</span>, all else equal. More experienced couriers are faster.</div>
+      <div class="step"><span class="step-n">3 &mdash; Prediction:</span><br>
+        Time = 10 + 2.5(4) + 8(0) &minus; 1.2(5)<br>
+        = 10 + 10 + 0 &minus; 6<br>
+        = <span class="result">14 minutes</span></div>
+      <div class="step"><span class="step-n">4 &mdash; If p = 0.25:</span><br>
+        With p = 0.25 &gt; 0.05, Experience would be <strong>not statistically significant</strong>. We could not reliably conclude that experience affects delivery time. Advice to HR: <span class="result">stop prioritizing experience in hiring</span> &mdash; the data does not support paying a premium for experienced couriers.</div>
+      <div class="conclusion"><strong>Key insight:</strong> Coefficient interpretation always includes &ldquo;holding all else constant.&rdquo; And significance determines whether we should <em>act</em> on a coefficient or treat it as noise.</div>
     </div>
   </div>
 
-  <!-- Q3(ii) -->
+  <!-- Q3(ii) — Prediction & The "Real World" -->
   <div class="q-card">
-    <div class="q-label">Question 3(ii) &middot; 5 Points</div>
-    <div class="q-text">Model 2 adds FREQUENCY and PRIME. Which variables are significant? Compare to Model 1 and provide managerial insights.</div>
-    <div class="data-box" style="margin-bottom:1rem">
-      <div class="db-item">Intercept: <span class="v">180.0 (SE: 32.0, p < 0.001)</span></div>
-      <div class="db-item">TENURE: <span class="v">8.2 (SE: 1.9, p < 0.001)</span></div>
-      <div class="db-item">FREQUENCY: <span class="v">45.0 (SE: 8.5, p < 0.001)</span></div>
-      <div class="db-item">PRIMEYes: <span class="v">125.0 (SE: 28.0, p < 0.001)</span></div>
-      <div class="db-item">R&sup2;: <span class="v">0.52</span></div>
+    <div class="q-label">Question 3(ii) &middot; 10 Points &mdash; Prediction &amp; The &ldquo;Real World&rdquo;</div>
+    <div class="q-text">You regress &ldquo;Customer Acquisition Cost&rdquo; (CAC) on &ldquo;Ad Impressions&rdquo; (in 000s):</div>
+    <div class="data-box" style="margin:.75rem 0">
+      <div class="db-item">Model: <span class="v">CAC = 20.0 + 0.50(Impressions)</span></div>
+      <div class="db-item">R&sup2;: <span class="v">0.45</span></div>
+      <div class="db-item">SE of Estimate (S<sub>e</sub>): <span class="v">&pound;5.00</span></div>
+      <div class="db-item">Prediction Multiplier (95%): <span class="v">2</span></div>
+    </div>
+    <div class="q-text" style="margin-top:.5rem">
+      <strong>Tasks:</strong><br>
+      1. Predict the CAC for a campaign with 40,000 impressions.<br>
+      2. Calculate the 95% Prediction Interval (PI) for that specific campaign.<br>
+      3. <strong>The Logic Trap:</strong> The CMO says, &ldquo;If we simply delete the &lsquo;Impressions&rsquo; variable, we can reduce our CAC by &pound;0.50 per unit.&rdquo; Explain the Causal Fallacy in this statement.<br>
+      4. If a campaign actually costs &pound;60.00, does it fall in your PI? What does an &ldquo;outlier&rdquo; like this suggest?
     </div>
     <div class="try-box">
       <div class="try-label">Your answer</div>
-      <textarea placeholder="Which are significant? Compare to Model 1..."></textarea>
+      <textarea placeholder="Predict CAC, build PI, explain causal fallacy, assess outlier..."></textarea>
     </div>
-    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution ▸</button>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution &#9656;</button>
     <div class="answer">
-      <div class="step"><span class="step-n">Significance:</span> <span class="result">All variables are significant</span> (all p-values < 0.001, well below 0.05).</div>
-      <div class="step"><span class="step-n">TENURE:</span> Each additional month &rarr; &pound;8.20 more CLV (down from &pound;12.50 in Model 1, as some effect was shared with FREQUENCY/PRIME).</div>
-      <div class="step"><span class="step-n">FREQUENCY:</span> Each additional monthly purchase &rarr; &pound;45 more CLV. High-frequency buyers are very valuable.</div>
-      <div class="step"><span class="step-n">PRIMEYes:</span> Prime members have &pound;125 higher CLV than non-Prime, holding other variables constant.</div>
-      <div class="step"><span class="step-n">Model comparison:</span> R&sup2; improved from 0.28 to <span class="result">0.52</span> — a major improvement. Model 2 explains nearly twice the variation.</div>
-      <div class="conclusion"><strong>Managerial insight:</strong> This is a better model. FREQUENCY and PRIME membership are strong CLV drivers. The drop in TENURE's coefficient (12.5 &rarr; 8.2) shows that part of TENURE's apparent effect was actually driven by purchase frequency and membership status. Investment in Prime conversion and purchase frequency programs would be high-value.</div>
+      <div class="your-attempt"></div>
+      <div class="step"><span class="step-n">Step 1 &mdash; Prediction:</span><br>
+        Impressions = 40 (in 000s)<br>
+        CAC = 20.0 + 0.50(40) = 20 + 20 = <span class="result">&pound;40.00</span></div>
+      <div class="step"><span class="step-n">Step 2 &mdash; 95% Prediction Interval:</span><br>
+        PI = &#374; &plusmn; (multiplier &times; S<sub>e</sub>) = 40 &plusmn; (2 &times; 5) = 40 &plusmn; 10<br>
+        <span class="result">PI = [&pound;30.00, &pound;50.00]</span></div>
+      <div class="step"><span class="step-n">Step 3 &mdash; Causal Fallacy:</span><br>
+        The CMO confuses <strong>association with causation</strong>. Impressions don&rsquo;t <em>cause</em> the &pound;20 intercept (fixed overhead). Removing the &ldquo;Impressions&rdquo; variable from the spreadsheet doesn&rsquo;t remove the impressions from reality. The variable <strong>tracks</strong> the cost &mdash; it doesn&rsquo;t generate it. Deleting a thermometer doesn&rsquo;t change the temperature.</div>
+      <div class="step"><span class="step-n">Step 4 &mdash; Outlier assessment:</span><br>
+        &pound;60.00 &gt; &pound;50.00 (upper bound of PI) &rarr; <span class="result">&pound;60 is an outlier</span>, falling outside the 95% PI.<br>
+        This suggests the model is missing something for this campaign &mdash; possibly a missing variable (e.g., holiday season, competitor activity, bad targeting) that inflated costs beyond what impressions alone can explain.</div>
+      <div class="conclusion"><strong>Key insight:</strong> Regression describes patterns, not levers you can pull. Outliers outside the PI signal that your model&rsquo;s assumptions are breaking down for that observation.</div>
     </div>
   </div>
 
-  <!-- Q3(iii) -->
+  <!-- Q3(iii) — Critical Synthesis -->
   <div class="q-card">
-    <div class="q-label">Question 3(iii) &middot; 6 Points</div>
-    <div class="q-text">Model 3 adds CATEGORY (Electronics, Fashion, Home). Why is CATEGORYElectronics not included? Interpret Fashion and Home coefficients.</div>
-    <div class="data-box" style="margin-bottom:1rem">
-      <div class="db-item">CATEGORYFashion: <span class="v">-35.0 (SE: 25.0, p = 0.162)</span></div>
-      <div class="db-item">CATEGORYHome: <span class="v">48.0 (SE: 22.0, p = 0.030)</span></div>
+    <div class="q-label">Question 3(iii) &middot; 10 Points &mdash; Critical Synthesis</div>
+    <div class="q-text">The CEO is looking at a regression that shows a strong positive correlation between &ldquo;Number of Support Tickets&rdquo; and &ldquo;Customer Lifetime Value (LTV).&rdquo; The CEO concludes: &ldquo;Our support team is a profit center! We should make the app more confusing so customers file more tickets, which will increase our LTV.&rdquo;</div>
+    <div class="q-text" style="margin-top:.5rem">
+      <strong>Tasks:</strong><br>
+      1. Identify the <strong>Reverse Causality</strong> error in the CEO&rsquo;s logic.<br>
+      2. Provide a more plausible <strong>Lurking Variable</strong> (Confounder) that explains why high-value customers might file more tickets.<br>
+      3. <strong>Recommendation:</strong> Propose a simple A/B test that would actually prove whether &ldquo;Support Quality&rdquo; causes LTV to increase. What would the Treatment and Control groups look like?
     </div>
     <div class="try-box">
       <div class="try-label">Your answer</div>
-      <textarea placeholder="Explain reference category, interpret coefficients..."></textarea>
+      <textarea placeholder="Identify reverse causality, name the confounder, design an A/B test..."></textarea>
     </div>
-    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution ▸</button>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution &#9656;</button>
     <div class="answer">
-      <div class="step"><span class="step-n">Why no Electronics:</span> Electronics is the <span class="result">reference category</span> (baseline). With 3 categories, we need k-1 = 2 dummy variables. Including all 3 would cause perfect multicollinearity (the dummy variable trap).</div>
-      <div class="step"><span class="step-n">Fashion coefficient (-35.0):</span> Fashion shoppers have &pound;35 <em>lower</em> CLV than Electronics shoppers, holding all else constant. However, p = 0.162 > 0.05 &rarr; <span class="result">NOT significant</span>. We cannot conclude a real difference.</div>
-      <div class="step"><span class="step-n">Home coefficient (48.0):</span> Home shoppers have &pound;48 <em>higher</em> CLV than Electronics shoppers, holding all else constant. p = 0.030 < 0.05 &rarr; <span class="result">Significant at 5%</span>.</div>
-      <div class="takeaway" style="margin-top:.75rem">For a categorical variable with k levels, always create <strong>k-1 dummies</strong>. The omitted category becomes the reference — all coefficients are <strong>relative to it</strong>.</div>
-    </div>
-  </div>
-
-  <!-- Q3(iv) -->
-  <div class="q-card">
-    <div class="q-label">Question 3(iv) &middot; 8 Points</div>
-    <div class="q-text">Model 4 includes all variables. Calculate each t-statistic and determine significance at 5% for each variable.</div>
-    <div class="fm" style="margin-bottom:1rem">CLV = &beta;₀ + &beta;₁&times;TENURE + &beta;₂&times;FREQUENCY + &beta;₃&times;PRIMEYes + &beta;₄&times;CATEGORYFashion + &beta;₅&times;CATEGORYHome + &beta;₆&times;SATISFACTION + &epsilon;</div>
-    <div class="try-box">
-      <div class="try-label">Fill in the t-statistics</div>
-      <textarea placeholder="Calculate t = coefficient / SE for each variable..."></textarea>
-    </div>
-    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution ▸</button>
-    <div class="answer">
-      <table style="width:100%;border-collapse:collapse;font-size:.82rem;margin-bottom:1rem">
-        <thead>
-          <tr style="border-bottom:2px solid var(--card-border)">
-            <th style="text-align:left;padding:.5rem;color:var(--text)">Variable</th>
-            <th style="text-align:right;padding:.5rem;color:var(--text)">Coeff</th>
-            <th style="text-align:right;padding:.5rem;color:var(--text)">SE</th>
-            <th style="text-align:right;padding:.5rem;color:var(--accent)">t-stat</th>
-            <th style="text-align:center;padding:.5rem;color:var(--text)">Sig?</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .5rem">Intercept</td><td style="text-align:right;padding:.4rem .5rem">95.0</td><td style="text-align:right;padding:.4rem .5rem">45.0</td><td style="text-align:right;padding:.4rem .5rem;color:var(--accent);font-family:var(--font-mono)">2.11</td><td style="text-align:center;padding:.4rem .5rem;color:var(--green)">Yes</td></tr>
-          <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .5rem">TENURE</td><td style="text-align:right;padding:.4rem .5rem">7.8</td><td style="text-align:right;padding:.4rem .5rem">1.8</td><td style="text-align:right;padding:.4rem .5rem;color:var(--accent);font-family:var(--font-mono)">4.33</td><td style="text-align:center;padding:.4rem .5rem;color:var(--green)">Yes</td></tr>
-          <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .5rem">FREQUENCY</td><td style="text-align:right;padding:.4rem .5rem">42.0</td><td style="text-align:right;padding:.4rem .5rem">8.2</td><td style="text-align:right;padding:.4rem .5rem;color:var(--accent);font-family:var(--font-mono)">5.12</td><td style="text-align:center;padding:.4rem .5rem;color:var(--green)">Yes</td></tr>
-          <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .5rem">PRIMEYes</td><td style="text-align:right;padding:.4rem .5rem">118.0</td><td style="text-align:right;padding:.4rem .5rem">27.0</td><td style="text-align:right;padding:.4rem .5rem;color:var(--accent);font-family:var(--font-mono)">4.37</td><td style="text-align:center;padding:.4rem .5rem;color:var(--green)">Yes</td></tr>
-          <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .5rem">CATEGORYFashion</td><td style="text-align:right;padding:.4rem .5rem">-32.0</td><td style="text-align:right;padding:.4rem .5rem">24.0</td><td style="text-align:right;padding:.4rem .5rem;color:var(--red);font-family:var(--font-mono)">-1.33</td><td style="text-align:center;padding:.4rem .5rem;color:var(--red)">No</td></tr>
-          <tr style="border-bottom:1px solid var(--card-border)"><td style="padding:.4rem .5rem">CATEGORYHome</td><td style="text-align:right;padding:.4rem .5rem">45.0</td><td style="text-align:right;padding:.4rem .5rem">21.0</td><td style="text-align:right;padding:.4rem .5rem;color:var(--accent);font-family:var(--font-mono)">2.14</td><td style="text-align:center;padding:.4rem .5rem;color:var(--green)">Yes</td></tr>
-          <tr><td style="padding:.4rem .5rem">SATISFACTION</td><td style="text-align:right;padding:.4rem .5rem">15.5</td><td style="text-align:right;padding:.4rem .5rem">6.2</td><td style="text-align:right;padding:.4rem .5rem;color:var(--accent);font-family:var(--font-mono)">2.50</td><td style="text-align:center;padding:.4rem .5rem;color:var(--green)">Yes</td></tr>
-        </tbody>
-      </table>
-      <div class="conclusion"><strong>Summary:</strong> All variables are significant (|t| > 2) except CATEGORYFashion (|t| = 1.33 < 2). Fashion shoppers are not statistically different from Electronics shoppers in CLV after controlling for other factors.</div>
-      <div class="exam-tip" style="margin-top:.75rem">Quick rule: <strong>|t| > 2 &rarr; significant at 5%</strong>. Just divide coefficient by SE.</div>
-    </div>
-  </div>
-
-  <!-- Q3(v) -->
-  <div class="q-card">
-    <div class="q-label">Question 3(v) &middot; 6 Points</div>
-    <div class="q-text">Using Model 4, predict CLV for: TENURE = 24, FREQUENCY = 3.5, PRIME = Yes, CATEGORY = Home, SATISFACTION = 8. Then construct a 95% prediction interval (SE of prediction = 42.0).</div>
-    <div class="try-box">
-      <div class="try-label">Your answer</div>
-      <textarea placeholder="Plug in values, calculate prediction, build PI..."></textarea>
-    </div>
-    <button class="reveal-btn" onclick="toggleAnswer(this)">Show Solution ▸</button>
-    <div class="answer">
-      <div class="step"><span class="step-n">Step 1:</span> Identify dummy values: PRIMEYes = 1, CATEGORYFashion = 0, CATEGORYHome = 1</div>
-      <div class="step"><span class="step-n">Step 2:</span> Plug into Model 4:</div>
-      <div class="fm">CLV = 95.0 + 7.8(24) + 42.0(3.5) + 118.0(1) + (-32.0)(0) + 45.0(1) + 15.5(8)</div>
-      <div class="step"><span class="step-n">Step 3:</span> = 95.0 + 187.2 + 147.0 + 118.0 + 0 + 45.0 + 124.0 = <span class="result">&pound;716.20</span></div>
-      <div class="step"><span class="step-n">Step 4:</span> 95% Prediction Interval = 716.2 &plusmn; 2 &times; 42.0 = 716.2 &plusmn; 84.0</div>
-      <div class="step"><span class="step-n">Result:</span> <span class="result">PI = [&pound;632.20, &pound;800.20]</span></div>
-      <div class="conclusion"><strong>Interpretation:</strong> We predict this customer's CLV to be approximately &pound;716, and we are 95% confident their actual CLV falls between &pound;632 and &pound;800. This is a high-value customer (long tenure, frequent buyer, Prime member, Home category).</div>
-      <div class="trap" style="margin-top:.75rem">Don't confuse <strong>confidence interval</strong> (for the mean response) with <strong>prediction interval</strong> (for an individual observation). Prediction intervals are always wider because they include individual variability.</div>
+      <div class="your-attempt"></div>
+      <div class="step"><span class="step-n">1 &mdash; Reverse Causality:</span><br>
+        The CEO assumes: More tickets &rarr; Higher LTV. But the true direction is likely reversed: <span class="result">High-LTV customers use the app more frequently, encounter more issues, and therefore file more tickets.</span> The tickets are a <em>consequence</em> of heavy usage, not a <em>cause</em> of high value.</div>
+      <div class="step"><span class="step-n">2 &mdash; Lurking Variable (Confounder):</span><br>
+        <span class="result">&ldquo;App Usage Frequency&rdquo;</span> is the confounder. Customers who use the app heavily both (a) spend more money (high LTV) and (b) encounter more bugs/issues (more tickets). Usage drives <em>both</em> variables, creating a spurious correlation between tickets and LTV.</div>
+      <div class="step"><span class="step-n">3 &mdash; A/B Test Design:</span><br>
+        <strong>Treatment group:</strong> Customers receive proactive, high-quality support (e.g., a dedicated support agent, faster response times, proactive check-ins).<br>
+        <strong>Control group:</strong> Customers receive standard support (business as usual).<br>
+        <strong>Measure:</strong> Compare LTV between the two groups over 6&ndash;12 months.<br>
+        <span class="result">If the Treatment group has significantly higher LTV, we can conclude that support quality causes LTV to increase.</span></div>
+      <div class="conclusion"><strong>Key insight:</strong> Correlation between X and Y can mean X&rarr;Y, Y&rarr;X, or Z&rarr;both. Only a controlled experiment (A/B test) can establish the causal direction. Never confuse a regression coefficient with a causal lever.</div>
     </div>
   </div>
 
@@ -1965,7 +2006,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 <section class="section embads collapsible" id="embads-formulas">
 <div class="container">
   <div class="ch-head">
-    <div class="ch-num">Reference<span class="ch-qcount">6 formulas</span></div>
+    <div class="ch-num">Reference<span class="ch-qcount">8 formulas</span></div>
     <h2 class="ch-q">Formula Sheet</h2>
   </div>
   <button class="ch-toggle" onclick="toggleChapter(this)"><span class="ch-arrow">▶</span> Expand section</button>
@@ -1973,42 +2014,55 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 
   <div class="q-card" style="margin-bottom:1rem">
     <div class="q-label">Standard Error for the Mean</div>
-    <div class="fm" style="font-size:1.1rem">SE = SD / &radic;n</div>
+    <div class="fm" style="font-size:1.1rem">SE = &sigma; / &radic;n</div>
     <p>Measures how precisely the sample mean estimates the population mean. Larger n &rarr; smaller SE &rarr; more precision.</p>
   </div>
 
   <div class="q-card" style="margin-bottom:1rem">
+    <div class="q-label">SE for Difference of Two Means</div>
+    <div class="fm" style="font-size:1.1rem">SE = &radic;(s&sup2;&#8321;/n&#8321; + s&sup2;&#8322;/n&#8322;)</div>
+    <p>Used to compare two independent groups. Combines the sampling variability from both groups.</p>
+  </div>
+
+  <div class="q-card" style="margin-bottom:1rem">
     <div class="q-label">Two-Sample t-test</div>
-    <div class="fm" style="font-size:1.1rem">t = (x&#772;₁ - x&#772;₂) / &radic;(s₁&sup2;/n₁ + s₂&sup2;/n₂)</div>
-    <p>Tests whether two group means are significantly different. |t| > 2 &rarr; significant at 5%.</p>
+    <div class="fm" style="font-size:1.1rem">t = (x&#772;&#8321; &minus; x&#772;&#8322;) / SE</div>
+    <p>Tests whether two group means are significantly different. |t| &gt; 2 &rarr; significant at 5%.</p>
   </div>
 
   <div class="q-card" style="margin-bottom:1rem">
     <div class="q-label">Confidence Interval</div>
     <div class="fm" style="font-size:1.1rem">CI = x&#772; &plusmn; z* &times; SE</div>
-    <p>95% CI uses z* &asymp; 2 (or 1.96). Contains the true population mean with 95% confidence (in the long run).</p>
+    <p>95% CI uses z* &asymp; 1.96. 98% CI uses z* = 2.33. Contains the true population mean with stated confidence (in the long run).</p>
+  </div>
+
+  <div class="q-card" style="margin-bottom:1rem">
+    <div class="q-label">Margin of Error</div>
+    <div class="fm" style="font-size:1.1rem">ME = z* &times; (&sigma; / &radic;n)</div>
+    <p>Half-width of the CI. Use to deduce n: rearrange to &radic;n = z* &times; &sigma; / ME.</p>
   </div>
 
   <div class="q-card" style="margin-bottom:1rem">
     <div class="q-label">Regression t-statistic</div>
     <div class="fm" style="font-size:1.1rem">t = coefficient / SE</div>
-    <p>Tests whether a coefficient is significantly different from zero. |t| > 2 &rarr; significant at 5%.</p>
+    <p>Tests whether a coefficient is significantly different from zero. |t| &gt; 2 &rarr; significant at 5%.</p>
   </div>
 
   <div class="q-card" style="margin-bottom:1rem">
     <div class="q-label">Prediction Interval</div>
-    <div class="fm" style="font-size:1.1rem">PI = &#374; &plusmn; z* &times; SE<sub>prediction</sub></div>
-    <p>Wider than CI because it accounts for individual variability around the regression line.</p>
+    <div class="fm" style="font-size:1.1rem">PI = &#374; &plusmn; multiplier &times; S<sub>e</sub></div>
+    <p>Wider than CI because it accounts for individual variability around the regression line. 95% multiplier &asymp; 2.</p>
   </div>
 
   <div class="q-card">
     <div class="q-label">Key Rules of Thumb</div>
-    <p>&bull; <strong>|t| > 2</strong> &rarr; significant at 5%<br>
-    &bull; <strong>p < 0.05</strong> &rarr; reject H₀<br>
+    <p>&bull; <strong>|t| &gt; 2</strong> &rarr; significant at 5%<br>
+    &bull; <strong>p &lt; 0.05</strong> &rarr; reject H&#8320;<br>
     &bull; <strong>R&sup2;</strong> = proportion of variance explained (0 to 1)<br>
-    &bull; <strong>k categories &rarr; k-1 dummies</strong> (reference category omitted)<br>
+    &bull; <strong>Significant p-value + low R&sup2;</strong> = real but minor effect<br>
     &bull; <strong>Quadruple n &rarr; halve the margin</strong> (square root law)<br>
-    &bull; <strong>VIF > 5</strong> &rarr; multicollinearity concern</p>
+    &bull; <strong>Correlation &ne; Causation</strong> &mdash; check for reverse causality and confounders<br>
+    &bull; <strong>Hawthorne Effect</strong> &mdash; behavior changes when subjects know they&rsquo;re observed</p>
   </div>
 
   </div><!-- /ch-body -->
@@ -2016,7 +2070,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 </section>
 
 <footer style="text-align:center;padding:2rem 1rem;border-top:1px solid var(--card-border)">
-  <div style="color:var(--text3);font-size:.68rem">Data Analytics for Executives — Practice Exam</div>
+  <div style="color:var(--text3);font-size:.68rem">Data Analytics for Executives &mdash; Sample Exam 2026</div>
   <div style="margin-top:.6rem;font-size:.78rem;color:var(--purple);font-weight:600">With warm regards from ESH</div>
 </footer>
 
@@ -2152,6 +2206,46 @@ function toggleAnswer(btn){
   if(showing){a.querySelectorAll('[data-chart]').forEach(el=>{
     if(!el.dataset.done){el.dataset.done='1';const fn=chartMap[el.dataset.chart];if(fn)fn();}
   });}
+  /* Stepped reveal for practice exam */
+  if(showing&&currentDS==='embads'){initSteppedReveal(a);}
+}
+function initSteppedReveal(answerEl){
+  if(answerEl.dataset.stepped) return;
+  answerEl.dataset.stepped='1';
+  const steps=answerEl.querySelectorAll('.step, .conclusion');
+  if(!steps.length) return;
+  let idx=0;
+  /* reveal first step immediately */
+  steps[0].classList.add('revealed');
+  idx=1;
+  if(idx>=steps.length) return;
+  const wrapper=document.createElement('div');
+  wrapper.style.marginTop='.75rem';
+  const nextBtn=document.createElement('button');
+  nextBtn.className='next-step-btn';
+  const counter=document.createElement('span');
+  counter.className='step-counter';
+  function updateBtn(){
+    if(idx>=steps.length){
+      nextBtn.textContent='All steps revealed';
+      nextBtn.classList.add('done');
+      counter.textContent='';
+    } else {
+      nextBtn.textContent='Next Step \u2192';
+      counter.textContent=idx+' / '+steps.length;
+    }
+  }
+  updateBtn();
+  nextBtn.addEventListener('click',function(){
+    if(idx>=steps.length) return;
+    steps[idx].classList.add('revealed');
+    steps[idx].scrollIntoView({behavior:'smooth',block:'nearest'});
+    idx++;
+    updateBtn();
+  });
+  wrapper.appendChild(nextBtn);
+  wrapper.appendChild(counter);
+  answerEl.appendChild(wrapper);
 }
 function toggleDig(btn){btn.classList.toggle('open');btn.nextElementSibling.classList.toggle('show');}
 function toggleChapter(btn){
